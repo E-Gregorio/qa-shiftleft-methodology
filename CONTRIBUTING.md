@@ -120,4 +120,4 @@ Abrí un issue con la etiqueta `question` o contactá al mantenedor:
 
 ---
 
-*QA Shift-Left Methodology · alineado a ISTQB v4, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148, OWASP Top 10 2021, OWASP LLM Top 10, NIST AI RMF*
+*QA Shift-Left Methodology — framework operativo integrado por E-Gregorio. Referencia a estándares públicos: ISTQB v4, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148, OWASP Top 10 2021, OWASP LLM Top 10, NIST AI RMF.*

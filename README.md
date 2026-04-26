@@ -2,9 +2,9 @@
 
 # QA Shift-Left Methodology
 
-**Metodología unificada de QA para equipos modernos: testing manual, automatización, E2E, performance, seguridad y testing de IA/LLM.**
+**Framework operativo integrado para QA Shift-Left.** Unifica la aplicación práctica de ISTQB v4, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148, OWASP y NIST AI RMF en una estrategia ejecutable: testing manual, automation, E2E, performance, seguridad y testing de IA/LLM.
 
-Plantillas listas para usar · Guías estratégicas · Framework VCR (Valor-Costo-Riesgo) · Modelo de madurez
+17 documentos ejecutables · Guías estratégicas · Framework VCR propio (Valor + Costo + Riesgo) · Modelo de madurez
 
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](LICENSE)
 [![ISTQB](https://img.shields.io/badge/ISTQB-v4%20Foundation%202023-2563EB)](#-marco-normativo-actualizado)
@@ -17,18 +17,33 @@ Plantillas listas para usar · Guías estratégicas · Framework VCR (Valor-Cost
 
 ---
 
-## Sobre esta metodología
+## Sobre este framework
 
-Esta es una **creación personal de [E-Gregorio](https://github.com/E-Gregorio)**, fruto de años de práctica como QA Lead implementando Shift-Left Testing en proyectos reales. Está pensada como un marco **unificado y operativo** para que cualquier equipo —independiente de tamaño o stack— pueda profesionalizar su práctica de calidad sin reinventar la rueda.
+Este es un **framework operativo integrado** mantenido por [E-Gregorio](https://github.com/E-Gregorio).
 
-A diferencia de la mayoría de la documentación que circula públicamente, este framework:
+> ⚠️ **Aclaración de autoría:** este repositorio **no reclama autoría de Shift-Left Testing, ISTQB, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148, OWASP ni NIST AI RMF**. Esas metodologías y estándares son **públicos** y pertenecen a sus respectivos organismos (ISTQB, ISO, IEEE, OWASP Foundation, NIST).
+
+### ¿Qué aporta este repositorio?
+
+El rol del autor es el de **integrador estratégico**. Lo que sí es de autoría propia:
+
+1. **La integración operativa** de metodologías y estándares que ya existen pero que normalmente se aplican por separado.
+2. **La unificación de 17 documentos ejecutables** (plantillas, guías, informes, modelo de madurez) que permiten a un equipo aplicarlos de forma cohesionada.
+3. **El framework VCR** (Valor + Costo + Riesgo) — metodología propia para priorización objetiva de automatización.
+4. **La estrategia de implementación end-to-end** que articula testing manual, automation, E2E, performance, seguridad y testing de IA/LLM bajo una sola visión operativa.
+
+### ¿Por qué existe?
+
+Para darle a equipos QA un marco ejecutable y completo que normalmente tendrían que construir desde cero combinando documentación dispersa de múltiples fuentes (sitios oficiales de ISTQB, ISO, OWASP, NIST, papers, blogs).
+
+### Características del framework
 
 - **No se queda en lo teórico**: cada concepto viene con plantilla, ejemplo y criterio de aceptación.
-- **Está alineado a normativa vigente** (no a estándares retirados como IEEE 829/830).
-- **Cubre el QA moderno completo**: manual, automation E2E, API, performance, seguridad, accesibilidad y **testing de IA/LLM** —área donde casi nadie publica con rigor.
-- **Es accionable desde el día 1**: las plantillas se copian, se pegan en Confluence/Jira/Notion y funcionan.
+- **Referencia a normativa vigente** (no a estándares retirados como IEEE 829/830).
+- **Cubre el QA moderno completo**: manual, automation E2E, API, performance, seguridad, accesibilidad y **testing de IA/LLM**.
+- **Accionable desde el día 1**: las plantillas se copian, se pegan en Confluence/Jira/Notion y funcionan.
 
-> 🎯 **Propósito:** que un equipo QA pueda madurar de **nivel reactivo** a **nivel preventivo y predictivo** usando un único marco coherente.
+> 🎯 **Propósito:** que un equipo QA pueda madurar de **nivel reactivo** a **nivel preventivo y predictivo** usando un único marco coherente, sin tener que reconstruir la integración entre estándares.
 
 ---
 
@@ -249,7 +264,7 @@ Este es un proyecto **abierto** —si tu equipo lo usa o querés sugerir mejoras
 
 ## 📞 Contacto
 
-**E-Gregorio** · QA Lead / Test Architect
+**E-Gregorio** · Autor del framework operativo integrado · QA Lead / Test Architect
 - GitHub: [@E-Gregorio](https://github.com/E-Gregorio)
 - Repo: [qa-shiftleft-methodology](https://github.com/E-Gregorio/qa-shiftleft-methodology)
 
@@ -262,7 +277,7 @@ Esta metodología se distribuye bajo **[Creative Commons Attribution-NonCommerci
 | Compartir el contenido | Modificarlo y republicarlo como tuyo |
 | Citarlo en presentaciones / formaciones | Usarlo con fines comerciales |
 | Usarlo internamente en tu equipo | Distribuir versiones derivadas |
-| Linkear desde tu blog / LinkedIn | Eliminar la atribución a E-Gregorio |
+| Linkear desde tu blog / LinkedIn | Eliminar la atribución al autor de la integración |
 
 Para uso comercial o adaptaciones, abrí un issue en el repo o contactame por GitHub.
 
