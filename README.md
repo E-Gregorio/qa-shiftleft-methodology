@@ -6,7 +6,7 @@
 
 Plantillas listas para usar · Guías estratégicas · Framework VCR (Valor-Costo-Riesgo) · Modelo de madurez
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](LICENSE)
 [![ISTQB](https://img.shields.io/badge/ISTQB-v4%20Foundation%202023-2563EB)](#-marco-normativo-actualizado)
 [![ISO/IEC/IEEE 29119](https://img.shields.io/badge/ISO%2FIEC%2FIEEE-29119-1D4ED8)](#-marco-normativo-actualizado)
 [![ISO/IEC/IEEE 29148](https://img.shields.io/badge/ISO%2FIEC%2FIEEE-29148%3A2018-1D4ED8)](#-marco-normativo-actualizado)
@@ -72,7 +72,7 @@ qa-shiftleft-methodology/
 ├── informesISQTB/                      # Fuentes en Markdown
 ├── Command_Center_Shift-Left-Testing/  # Plataforma de comando QA
 ├── .github/workflows/pages.yml         # Auto-deploy a GitHub Pages
-├── LICENSE                             # MIT
+├── LICENSE                             # CC BY-NC-ND 4.0
 └── README.md
 ```
 
@@ -255,7 +255,16 @@ Este es un proyecto **abierto** —si tu equipo lo usa o querés sugerir mejoras
 
 ## 📝 Licencia
 
-[MIT](LICENSE) — usalo, copialo, adaptalo. Solo conservá la atribución.
+Esta metodología se distribuye bajo **[Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)](LICENSE)**.
+
+| ✅ Podés | ❌ No podés |
+|---|---|
+| Compartir el contenido | Modificarlo y republicarlo como tuyo |
+| Citarlo en presentaciones / formaciones | Usarlo con fines comerciales |
+| Usarlo internamente en tu equipo | Distribuir versiones derivadas |
+| Linkear desde tu blog / LinkedIn | Eliminar la atribución a E-Gregorio |
+
+Para uso comercial o adaptaciones, abrí un issue en el repo o contactame por GitHub.
 
 ---
 

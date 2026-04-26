@@ -38,7 +38,7 @@ qa-shiftleft-methodology/
 │   ├── workflows/pages.yml             # Auto-deploy a GitHub Pages
 │   ├── ISSUE_TEMPLATE/
 │   └── PULL_REQUEST_TEMPLATE.md
-├── LICENSE                             # MIT
+├── LICENSE                             # CC BY-NC-ND 4.0
 ├── README.md
 ├── CONTRIBUTING.md
 └── estructura-proyecto.txt             # Este archivo
