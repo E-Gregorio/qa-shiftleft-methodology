@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Shift-Left Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000;
+            color: #2563EB;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border-bottom: 2px solid #2563EB;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2563EB, #4a73c4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .header-title {
+            color: #2563EB;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .user-info {
+            color: #2563EB;
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+            border-right: 2px solid #2563EB;
+            padding: 20px 0;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            color: #2563EB;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 0 20px 10px 20px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(92, 133, 214, 0.1);
+            color: #2563EB;
+            border-left: 4px solid #2563EB;
+        }
+
+        .sidebar-item.active {
+            background: rgba(92, 133, 214, 0.2);
+            color: #2563EB;
+            border-left: 4px solid #2563EB;
+        }
+
+        .sidebar-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 280px;
+            padding: 30px;
+            flex: 1;
+            background: #0a0a0a;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #2563EB;
+            box-shadow: 0 8px 25px rgba(92, 133, 214, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #2563EB;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        .card-subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2563EB, #4a73c4);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #4a73c4, #3d5fa8);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(92, 133, 214, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #333, #444);
+            color: #2563EB;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #444, #555);
+            color: white;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-online { background: #4caf50; }
+        .status-warning { background: #ff9800; }
+        .status-error { background: #f44336; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(92, 133, 214, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(92, 133, 214, 0.3);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563EB;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Quick Actions Bar */
+        .quick-actions {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .quick-actions-title {
+            color: #2563EB;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+            .content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">EQ</div>
+            <div>
+                <div class="header-title">QA Shift-Left Command Center</div>
+                <div class="header-subtitle">Shift Left Testing Platform</div>
+            </div>
+        </div>
+        <div class="user-info">
+            👤 Líder Técnico QA | 🕐 Sprint 24.1 | 📊 Dashboard v2.0
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 DASHBOARD</div>
+                <a href="#" class="sidebar-item active">
+                    <span class="sidebar-icon">🏠</span>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span>Metrics</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span>Sprint Board</span>
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">📝 DOCUMENTATION</div>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🔗</span>
+                    <span>Jira Projects</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📚</span>
+                    <span>Confluence</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📄</span>
+                    <span>Google Docs</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📊</span>
+                    <span>Google Sheets</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🗄️</span>
+                    <span>User Stories DB</span>
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">🧪 TESTING</div>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🖱️</span>
+                    <span>Manual Testing</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🤖</span>
+                    <span>Automated Tests</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🎭</span>
+                    <span>Playwright Runner</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">⚡</span>
+                    <span>Performance Tests</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📧</span>
+                    <span>API Testing</span>
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 MONITORING</div>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span>Grafana</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🎯</span>
+                    <span>Allure Reports</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">💬</span>
+                    <span>Slack Channels</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🔄</span>
+                    <span>N8N Workflows</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <span class="sidebar-icon">🤖</span>
+                    <span>Claude AI</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="quick-actions-title">⚡ Quick Actions</div>
+                <div class="quick-actions-grid">
+                    <button class="btn">🏃‍♂️ Run Smoke Tests</button>
+                    <button class="btn">🔍 New Manual Test</button>
+                    <button class="btn">📊 Generate Report</button>
+                    <button class="btn">🚨 Create Incident</button>
+                    <button class="btn">🤖 Ask Claude AI</button>
+                    <button class="btn">🔄 Trigger Pipeline</button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">847</div>
+                    <div class="stat-label">Tests Executed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">94.2%</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Active Bugs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12m</div>
+                    <div class="stat-label">Avg Test Time</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Documentation Hub -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">📚</span>
+                            Documentation Hub
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">Centralized access to all project documentation</div>
+                    <div class="action-buttons">
+                        <button class="btn">🔗 Open Jira</button>
+                        <button class="btn btn-secondary">📄 Google Docs</button>
+                        <button class="btn btn-secondary">📊 Sheets</button>
+                        <button class="btn btn-secondary">🗄️ Stories DB</button>
+                    </div>
+                </div>
+
+                <!-- Manual Testing -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">🖱️</span>
+                            Manual Testing
+                        </div>
+                        <span class="status-indicator status-warning"></span>
+                    </div>
+                    <div class="card-subtitle">Execute and manage manual test cases</div>
+                    <div class="action-buttons">
+                        <button class="btn">▶️ Start Session</button>
+                        <button class="btn btn-secondary">📋 Test Cases</button>
+                        <button class="btn btn-secondary">🐛 Report Bug</button>
+                        <button class="btn btn-secondary">📊 Sessions</button>
+                    </div>
+                </div>
+
+                <!-- Automated Testing -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">🤖</span>
+                            Automated Testing
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">Playwright TypeScript automation suite</div>
+                    <div class="action-buttons">
+                        <button class="btn">🎭 Run Playwright</button>
+                        <button class="btn btn-secondary">📝 Test Builder</button>
+                        <button class="btn btn-secondary">🔄 Schedules</button>
+                        <button class="btn btn-secondary">📈 Results</button>
+                    </div>
+                </div>
+
+                <!-- Performance Testing -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">⚡</span>
+                            Performance Testing
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">JMeter, K6, and load testing tools</div>
+                    <div class="action-buttons">
+                        <button class="btn">⚡ Run JMeter</button>
+                        <button class="btn btn-secondary">🚀 K6 Tests</button>
+                        <button class="btn btn-secondary">📊 Load Reports</button>
+                        <button class="btn btn-secondary">⚙️ Configure</button>
+                    </div>
+                </div>
+
+                <!-- API Testing -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">📧</span>
+                            API Testing
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">Postman collections and API validation</div>
+                    <div class="action-buttons">
+                        <button class="btn">📧 Postman</button>
+                        <button class="btn btn-secondary">🔧 Newman</button>
+                        <button class="btn btn-secondary">📋 Collections</button>
+                        <button class="btn btn-secondary">🔍 Monitor</button>
+                    </div>
+                </div>
+
+                <!-- Reporting & Analytics -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">📊</span>
+                            Reports & Analytics
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">Grafana dashboards and Allure reports</div>
+                    <div class="action-buttons">
+                        <button class="btn">📈 Grafana</button>
+                        <button class="btn btn-secondary">🎯 Allure</button>
+                        <button class="btn btn-secondary">📊 Custom</button>
+                        <button class="btn btn-secondary">📧 Email</button>
+                    </div>
+                </div>
+
+                <!-- Communication Hub -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">💬</span>
+                            Communication
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">Slack integration and notifications</div>
+                    <div class="action-buttons">
+                        <button class="btn">💬 Slack</button>
+                        <button class="btn btn-secondary">🔔 Alerts</button>
+                        <button class="btn btn-secondary">🔄 N8N</button>
+                        <button class="btn btn-secondary">📧 Email</button>
+                    </div>
+                </div>
+
+                <!-- AI Assistant -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">🤖</span>
+                            Claude AI Assistant
+                        </div>
+                        <span class="status-indicator status-online"></span>
+                    </div>
+                    <div class="card-subtitle">AI-powered testing insights and automation</div>
+                    <div class="action-buttons">
+                        <button class="btn">🤖 Ask Claude</button>
+                        <button class="btn btn-secondary">💡 Insights</button>
+                        <button class="btn btn-secondary">🔮 Predict</button>
+                        <button class="btn btn-secondary">📝 Generate</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Simple interactivity
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Button click effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-2px)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

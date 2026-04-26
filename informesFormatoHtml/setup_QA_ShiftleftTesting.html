@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup QA Shift-Left Testing - Framework Integral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #1E40AF 100%);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 50%;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2563EB;
+            font-size: 24px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #DBEAFE;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #F59E0B;
+        }
+
+        .content {
+            text-align: left;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #DBEAFE;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            flex: 1;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .flow-step h4 {
+            color: #F59E0B;
+            margin-bottom: 10px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #F59E0B;
+            margin: 0 10px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #F59E0B;
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .vcr-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .vcr-table th, .vcr-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vcr-table th {
+            background: rgba(255, 215, 0, 0.3);
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #F59E0B;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #DBEAFE;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(232, 244, 253, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .phases-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .phase {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #DBEAFE;
+        }
+
+        .phase h4 {
+            color: #F59E0B;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .phase ul {
+            list-style-type: none;
+        }
+
+        .phase li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .phase li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #90ee90;
+            font-weight: bold;
+        }
+
+        .traceability-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .trace-item {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #F59E0B;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .trace-arrow {
+            font-size: 1.5em;
+            color: #F59E0B;
+            margin: 0 10px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .benefit-card {
+            background: rgba(144, 238, 144, 0.2);
+            border: 2px solid #90ee90;
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .benefit-card h4 {
+            color: #90ee90;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para enlaces a documentos HTML */
+        .doc-link {
+            color: #F59E0B;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px 0;
+            padding: 8px 12px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .doc-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 5px #F59E0B;
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-link {
+            background: linear-gradient(45deg, #2563EB, #1D4ED8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dashboard-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .document-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+        </div>
+
+        <!-- Slide 1: Portada -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="logo">QA</div>
+                <div>
+                    <h1>Setup QA Shift Left Testing</h1>
+                    <p style="font-size: 1.2em; color: #DBEAFE;">Framework Integral de QA Shift-Left</p>
+                </div>
+            </div>
+            <div class="content">
+    <div class="highlight">
+        <h3>🎯 Objetivo de la Presentación</h3>
+        <p>Implementar la metodología <strong>Shift Left Testing</strong> en todos los proyectos, 
+        estableciendo un flujo de trabajo QA basado en estándares internacionales 
+        (ISTQB v4, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148).</p>
+    </div>
+    <div class="highlight" style="margin-top: 20px;">
+        <h3>🚀 Centro de Control QA</h3>
+        <p>Acceso directo a nuestro dashboard operativo:</p>
+        <a href="https://supabase.com/dashboard/project/kqczwkrbmjuoygaapjua/editor/17293" target="_blank" class="dashboard-link">
+            📊 Dashboard Supabase - Centro de Control QA
+        </a>
+    </div>
+    <div class="highlight" style="margin-top: 20px;">
+        <h3>📚 Marco Normativo y Estándares</h3>
+        <p>Fundamentos normativos que respaldan nuestro Framework QA:</p>
+        <a href="05_Guias/marco-normativo-estandares.html" target="_blank" class="dashboard-link">
+            🏆 Marco Normativo del Framework
+        </a>
+    </div>
+</div>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Shift Left Testing? -->
+        <div class="slide">
+            <h1>¿Qué es Shift Left Testing?</h1>
+            <div class="content">
+                <h2>🔄 Cambio de Paradigma</h2>
+                <div class="phases-container">
+                    <div class="phase">
+                        <h4>❌ ANTES (Tradicional)</h4>
+                        <ul>
+                            <li>QA entra al final del desarrollo</li>
+                            <li>Pruebas reactivas</li>
+                            <li>Defectos costosos de corregir</li>
+                            <li>Documentación desactualizada</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>✅ AHORA (Shift Left)</h4>
+                        <ul>
+                            <li>QA participa desde el análisis</li>
+                            <li>Pruebas proactivas y preventivas</li>
+                            <li>Defectos detectados temprano</li>
+                            <li>Casos de prueba antes del código</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>💡 Concepto Clave:</strong> Mover las actividades de QA hacia la izquierda en el ciclo de vida del proyecto
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Flujo General -->
+        <div class="slide">
+            <h1>Flujo General de Trabajo</h1>
+            <div class="content">
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <h4>1. Análisis de Requisitos</h4>
+                        <p>QA participa en documentación<br/>Creación de Épicas y US</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">
+                        <h4>2. Pruebas Estáticas</h4>
+                        <p>Test Cases antes del código<br/>Master Test Plan</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">
+                        <h4>3. Despliegue SUT</h4>
+                        <p>Pruebas exploratorias<br/>Refinamiento de US</p>
+                    </div>
+                </div>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <h4>4. Planning Poker</h4>
+                        <p>Estimación VCR<br/>Priorización por riesgo</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">
+                        <h4>5. Ejecución</h4>
+                        <p>Test Plans por sprint<br/>Informes de avance</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">
+                        <h4>6. Métricas</h4>
+                        <p>Dashboard de control<br/>Informe final IEEE</p>
+                    </div>
+                </div>
+                <div class="highlight" style="margin-top: 30px; text-align: center;">
+                    <h3>📚 Recursos del Framework</h3>
+                    <p>Accede a las <strong>Guías Estratégicas</strong> que soportan este flujo de trabajo</p>
+                    <button class="nav-btn" style="background-color: #F59E0B; color: #2563EB; font-size: 16px; padding: 15px 30px; margin-top: 15px; font-weight: bold;" onclick="window.open('./05_Guias/index.html', '_blank')">🎯 Ver Guías Estratégicas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Fase 1 - Análisis y Documentación -->
+        <div class="slide">
+            <h1>Fase 1: Análisis y Documentación</h1>
+            <div class="content">
+                <h2>🔍 Participación Temprana del Equipo QA</h2>
+                <div class="document-section">
+                    <h3>📋 Plantillas de Planificación</h3>
+                    <div class="document-grid">
+                        <a href="./03_Planes/plantillaMasterTestPlan.html" target="_blank" class="doc-link">
+                            📋 Master Test Plan
+                        </a>
+                        <a href="./03_Planes/plantillaTestPlan.html" target="_blank" class="doc-link">
+                            📝 Test Plan por Sprint
+                        </a>
+                        <a href="./03_Planes/plantillaUS_ISQTB.html" target="_blank" class="doc-link">
+                            📖 User Stories ISTQB
+                        </a>
+                    </div>
+                </div>
+                <div class="phases-container">
+                    <div class="phase">
+                        <h4>Actividades QA</h4>
+                        <ul>
+                            <li>Revisión de requisitos y requerimientos</li>
+                            <li>Identificación temprana de riesgos</li>
+                            <li>Participación en creación de Épicas</li>
+                            <li>Colaboración en User Stories (US)</li>
+                            <li>Definición de criterios de aceptación</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>Documentos Generados</h4>
+                        <ul>
+                            <li>Master Test Plan del proyecto</li>
+                            <li>Épicas con trazabilidad</li>
+                            <li>User Stories (plantilla ISO/IEC/IEEE 29119-3)</li>
+                            <li>Guía de Estrategia de Pruebas</li>
+                            <li>Test Suites definidos</li>
+                            <li>Precondiciones establecidas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="traceability-flow">
+                    <div class="trace-item">ÉPICA</div>
+                    <div class="trace-arrow">→</div>
+                    <div class="trace-item">USER STORY</div>
+                    <div class="trace-arrow">→</div>
+                    <div class="trace-item">TEST SUITE</div>
+                    <div class="trace-arrow">→</div>
+                    <div class="trace-item">TEST CASE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Fase 2 - Pruebas Estáticas -->
+        <div class="slide">
+            <h1>Fase 2: Pruebas Estáticas</h1>
+            <div class="content">
+                <h2>📋 Casos de Prueba ANTES del Código</h2>
+                <div class="highlight">
+                    <h3>🎯 Objetivo Principal</h3>
+                    <p><strong>Los Test Cases existen ANTES de que se escriba una sola línea de código</strong></p>
+                </div>
+                <div class="document-section">
+                    <h3>📝 Plantillas de Revisión</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/checklist-revision.html" target="_blank" class="doc-link">
+                            ✅ Checklist de Revisión
+                        </a>
+                    </div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>✅ Validaciones Estáticas</h4>
+                        <ul>
+                            <li>Revisión de User Stories</li>
+                            <li>Verificación de criterios de aceptación</li>
+                            <li>Análisis de reglas de negocio</li>
+                            <li>Identificación de dependencias</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>📝 Documentación Creada</h4>
+                        <ul>
+                            <li>Test Cases detallados</li>
+                            <li>Precondiciones específicas</li>
+                            <li>Datos de prueba requeridos</li>
+                            <li>Escenarios de prueba completos</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>🔄 Beneficios Inmediatos</h4>
+                        <ul>
+                            <li>Requisitos más claros</li>
+                            <li>Menos retrabajo</li>
+                            <li>Defectos prevenidos</li>
+                            <li>Estimaciones más precisas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Fase 3 - Despliegue y Exploración -->
+        <div class="slide">
+            <h1>Fase 3: Despliegue SUT y Pruebas Exploratorias</h1>
+            <div class="content">
+                <h2>🔍 Validación y Refinamiento</h2>
+                <div class="phases-container">
+                    <div class="phase">
+                        <h4>Despliegue del SUT (System Under Test)</h4>
+                        <ul>
+                            <li>Despliegue en ambiente QA</li>
+                            <li>Verificación de ambientes</li>
+                            <li>Health checks automáticos</li>
+                            <li>Configuración de datos de prueba</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>Pruebas Exploratorias</h4>
+                        <ul>
+                            <li>Inspección general del sistema</li>
+                            <li>Validación de flujos principales</li>
+                            <li>Identificación de gaps</li>
+                            <li>Verificación de integración</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>Refinamiento de US</h4>
+                        <ul>
+                            <li>Ajustes basados en hallazgos</li>
+                            <li>Actualización de criterios</li>
+                            <li>Modificación de Test Cases</li>
+                            <li>Preparación para Planning</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>📌 Resultado:</strong> User Stories refinadas y validadas listas para el backlog del sprint
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Fase 4 - Planning Poker y Estimación VCR -->
+        <div class="slide">
+            <h1>Fase 4: Planning Poker - Estimación VCR</h1>
+            <div class="content">
+                <h2>🎯 Metodología de Estimación</h2>
+                <div class="highlight">
+                    <h3>¿Qué es VCR?</h3>
+                    <p><strong>V</strong>alor + <strong>C</strong>osto + <strong>R</strong>iesgo = Puntuación para decidir automatización</p>
+                </div>
+                <table class="vcr-table">
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Qué Mide</th>
+                            <th>Escala</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Valor (V)</strong></td>
+                            <td>Beneficio de negocio</td>
+                            <td>1-3</td>
+                            <td>V=3: Funcionalidad crítica para el negocio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo (C)</strong></td>
+                            <td>Costo de pruebas manuales</td>
+                            <td>1-3</td>
+                            <td>C=3: Requiere configuración compleja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Probabilidad (P)</strong></td>
+                            <td>Probabilidad de falla</td>
+                            <td>1-5</td>
+                            <td>P=4: Integración nueva, compleja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Impacto (I)</strong></td>
+                            <td>Severidad del impacto</td>
+                            <td>1-5</td>
+                            <td>I=5: Falla expone datos sensibles</td>
+                        </tr>
+                        <tr style="background: rgba(255, 215, 0, 0.3);">
+                            <td><strong>Riesgo (R)</strong></td>
+                            <td>R = P × I</td>
+                            <td>1-25</td>
+                            <td>R = 4 × 5 = 20</td>
+                        </tr>
+                        <tr style="background: rgba(255, 215, 0, 0.3);">
+                            <td><strong>VCR Total</strong></td>
+                            <td>V + C + R</td>
+                            <td>3-31</td>
+                            <td>VCR = 3 + 3 + 20 = 26</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight">
+                    <h3>📌 Importante: Definir Anclas</h3>
+                    <p>Cada equipo debe definir sus <strong>anclas de referencia</strong> para puntuar de manera consistente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Regla de Decisión VCR -->
+        <div class="slide">
+            <h1>Regla de Decisión VCR</h1>
+            <div class="content">
+                <h2>🚀 ¿Automatizar o Probar Manual?</h2>
+                <div class="phases-container">
+                    <div class="phase" style="border-color: #ff6b6b; background: rgba(255, 107, 107, 0.1);">
+                        <h4 style="color: #ff6b6b;">VCR ≥ 9: DEUDA TÉCNICA</h4>
+                        <ul style="color: #ff6b6b;">
+                            <li>Se AUTOMATIZA obligatoriamente</li>
+                            <li>Va a suite de REGRESIÓN</li>
+                            <li>Prioridad ALTA para automatización</li>
+                            <li>ROI justificado por riesgo/costo</li>
+                        </ul>
+                    </div>
+                    <div class="phase" style="border-color: #4ecdc4; background: rgba(78, 205, 196, 0.1);">
+                        <h4 style="color: #4ecdc4;">VCR < 9: PRUEBAS MANUALES</h4>
+                        <ul style="color: #4ecdc4;">
+                            <li>Se mantiene como prueba manual</li>
+                            <li>Ejecución en ciclos específicos</li>
+                            <li>Se revisa en futuros sprints</li>
+                            <li>Posible automatización posterior</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <h3>📊 Ejemplo Práctico</h3>
+                    <p><strong>US:</strong> "Como usuario quiero hacer login para acceder al sistema"</p>
+                    <ul>
+                        <li><strong>V = 3</strong> (Crítico para el negocio)</li>
+                        <li><strong>C = 2</strong> (Configuración media)</li>
+                        <li><strong>P = 2, I = 4</strong> → R = 8</li>
+                        <li><strong>VCR = 3 + 2 + 8 = 13</strong> → <span style="color: #ff6b6b;">AUTOMATIZAR</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Fase 5 - Ejecución y Test Plans -->
+        <div class="slide">
+            <h1>Fase 5: Ejecución - Test Plans por Sprint</h1>
+            <div class="content">
+                <h2>⚡ Buenas Prácticas del Tester</h2>
+                <div class="document-section">
+                    <h3>📅 Calendario y Planificación</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/calendario-pruebas.html" target="_blank" class="doc-link">
+                            📅 Calendario de Pruebas
+                        </a>
+                        <a href="./04_Informes/informe-avance-prueba.html" target="_blank" class="doc-link">
+                            📈 Informe de Avance
+                        </a>
+                    </div>
+                </div>
+                <div class="phases-container">
+                    <div class="phase">
+                        <h4>📋 OBLIGATORIO: Test Plan por Sprint</h4>
+                        <ul>
+                            <li><strong>📝 El Test Plan por Sprint DERIVA del Master Test Plan</strong></li>
+                            <li>Mantiene coherencia con la estrategia global</li>
+                            <li>Cada tester crea su Test Plan específico</li>
+                            <li>Alcance ajustado al sprint actual</li>
+                            <li>Calendario detallado por tester</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>📊 OBLIGATORIO: Informes Semanales</h4>
+                        <ul>
+                            <li>Estado vs planificación</li>
+                            <li>Defectos encontrados</li>
+                            <li>Bloqueos y riesgos</li>
+                            <li>Plan próximo período</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>🐛 OBLIGATORIO: Reporte de Defectos</h4>
+                        <ul>
+                            <li>Pasos para reproducir</li>
+                            <li>Evidencias (capturas, logs)</li>
+                            <li>Severidad y prioridad</li>
+                            <li>Trazabilidad US/TC</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>🎯 Objetivo:</strong> Asegurar trazabilidad completa y control de calidad en cada sprint
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Fase 6 - Métricas y Control -->
+        <div class="slide">
+            <h1>Fase 6: Métricas y Dashboard de Control</h1>
+            <div class="content">
+                <h2>📈 Alimentación del Archivo de Control</h2>
+                <div class="document-section">
+                    <h3>📊 Plantillas de Métricas e Informes</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/metricas-calidad.html" target="_blank" class="doc-link">
+                            📊 Métricas de Calidad
+                        </a>
+                        <a href="./04_Informes/reporte-defectos.html" target="_blank" class="doc-link">
+                            🐛 Reporte Consolidado de Defectos
+                        </a>
+                        <a href="./04_Informes/reporte-defecto-individual.html" target="_blank" class="doc-link">
+                            🐞 Reporte Individual de Defecto
+                        </a>
+                    </div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>📊 Métricas de Avance</h4>
+                        <ul>
+                            <li>% Ejecución vs Plan</li>
+                            <li>Pass Rate por sprint</li>
+                            <li>Cobertura de requisitos</li>
+                            <li>Burn-down de casos</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>🐛 Métricas de Calidad</h4>
+                        <ul>
+                            <li>Defectos por severidad</li>
+                            <li>Densidad de defectos</li>
+                            <li>DRE (Defect Removal Effectiveness)</li>
+                            <li>MTTR (Mean Time To Repair)</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>🔄 Métricas de Proceso</h4>
+                        <ul>
+                            <li>% de automatización</li>
+                            <li>Cobertura de riesgo</li>
+                            <li>Eficiencia de regresión</li>
+                            <li>ROI de automatización</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <h3>🎯 Usuarios de las Métricas</h3>
+                    <div class="traceability-flow">
+                        <div class="trace-item">Product Owner</div>
+                        <div class="trace-item">Project Manager</div>
+                        <div class="trace-item">QA Lead</div>
+                        <div class="trace-item">Development Team</div>
+                        <div class="trace-item">Stakeholders</div>
+                    </div>
+                </div>
+                <div class="highlight" style="text-align: center;">
+                    <h3>🚀 Centro de Control Operativo</h3>
+                    <a href="https://supabase.com/dashboard/project/kqczwkrbmjuoygaapjua/editor/18012?schema=public" target="_blank" class="dashboard-link">
+                        📊 Acceder al Dashboard de Métricas en Tiempo Real
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Informe Final -->
+        <div class="slide">
+            <h1>Cierre: Informe Final IEEE 29119-3</h1>
+            <div class="content">
+                <h2>📄 Test Completion Report</h2>
+                <div class="document-section">
+                    <h3>📋 Informe de Cierre</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/informe-cierre-prueba.html" target="_blank" class="doc-link">
+                            ✅ Informe de Cierre de Prueba
+                        </a>
+                    </div>
+                </div>
+                <div class="phases-container">
+                    <div class="phase">
+                        <h4>🎯 Resumen Ejecutivo</h4>
+                        <ul>
+                            <li>Objetivos planificados vs alcanzados</li>
+                            <li>Alcance cubierto</li>
+                            <li>Criterios de salida cumplidos</li>
+                            <li>Estado general del ciclo</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>📊 Métricas Finales</h4>
+                        <ul>
+                            <li>Cobertura final de requisitos</li>
+                            <li>Pass Rate global</li>
+                            <li>Defectos cerrados/abiertos</li>
+                            <li>Cumplimiento NFR</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <h4>⚠️ Riesgos Residuales</h4>
+                        <ul>
+                            <li>Riesgos que permanecen</li>
+                            <li>Impacto en producción</li>
+                            <li>Recomendaciones</li>
+                            <li>Plan de monitoreo post-release</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <h3>🏆 Decisión de Release</h3>
+                    <p>Basada en evidencia objetiva y métricas del dashboard de control</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Beneficios y Próximos Pasos -->
+        <div class="slide">
+            <h1>Resumen de Documentos QA Disponibles</h1>
+            <div class="content">
+                <h2>📚 Framework Completo de Documentación</h2>
+                
+                <div class="document-section">
+                    <h3>📋 PLANIFICACIÓN</h3>
+                    <div class="document-grid">
+                        <a href="./03_Planes/plantillaMasterTestPlan.html" target="_blank" class="doc-link">
+                            📋 Master Test Plan
+                        </a>
+                        <a href="./03_Planes/plantillaTestPlan.html" target="_blank" class="doc-link">
+                            📝 Test Plan por Sprint
+                        </a>
+                        <a href="./03_Planes/plantillaUS_ISQTB.html" target="_blank" class="doc-link">
+                            📖 User Stories ISTQB
+                        </a>
+                    </div>
+                </div>
+
+                <div class="document-section">
+                    <h3>📊 INFORMES Y SEGUIMIENTO</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/calendario-pruebas.html" target="_blank" class="doc-link">
+                            📅 Calendario de Pruebas
+                        </a>
+                        <a href="./04_Informes/informe-avance-prueba.html" target="_blank" class="doc-link">
+                            📈 Informe de Avance
+                        </a>
+                        <a href="./04_Informes/informe-cierre-prueba.html" target="_blank" class="doc-link">
+                            ✅ Informe de Cierre de Prueba
+                        </a>
+                        <a href="./04_Informes/metricas-calidad.html" target="_blank" class="doc-link">
+                            📊 Métricas de Calidad
+                        </a>
+                    </div>
+                </div>
+
+                <div class="document-section">
+                    <h3>🐛 GESTIÓN DE DEFECTOS</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/reporte-defectos.html" target="_blank" class="doc-link">
+                            🐛 Reporte Consolidado de Defectos
+                        </a>
+                        <a href="./04_Informes/reporte-defecto-individual.html" target="_blank" class="doc-link">
+                            🐞 Reporte Individual de Defecto
+                        </a>
+                    </div>
+                </div>
+
+                <div class="document-section">
+                    <h3>✅ CONTROL DE CALIDAD</h3>
+                    <div class="document-grid">
+                        <a href="./04_Informes/checklist-revision.html" target="_blank" class="doc-link">
+                            ✅ Checklist de Revisión
+                        </a>
+                    </div>
+                </div>
+
+                <div class="highlight" style="text-align: center; margin-top: 30px;">
+                    <h3>🎯 Framework QA Completo - 10 Documentos Listos</h3>
+                    <p><strong>Todos los documentos están alineados con ISTQB v4 (Foundation 2023), ISO/IEC/IEEE 29119 e ISO/IEC/IEEE 29148</strong></p>
+                    <a href="https://supabase.com/dashboard/project/kqczwkrbmjuoygaapjua/editor/17293" target="_blank" class="dashboard-link">
+                        🚀 Dashboard Central de Control QA
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">⬅ Anterior</button>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente ➡</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Set total slides
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function updateSlide() {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>

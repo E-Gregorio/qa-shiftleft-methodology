@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe de Avance de Prueba — Progress Report</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .rep-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .rep-header { background: #2563EB; color: white; padding: 20px; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; }
+  .rep-logo { width: 60px; height: 60px; margin-right: 20px; }
+  .rep-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .rep-section { margin: 30px 0; }
+  .rep-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .rep-section h3 { color: #2563EB; margin-top: 25px; }
+  .rep-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .rep-table td, .rep-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .rep-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .rep-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .status-indicator { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; margin-right: 10px; background-color: #2563EB; }
+</style>
+</head>
+<body>
+<div class="rep-container">
+  
+  <div class="rep-header">
+    <div>INFORME DE AVANCE DE PRUEBA</div>
+  </div>
+  
+  <div class="rep-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISO/IEC/IEEE 29119 (Test) e ISO/IEC/IEEE 29148 (Requirements)
+    </div>
+    
+    <table class="rep-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Módulo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión de la aplicación:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Periodo cubierto:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable / Equipo QA:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="rep-section">
+    <h2>1️⃣ Resumen de Avance</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 30%;">Campo</th>
+        <th style="width: 70%;">Descripción</th>
+      </tr>
+      <tr>
+        <td class="field-label">Situación actual</td>
+        <td>
+          <span class="status-indicator status-ahead">Por delante</span>
+          <span class="status-indicator status-ontrack">En línea</span>
+          <span class="status-indicator status-behind">Por detrás</span>
+          <em>(seleccionar según el estado del plan)</em>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Porcentaje de ejecución</td>
+        <td>______ % (Casos ejecutados / Casos planificados) × 100</td>
+      </tr>
+      <tr>
+        <td class="field-label">Principales incidencias de la semana</td>
+        <td>Defectos críticos, bloqueos, cambios de alcance, etc.</td>
+      </tr>
+      <tr>
+        <td class="field-label">Cobertura alcanzada</td>
+        <td>Requisitos o historias cubiertas vs. planificado</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>2️⃣ Desviaciones Notables</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 20%;">Tipo de desviación</th>
+        <th style="width: 30%;">Descripción</th>
+        <th style="width: 20%;">Impacto</th>
+        <th style="width: 30%;">Acción tomada</th>
+      </tr>
+      <tr>
+        <td><strong>Calendario</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td><strong>Alcance</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td><strong>Esfuerzo / Recursos</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📌 Referencia:</strong> Basado en ISO/IEC/IEEE 29119-3 – Test Progress Report: identificar y justificar las desviaciones respecto al plan.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>3️⃣ Obstáculos y Soluciones</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 30%;">Obstáculo / Bloqueo</th>
+        <th style="width: 40%;">Descripción</th>
+        <th style="width: 30%;">Solución adoptada</th>
+      </tr>
+      <tr>
+        <td>________________________</td>
+        <td>________________________</td>
+        <td>________________________</td>
+      </tr>
+      <tr>
+        <td>________________________</td>
+        <td>________________________</td>
+        <td>________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>4️⃣ Métricas de Prueba</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 40%;">Métrica</th>
+        <th style="width: 20%;">Valor actual</th>
+        <th style="width: 40%;">Variación vs. plan</th>
+      </tr>
+      <tr>
+        <td>Casos de prueba planificados</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba diseñados</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba ejecutados</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos pasados</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos fallidos</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos bloqueados / pendientes</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Defectos abiertos (por severidad)</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Defectos cerrados</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Cobertura de requisitos (%)</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📊 Referencia:</strong> ISTQB v4 – Sección 5.3.2 y ISO/IEC/IEEE 29119-3.<br>
+      Estas métricas permiten evaluar avance, calidad y tendencia.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>5️⃣ Riesgos Nuevos o Modificados</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 25%;">Riesgo</th>
+        <th style="width: 35%;">Descripción</th>
+        <th style="width: 20%;">Impacto</th>
+        <th style="width: 20%;">Acción recomendada</th>
+      </tr>
+      <tr>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td>____________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>⚠️ Considerar:</strong> riesgos de calidad, de calendario o de negocio surgidos durante el periodo.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>6️⃣ Plan para el Próximo Periodo</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>Casos de prueba planificados</strong> para la siguiente iteración.</li>
+        <li><strong>Actividades de regresión</strong> o no funcionales previstas (performance, seguridad, etc.).</li>
+        <li><strong>Acciones correctivas</strong> o preventivas acordadas.</li>
+        <li><strong>Ajustes de alcance</strong> si se detectaron nuevas dependencias o cambios.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>📚 Referencias</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB Foundation Level v4.0 – Sección 5.3.2:</strong> Propósito, Contenido y Audiencia de los Informes de Prueba.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Test Progress Report Template.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Standard for Software Test Documentation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>🔑 Puntos clave de la revisión</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>✅ Añadido "Cobertura alcanzada" y "Defectos cerrados"</strong> en métricas, como exige 29119-3.</li>
+        <li><strong>✅ Refuerzo de referencias normativas</strong> en la sección final.</li>
+        <li><strong>✅ Estructura en tablas</strong> para claridad y trazabilidad.</li>
+        <li>Mantiene la lógica: resumen → desviaciones → obstáculos → métricas → riesgos → plan.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Conclusión</h3>
+    <p>Con estas mejoras el <strong>Informe de Avance de Prueba</strong> queda plenamente alineado con <strong>ISTQB v4</strong> y con las <strong>normas ISO/IEC/IEEE 29119 e ISO/IEC/IEEE 29148</strong>, listo para usar como documento formal de control de avance en cada sprint o release.</p>
+  </div>
+
+</div>
+</body>
+</html>

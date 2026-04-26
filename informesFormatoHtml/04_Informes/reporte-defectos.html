@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reporte de Defectos — Defect Report</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .rep-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .rep-header { background: #2563EB; color: white; padding: 20px; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; }
+  .rep-logo { width: 60px; height: 60px; margin-right: 20px; }
+  .rep-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .rep-section { margin: 30px 0; }
+  .rep-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .rep-section h3 { color: #2563EB; margin-top: 25px; }
+  .rep-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .rep-table td, .rep-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .rep-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .rep-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .defect-form { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #2563EB; margin: 20px 0; }
+  .priority-high { background-color: #2563EB; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="rep-container">
+  
+  <div class="rep-header">
+    <div>REPORTE DE DEFECTOS</div>
+  </div>
+  
+  <div class="rep-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISO/IEC/IEEE 29119-3 / IEEE 1044 e ISO/IEC/IEEE 29119-3 - Defect Reporting
+    </div>
+    
+    <table class="rep-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Módulo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión de la aplicación:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha del reporte:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable QA:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="rep-section">
+    <h2>1️⃣ Resumen de Defectos</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 25%;">Severidad</th>
+        <th style="width: 15%;">Total</th>
+        <th style="width: 15%;">Abiertos</th>
+        <th style="width: 15%;">En proceso</th>
+        <th style="width: 15%;">Cerrados</th>
+        <th style="width: 15%;">% Resolución</th>
+      </tr>
+      <tr>
+        <td><strong>CRÍTICO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>ALTO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>MEDIO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>BAJO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📊 Total de defectos encontrados:</strong> ________
+      <br><strong>🎯 Tasa de resolución general:</strong> ________ %
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>2️⃣ Formulario de Reporte de Defecto Individual</h2>
+    
+    <div class="defect-form">
+      <table class="rep-table">
+        <tr>
+          <td class="field-label" style="width: 20%;">ID del Defecto:</td>
+          <td style="width: 30%;">DEF-YYYY-MM-####</td>
+          <td class="field-label" style="width: 20%;">Fecha de detección:</td>
+          <td style="width: 30%;">_______________</td>
+        </tr>
+        <tr>
+          <td class="field-label">Módulo/Componente:</td>
+          <td>_______________</td>
+          <td class="field-label">Versión:</td>
+          <td>_______________</td>
+        </tr>
+        <tr>
+          <td class="field-label">Detectado por:</td>
+          <td>_______________</td>
+          <td class="field-label">Asignado a:</td>
+          <td>_______________</td>
+        </tr>
+        <tr>
+          <td class="field-label">Severidad:</td>
+          <td>
+            <span class="priority-high">CRÍTICO</span> 
+            <span class="priority-high">ALTO</span> 
+            <span class="priority-high">MEDIO</span> 
+            <span class="priority-high">BAJO</span>
+          </td>
+          <td class="field-label">Prioridad:</td>
+          <td>
+            <span class="priority-high">P1</span> 
+            <span class="priority-high">P2</span> 
+            <span class="priority-high">P3</span> 
+            <span class="priority-high">P4</span>
+          </td>
+        </tr>
+      </table>
+      
+      <h3>📋 Descripción del Defecto</h3>
+      <div class="info-box">
+        <strong>Resumen:</strong>
+        <p>_________________________________________________________________</p>
+        
+        <strong>Descripción detallada:</strong>
+        <p>_________________________________________________________________<br>
+        _________________________________________________________________<br>
+        _________________________________________________________________</p>
+        
+        <strong>Pasos para reproducir:</strong>
+        <ol>
+          <li>_________________________________________________________________</li>
+          <li>_________________________________________________________________</li>
+          <li>_________________________________________________________________</li>
+        </ol>
+        
+        <strong>Resultado esperado:</strong>
+        <p>_________________________________________________________________</p>
+        
+        <strong>Resultado actual:</strong>
+        <p>_________________________________________________________________</p>
+      </div>
+      
+      <h3>🔧 Información técnica</h3>
+      <table class="rep-table">
+        <tr>
+          <td class="field-label">Entorno:</td>
+          <td>Desarrollo / Testing / Staging / Producción</td>
+        </tr>
+        <tr>
+          <td class="field-label">Sistema Operativo:</td>
+          <td>_______________</td>
+        </tr>
+        <tr>
+          <td class="field-label">Navegador/Versión:</td>
+          <td>_______________</td>
+        </tr>
+        <tr>
+          <td class="field-label">Datos de prueba:</td>
+          <td>_______________</td>
+        </tr>
+      </table>
+      
+      <h3>📎 Adjuntos y evidencias</h3>
+      <div class="info-box">
+        <strong>Screenshots:</strong> _______________<br>
+        <strong>Logs:</strong> _______________<br>
+        <strong>Videos:</strong> _______________<br>
+        <strong>Otros:</strong> _______________
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>3️⃣ Análisis de Tendencias</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 30%;">Métrica</th>
+        <th style="width: 25%;">Sprint/Periodo Anterior</th>
+        <th style="width: 25%;">Sprint/Periodo Actual</th>
+        <th style="width: 20%;">Tendencia</th>
+      </tr>
+      <tr>
+        <td>Defectos encontrados</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>📈 📉 ➡️</td>
+      </tr>
+      <tr>
+        <td>Defectos críticos</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>📈 📉 ➡️</td>
+      </tr>
+      <tr>
+        <td>Tiempo promedio de resolución</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>📈 📉 ➡️</td>
+      </tr>
+      <tr>
+        <td>Defectos reabiertos</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>📈 📉 ➡️</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>4️⃣ Defectos por Categoría</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 25%;">Categoría</th>
+        <th style="width: 20%;">Cantidad</th>
+        <th style="width: 15%;">% del Total</th>
+        <th style="width: 40%;">Observaciones</th>
+      </tr>
+      <tr>
+        <td><strong>Funcional</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>UI/UX</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Performance</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Integración</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Seguridad</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Compatibilidad</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>5️⃣ Estados y Flujo de Defectos</h2>
+    
+    <div class="info-box">
+      <h3>📋 Ciclo de vida del defecto (según ISO 29119-3):</h3>
+      <p><strong>NUEVO</strong> → <strong>ASIGNADO</strong> → <strong>EN PROCESO</strong> → <strong>LISTO PARA PRUEBA</strong> → <strong>CERRADO</strong></p>
+      <p><strong>Estados especiales:</strong> RECHAZADO / DUPLICADO / NO REPRODUCIBLE</p>
+    </div>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 20%;">Estado</th>
+        <th style="width: 15%;">Cantidad</th>
+        <th style="width: 15%;">Tiempo Promedio</th>
+        <th style="width: 50%;">Responsable/Comentarios</th>
+      </tr>
+      <tr>
+        <td><strong>NUEVO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>ASIGNADO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>EN PROCESO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>LISTO PARA PRUEBA</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>CERRADO</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>6️⃣ Acciones Recomendadas</h2>
+    
+    <div class="info-box">
+      <h3>🎯 Para defectos críticos:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+      
+      <h3>⚡ Mejoras en el proceso:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+      
+      <h3>📚 Lecciones aprendidas:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>📚 Referencias Normativas</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB Foundation Level v4.0 – Sección 5.5:</strong> Gestión de defectos y ciclo de vida.</li>
+        <li><strong>IEEE 1044:</strong> Standard Classification for Software Anomalies.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Test Documentation - Incident Report Template.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Validación del Reporte</h3>
+    <p>Este <strong>Reporte de Defectos</strong> cumple con los estándares <strong>ISTQB v4</strong>, <strong>IEEE 1044</strong> e <strong>ISO/IEC/IEEE 29119-3</strong> para la documentación y trazabilidad de incidencias en el testing de software.</p>
+    <br>
+    <p><strong>Revisado por:</strong> _________________________</p>
+    <p><strong>Fecha:</strong> _________________________</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guías Estratégicas QA — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; color: #1a1a1a; }
+  .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; padding: 25px; text-align: center; font-weight: bold; font-size: 26px; margin-bottom: 30px; border-radius: 8px; }
+  .header .subtitle { font-size: 14px; font-weight: normal; opacity: 0.9; margin-top: 8px; }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin: 30px 0; }
+  .guide-card { background: #f8f9fa; border-left: 5px solid #2563EB; padding: 22px; border-radius: 8px; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+  .guide-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18); }
+  .guide-card.new { border-left-color: #F59E0B; }
+  .guide-card.new::after { content: "NUEVO"; position: absolute; top: 12px; right: 12px; background: #F59E0B; color: white; padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+  .guide-title { color: #2563EB; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+  .guide-description { color: #475569; margin-bottom: 15px; font-size: 14px; }
+  .guide-includes { font-size: 13px; color: #64748B; margin-bottom: 14px; }
+  .guide-btn { background: #2563EB; color: white; border: none; padding: 9px 18px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s; font-size: 14px; }
+  .guide-btn:hover { background: #1D4ED8; }
+  .info-section { background: #DBEAFE; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #2563EB; }
+  .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #2563EB; color: #475569; font-size: 13px; }
+  .standard-pill { display: inline-block; background: #2563EB; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; margin: 2px; }
+  .standard-pill.green { background: #10B981; }
+  .standard-pill.red { background: #EF4444; }
+  .standard-pill.amber { background: #F59E0B; }
+  .section-title { color: #1E40AF; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #2563EB; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div>📚 GUÍAS ESTRATÉGICAS QA</div>
+    <div class="subtitle">QA Shift-Left Methodology · by E-Gregorio</div>
+  </div>
+
+  <div class="info-section">
+    <h3 style="color: #1E40AF; margin-bottom: 12px;">Marco metodológico integrado</h3>
+    <p>Las siguientes guías forman parte del <strong>QA Shift-Left Methodology</strong>, una metodología <strong>unificada</strong> para equipos QA modernos: testing manual, automation, E2E, performance, seguridad y testing de IA/LLM.</p>
+    <p style="margin-top: 12px;">
+      <span class="standard-pill green">ISTQB v4 (Foundation 2023)</span>
+      <span class="standard-pill green">ISO/IEC/IEEE 29119</span>
+      <span class="standard-pill green">ISO/IEC/IEEE 29148:2018</span>
+      <span class="standard-pill green">ISO/IEC 25010:2023</span>
+      <span class="standard-pill green">ISO/IEC 27001:2022</span>
+      <span class="standard-pill green">WCAG 2.2</span>
+      <span class="standard-pill red">OWASP Top 10 / LLM Top 10</span>
+      <span class="standard-pill amber">NIST AI RMF 1.0</span>
+    </p>
+  </div>
+
+  <div class="section-title">🏛️ Fundamentos del framework</div>
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-title">📊 Guía de Estimación VCR y Story Points</div>
+      <div class="guide-description">
+        Metodología para estimar User Stories usando <strong>V</strong>alor, <strong>C</strong>osto y <strong>R</strong>iesgo. Incluye escalas, anclas, reglas de decisión para automatización y plantillas completas.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> Escalas VCR, Planning Poker, regla de decisión de automatización
+      </div>
+      <a href="guia-estimacion-vcr.html" class="guide-btn">Abrir guía VCR →</a>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-title">🎯 Guía Estrategia de Pruebas</div>
+      <div class="guide-description">
+        Marco común de testing: niveles de prueba, priorización basada en riesgo, estrategia de automatización, métricas clave y roles del equipo QA.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> Niveles de prueba, stack, CI/CD integration, KPIs
+      </div>
+      <a href="guia-estrategia-pruebas.html" class="guide-btn">Abrir estrategia →</a>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-title">⚖️ Guía Gestión de Riesgos</div>
+      <div class="guide-description">
+        Framework metodológico para identificar, evaluar, priorizar y gestionar riesgos en testing usando escalas P×I, matriz de riesgos y estrategias de tratamiento.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> Escalas P×I, matriz de riesgos, plantillas, métricas, proceso
+      </div>
+      <a href="guia-gestion-riesgos.html" class="guide-btn">Abrir riesgos →</a>
+    </div>
+
+  </div>
+
+  <div class="section-title">🆕 QA moderno (lo que no se ve en otros lados)</div>
+  <div class="guide-grid">
+
+    <div class="guide-card new">
+      <div class="guide-title">🤖 Guía Testing de IA / LLM</div>
+      <div class="guide-description">
+        Cómo probar aplicaciones con LLMs: <strong>evals, golden sets, hallucination, RAG, jailbreaks</strong>, performance (TTFT, TPOT) y benchmarks. Alineada a <strong>OWASP LLM Top 10</strong> y <strong>NIST AI RMF</strong>.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> OWASP LLM Top 10 (10 riesgos + tests), Ragas, promptfoo, garak, plantilla de plan, pipeline CI con evals
+      </div>
+      <a href="guia-testing-ia-llm.html" class="guide-btn">Abrir guía IA/LLM →</a>
+    </div>
+
+    <div class="guide-card new">
+      <div class="guide-title">⚡ Guía Testing de Performance</div>
+      <div class="guide-description">
+        Performance moderno: load, stress, spike, soak, scalability. <strong>Web Vitals 2024</strong> (LCP, INP, CLS), SLI/SLO/Error Budget, k6 + Lighthouse CI, observabilidad y shift-left con presupuestos en PR.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> Open vs closed model, scripts k6 listos, Lighthouse CI, USE method, plantilla de Performance Test Plan
+      </div>
+      <a href="guia-testing-performance.html" class="guide-btn">Abrir guía Performance →</a>
+    </div>
+
+    <div class="guide-card new">
+      <div class="guide-title">🛡️ Guía DevSecOps & Seguridad</div>
+      <div class="guide-description">
+        Shift-left de seguridad end-to-end: <strong>SAST, DAST, SCA, secrets, IaC, container scanning, threat modeling STRIDE</strong> y pentesting. Alineada a <strong>OWASP Top 10 (2021)</strong> y <strong>OWASP ASVS 4.0.3</strong>.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> Pipeline DevSecOps completo, SBOM (CycloneDX), STRIDE, ASVS L1/L2/L3, métricas
+      </div>
+      <a href="guia-devsecops-security.html" class="guide-btn">Abrir guía DevSecOps →</a>
+    </div>
+
+  </div>
+
+  <div class="section-title">📐 Marco normativo</div>
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-title">📜 Marco Normativo y Estándares</div>
+      <div class="guide-description">
+        Resumen consolidado de los estándares vigentes que sustentan el framework. Tabla de equivalencias, estándares retirados y migraciones.
+      </div>
+      <div class="guide-includes">
+        <strong>Incluye:</strong> ISTQB, ISO/IEC/IEEE 29119, 29148, 25010, 25059, 27001:2022, OWASP, NIST
+      </div>
+      <a href="marco-normativo-estandares.html" class="guide-btn">Abrir marco normativo →</a>
+    </div>
+
+  </div>
+
+  <div class="info-section">
+    <h3 style="color: #1E40AF; margin-bottom: 12px;">🔗 Integración de las guías</h3>
+    <p>Las guías están diseñadas para usarse de forma <strong>complementaria</strong>:</p>
+    <ul style="margin-top: 8px;">
+      <li><strong>VCR</strong> → método de estimación y priorización por valor/costo/riesgo</li>
+      <li><strong>Estrategia de Pruebas</strong> → cómo ejecutar las pruebas eficientemente</li>
+      <li><strong>Gestión de Riesgos</strong> → marco para tratar riesgos identificados</li>
+      <li><strong>Testing IA/LLM</strong> → extensión para sistemas con componentes IA</li>
+      <li><strong>Performance</strong> → extensión para validar tiempos y capacidad</li>
+      <li><strong>DevSecOps</strong> → extensión transversal de seguridad en cada etapa</li>
+    </ul>
+  </div>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="../setup_QA_ShiftleftTesting.html" class="guide-btn" style="font-size: 15px; padding: 12px 22px;">🎥 Volver a la presentación principal</a>
+  </div>
+
+  <div class="footer">
+    <strong>QA Shift-Left Methodology · by E-Gregorio</strong><br>
+    Framework basado en ISTQB v4, ISO/IEC/IEEE 29119, ISO/IEC/IEEE 29148, ISO/IEC 25010:2023, OWASP, NIST AI RMF<br>
+    <em>Metodología unificada para QA manual, automation, E2E, performance, seguridad y testing de IA/LLM</em>
+  </div>
+
+</div>
+</body>
+</html>

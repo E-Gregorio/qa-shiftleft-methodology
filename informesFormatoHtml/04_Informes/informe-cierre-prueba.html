@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe de Cierre de Prueba — Test Completion Report</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .rep-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .rep-header { background: #2563EB; color: white; padding: 20px; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; }
+  .rep-logo { width: 60px; height: 60px; margin-right: 20px; }
+  .rep-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .rep-section { margin: 30px 0; }
+  .rep-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .rep-section h3 { color: #2563EB; margin-top: 25px; }
+  .rep-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .rep-table td, .rep-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .rep-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .rep-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .status-passed { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; margin-right: 10px; background-color: #2563EB; }
+</style>
+</head>
+<body>
+<div class="rep-container">
+  
+  <div class="rep-header">
+    <div>INFORME DE CIERRE DE PRUEBA</div>
+  </div>
+  
+  <div class="rep-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISO/IEC/IEEE 29119 (Test) e ISO/IEC/IEEE 29148 (Requirements) - Test Completion Report
+    </div>
+    
+    <table class="rep-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Módulo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión de la aplicación:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de cierre:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable / Equipo QA:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="rep-section">
+    <h2>1️⃣ Resumen Ejecutivo del Cierre</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 30%;">Campo</th>
+        <th style="width: 70%;">Descripción</th>
+      </tr>
+      <tr>
+        <td class="field-label">Estado final del proyecto</td>
+        <td>
+          <span class="status-passed">Completado</span>
+          <em>— Todas las pruebas han sido ejecutadas y documentadas</em>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Criterios de finalización cumplidos</td>
+        <td>✓ Todos los criterios de salida definidos en el plan han sido satisfechos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Duración total de las pruebas</td>
+        <td>Desde: _____________ hasta: _____________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Esfuerzo total invertido</td>
+        <td>______ horas-persona / ______ días-equipo</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>2️⃣ Métricas Finales de Prueba</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 40%;">Métrica</th>
+        <th style="width: 20%;">Planificado</th>
+        <th style="width: 20%;">Ejecutado</th>
+        <th style="width: 20%;">% Cumplimiento</th>
+      </tr>
+      <tr>
+        <td>Casos de prueba diseñados</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba ejecutados</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos pasados exitosamente</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Casos fallidos</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Defectos encontrados</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Defectos corregidos</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td>Cobertura de requisitos (%)</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📊 Análisis:</strong> ISTQB v4 - Sección 5.3.2 requiere métricas comparativas entre lo planificado vs. lo ejecutado para evaluar la efectividad del proceso.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>3️⃣ Análisis de Calidad del Producto</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 25%;">Aspecto evaluado</th>
+        <th style="width: 25%;">Criterio</th>
+        <th style="width: 25%;">Resultado</th>
+        <th style="width: 25%;">Estado</th>
+      </tr>
+      <tr>
+        <td><strong>Funcionalidad</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td><span class="status-passed">APROBADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Usabilidad</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td><span class="status-passed">APROBADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Performance</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td><span class="status-passed">APROBADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Seguridad</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td><span class="status-passed">APROBADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Compatibilidad</strong></td>
+        <td>____________________</td>
+        <td>____________________</td>
+        <td><span class="status-passed">APROBADO</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>4️⃣ Defectos - Estado Final</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 20%;">Severidad</th>
+        <th style="width: 20%;">Total encontrados</th>
+        <th style="width: 20%;">Corregidos</th>
+        <th style="width: 20%;">Abiertos</th>
+        <th style="width: 20%;">Justificación</th>
+      </tr>
+      <tr>
+        <td><strong>Críticos</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Altos</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Medios</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+      <tr>
+        <td><strong>Bajos</strong></td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+        <td>________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📌 Nota importante:</strong> Los defectos no corregidos deben tener justificación de negocio y aprobación para el release según ISO/IEC/IEEE 29119-3.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>5️⃣ Actividades No Realizadas</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 30%;">Actividad</th>
+        <th style="width: 40%;">Motivo</th>
+        <th style="width: 30%;">Impacto en la calidad</th>
+      </tr>
+      <tr>
+        <td>________________________</td>
+        <td>________________________</td>
+        <td>________________________</td>
+      </tr>
+      <tr>
+        <td>________________________</td>
+        <td>________________________</td>
+        <td>________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>6️⃣ Lecciones Aprendidas</h2>
+    
+    <div class="info-box">
+      <h3>✅ Aspectos que funcionaron bien:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+    </div>
+    
+    <div class="info-box">
+      <h3>⚠️ Aspectos a mejorar:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+    </div>
+    
+    <div class="info-box">
+      <h3>💡 Recomendaciones para futuros proyectos:</h3>
+      <ul>
+        <li>____________________</li>
+        <li>____________________</li>
+        <li>____________________</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>7️⃣ Entregables de Prueba</h2>
+    
+    <table class="rep-table">
+      <tr>
+        <th style="width: 40%;">Entregable</th>
+        <th style="width: 30%;">Estado</th>
+        <th style="width: 30%;">Ubicación / Referencia</th>
+      </tr>
+      <tr>
+        <td>Plan de Pruebas</td>
+        <td><span class="status-passed">ENTREGADO</span></td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td>Casos de Prueba</td>
+        <td><span class="status-passed">ENTREGADO</span></td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td>Reportes de Ejecución</td>
+        <td><span class="status-passed">ENTREGADO</span></td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td>Reporte de Defectos</td>
+        <td><span class="status-passed">ENTREGADO</span></td>
+        <td>____________________</td>
+      </tr>
+      <tr>
+        <td>Matriz de Trazabilidad</td>
+        <td><span class="status-passed">ENTREGADO</span></td>
+        <td>____________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>8️⃣ Recomendación Final</h2>
+    
+    <div class="info-box" style="text-align: center;">
+      <h3>🎯 DECISIÓN DE RELEASE</h3>
+      <p style="font-size: 18px; margin: 20px 0;">
+        <strong>El producto/módulo</strong> ________________________ 
+        <br><br>
+        <span class="status-passed" style="font-size: 16px; padding: 10px 20px;">
+          ✅ SE RECOMIENDA PARA PRODUCCIÓN
+        </span>
+        <br><br>
+        Basado en el cumplimiento de todos los criterios de calidad establecidos
+      </p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rep-section">
+    <h2>📚 Referencias Normativas</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB Foundation Level v4.0 – Sección 5.3.2:</strong> Test Completion Reports - propósito, contenido y audiencia.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Test Completion Report Template y criterios de finalización.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Standard for Software Test Documentation - sección de test summary report.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Certificación de Completitud</h3>
+    <p>Este <strong>Informe de Cierre de Prueba</strong> certifica la finalización exitosa de todas las actividades de testing planificadas, cumpliendo con los estándares <strong>ISTQB v4</strong>, <strong>ISO/IEC/IEEE 29119-3</strong> e <strong>ISO/IEC/IEEE 29119-3</strong>.</p>
+    <br>
+    <p><strong>Firma del Responsable de QA:</strong> _________________________</p>
+    <p><strong>Fecha:</strong> _________________________</p>
+  </div>
+
+</div>
+</body>
+</html>

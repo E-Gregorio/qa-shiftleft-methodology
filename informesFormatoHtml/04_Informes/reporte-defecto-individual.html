@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reporte de Defecto Individual — Bug Report Template</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .bug-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .bug-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .bug-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .bug-section { margin: 30px 0; }
+  .bug-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .bug-section h3 { color: #2563EB; margin-top: 25px; }
+  .bug-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .bug-table td, .bug-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .bug-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .bug-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .bug-id-box { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 2px solid #2563EB; margin: 20px 0; text-align: center; }
+  .phase-selector { display: inline-block; margin: 5px; padding: 5px 10px; border: 1px solid #2563EB; border-radius: 4px; }
+  .severity-priority { display: inline-block; margin: 5px; padding: 5px 10px; background: #2563EB; color: white; border-radius: 4px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="bug-container">
+  
+  <div class="bug-header">
+    <div>🐞 INFORME DE DEFECTO – PLANTILLA FINAL</div>
+  </div>
+  
+  <div class="bug-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISTQB Foundation v4.0 (Cap. 5 – Evaluación y Reporte de Defectos), ISO/IEC/IEEE 29119-3 (Test Incident Report) y ISO/IEC/IEEE 29119-3
+    </div>
+    
+    <div class="bug-id-box">
+      <h2>ID: BUG-____</h2>
+      <p><strong>Título:</strong> __________________________________________</p>
+      <p><strong>Resumen / Descripción breve:</strong> __________________________________________</p>
+    </div>
+    
+    <table class="bug-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Fecha de informe:</td><td>____/____/______</td></tr>
+      <tr><td class="field-label">Organización emisora:</td><td>____________________________</td></tr>
+      <tr><td class="field-label">Autor (reporter):</td><td>________________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="bug-section">
+    <h2>📍 Contexto del Defecto</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <td class="field-label" style="width: 30%;">Elemento de prueba / Módulo afectado:</td>
+        <td>_____________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Versión / Build:</td>
+        <td>_____________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Entorno:</td>
+        <td>SO ______ | Navegador/App ______ | Datos de prueba: ______</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>Fase observada:</strong>
+      <div style="margin-top: 10px;">
+        <span class="phase-selector">☐ Revisión estática</span>
+        <span class="phase-selector">☐ Componente</span>
+        <span class="phase-selector">☐ Integración</span>
+        <span class="phase-selector">☐ Sistema</span>
+        <span class="phase-selector">☐ UAT</span>
+        <span class="phase-selector">☐ Producción</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>1️⃣ Pasos para reproducir</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <td class="field-label" style="width: 30%;">Datos de prueba utilizados:</td>
+        <td>____________________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Condiciones previas / Configuración necesaria:</td>
+        <td>____________________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <h3>📋 Pasos detallados:</h3>
+      <ol>
+        <li>_________________________________________________________________</li>
+        <li>_________________________________________________________________</li>
+        <li>_________________________________________________________________</li>
+        <li>_________________________________________________________________</li>
+        <li>_________________________________________________________________</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>2️⃣ Resultados</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 20%;">Tipo de resultado</th>
+        <th style="width: 80%;">Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>Esperado</strong></td>
+        <td>________________________________________</td>
+      </tr>
+      <tr>
+        <td><strong>Real</strong></td>
+        <td>________________________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>3️⃣ Evidencia adjunta</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 30%;">Tipo de evidencia</th>
+        <th style="width: 70%;">Ruta/Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>Logs:</strong></td>
+        <td>Ruta/archivo ________________________________________</td>
+      </tr>
+      <tr>
+        <td><strong>Capturas / Video:</strong></td>
+        <td>________________________________________</td>
+      </tr>
+      <tr>
+        <td><strong>Dumps u otros archivos de soporte:</strong></td>
+        <td>_________________________</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📎 Nota:</strong> Estos elementos permiten reproducir el defecto y respaldar el análisis.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>4️⃣ Evaluación del defecto</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 25%;">Campo</th>
+        <th style="width: 75%;">Detalle</th>
+      </tr>
+      <tr>
+        <td class="field-label">Severidad</td>
+        <td>
+          <span class="severity-priority">Bloqueante</span>
+          <span class="severity-priority">Alta</span>
+          <span class="severity-priority">Media</span>
+          <span class="severity-priority">Baja</span>
+          <br><em>— impacto en la funcionalidad o en el negocio</em>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Prioridad / Urgencia</td>
+        <td>
+          <span class="severity-priority">P1</span>
+          <span class="severity-priority">P2</span>
+          <span class="severity-priority">P3</span>
+          <span class="severity-priority">P4</span>
+          <br><em>— velocidad requerida para su corrección</em>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Frecuencia de ocurrencia</td>
+        <td>
+          <span class="severity-priority">Siempre</span>
+          <span class="severity-priority">Intermitente</span>
+          <span class="severity-priority">Rara</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Impacto / Alcance</td>
+        <td>Módulos, procesos o usuarios afectados: _______________________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Clasificación del defecto</td>
+        <td>
+          <span class="phase-selector">☐ Funcional</span>
+          <span class="phase-selector">☐ Interfaz</span>
+          <span class="phase-selector">☐ Rendimiento</span>
+          <span class="phase-selector">☐ Seguridad</span>
+          <span class="phase-selector">☐ Datos</span>
+          <span class="phase-selector">☐ Ambiente</span>
+          <span class="phase-selector">☐ Requisito</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>5️⃣ Referencias y trazabilidad</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 30%;">Elemento</th>
+        <th style="width: 70%;">Identificador</th>
+      </tr>
+      <tr>
+        <td class="field-label">Historia de Usuario / Épica</td>
+        <td>______</td>
+      </tr>
+      <tr>
+        <td class="field-label">Caso de prueba (TC)</td>
+        <td>______</td>
+      </tr>
+      <tr>
+        <td class="field-label">Build / Release</td>
+        <td>______</td>
+      </tr>
+      <tr>
+        <td class="field-label">Ticket o issue relacionado</td>
+        <td>______</td>
+      </tr>
+      <tr>
+        <td class="field-label">Documento de requerimientos</td>
+        <td>______</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>6️⃣ Información adicional</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 30%;">Campo</th>
+        <th style="width: 70%;">Detalle</th>
+      </tr>
+      <tr>
+        <td class="field-label">Workaround disponible</td>
+        <td>
+          ¿Existe solución temporal? 
+          <span class="severity-priority">Sí</span> / <span class="severity-priority">No</span>
+          <br>Detallar: _______________________________
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Notas / Observaciones</td>
+        <td>Información adicional, hipótesis, datos de diagnóstico:<br>
+        _________________________________________________________________<br>
+        _________________________________________________________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Acción correctiva sugerida</td>
+        <td>Opcional: recomendación del equipo de QA:<br>
+        _________________________________________________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>7️⃣ Estado y seguimiento</h2>
+    
+    <table class="bug-table">
+      <tr>
+        <th style="width: 30%;">Campo</th>
+        <th style="width: 70%;">Detalle</th>
+      </tr>
+      <tr>
+        <td class="field-label">Estado actual</td>
+        <td>
+          <span class="phase-selector">☐ Nuevo</span>
+          <span class="phase-selector">☐ Asignado</span>
+          <span class="phase-selector">☐ En progreso</span>
+          <span class="phase-selector">☐ Resuelto</span>
+          <span class="phase-selector">☐ Cerrado</span>
+          <span class="phase-selector">☐ Rechazado</span>
+          <span class="phase-selector">☐ Duplicado</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="field-label">Responsable</td>
+        <td>Desarrollador, equipo o área encargada: _______________________________</td>
+      </tr>
+      <tr>
+        <td class="field-label">Fecha de cierre</td>
+        <td>(si aplica): ____/____/______</td>
+      </tr>
+      <tr>
+        <td class="field-label">Resultado del re-test</td>
+        <td>
+          <span class="severity-priority">Pass</span> / <span class="severity-priority">Fail</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>📚 Normas de referencia</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB FL v4.0 – Capítulo 5:</strong> Evaluación y reporte de incidentes/defectos.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Test Incident Report Template.</li>
+        <li><strong>ISO/IEC/IEEE 29119-3:</strong> Standard for Software Test Documentation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bug-section">
+    <h2>🔄 Principales mejoras respecto a la versión original</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>Sección "Clasificación del defecto":</strong> Para cumplir ISO/IEC/IEEE 29119-3 y facilitar métricas por tipo de defecto.</li>
+        <li><strong>Trazabilidad ampliada:</strong> Enlaces directos a Historia de Usuario, Épica, TC y Build, asegurando el vínculo con la planificación.</li>
+        <li><strong>Acción correctiva sugerida:</strong> Campo opcional para que QA pueda proponer mitigaciones tempranas.</li>
+        <li><strong>Resultado del re-test y fecha de cierre:</strong> Importante para auditorías y reportes de cierre.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Conclusión</h3>
+    <p>Con esta versión el <strong>Informe de Defecto</strong> está completamente alineado con <strong>ISTQB</strong>, <strong>ISO/IEC/IEEE 29119-3</strong> e <strong>ISO/IEC/IEEE 29119-3</strong>, y listo para ser usado en tu Centro de Control de QA para trazabilidad, seguimiento y auditoría.</p>
+    <br>
+    <p><strong>Responsable del reporte:</strong> _________________________</p>
+    <p><strong>Fecha de creación:</strong> _________________________</p>
+  </div>
+
+</div>
+</body>
+</html>

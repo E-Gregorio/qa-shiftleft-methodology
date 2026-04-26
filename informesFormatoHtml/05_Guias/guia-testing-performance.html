@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Testing de Performance — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; color: #1a1a1a; }
+  .guide-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; padding: 25px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-header .subtitle { font-size: 14px; font-weight: normal; opacity: 0.9; margin-top: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #1D4ED8; margin-top: 25px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #DBEAFE; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .warn-box { background: #FFF3E0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #F97316; }
+  .danger-box { background: #FEE2E2; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #EF4444; }
+  .ok-box { background: #D1FAE5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #10B981; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .code-box { background: #0F172A; color: #E2E8F0; padding: 18px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; line-height: 1.5; }
+  .code-box .k { color: #60A5FA; }
+  .code-box .s { color: #FCD34D; }
+  .code-box .c { color: #94A3B8; font-style: italic; }
+  .template-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Consolas', monospace; font-size: 13px; border: 1px solid #ddd; white-space: pre-wrap; }
+  .standard-pill { display: inline-block; background: #2563EB; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .standard-pill.green { background: #10B981; }
+  .standard-pill.red { background: #EF4444; }
+  .standard-pill.amber { background: #F59E0B; }
+  .nav-back { display: inline-block; margin-bottom: 20px; padding: 8px 16px; background: #2563EB; color: white; text-decoration: none; border-radius: 4px; }
+  .nav-back:hover { background: #1D4ED8; }
+  .toc { background: #f8f9fa; padding: 18px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #F59E0B; }
+  .toc ul { columns: 2; list-style-type: none; padding-left: 0; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: #2563EB; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+
+  <a href="index.html" class="nav-back">← Volver al portal de guías</a>
+
+  <div class="guide-header">
+    <div>⚡ GUÍA TESTING DE PERFORMANCE</div>
+    <div class="subtitle">Performance moderno: load, stress, scalability, web vitals y observabilidad — alineado a ISO/IEC 25010</div>
+  </div>
+
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong>
+    </div>
+    <div style="text-align: center; margin-bottom: 12px;">
+      <span class="standard-pill green">ISO/IEC 25010:2023 — Performance Efficiency</span>
+      <span class="standard-pill green">Google Web Vitals (2024)</span>
+      <span class="standard-pill amber">SLO/SLI per SRE Workbook</span>
+    </div>
+    <div class="info-box">
+      Esta guía cubre <strong>cómo planificar, ejecutar e interpretar pruebas de performance modernas</strong> sobre arquitecturas web, API y batch — usando <strong>k6</strong>, <strong>Lighthouse CI</strong> y observabilidad. Va más allá de "JMeter al final del proyecto": integra performance dentro del pipeline (shift-left) con presupuestos de PR y SLOs continuos.
+    </div>
+  </div>
+
+  <div class="toc">
+    <strong>📋 Contenido</strong>
+    <ul>
+      <li><a href="#modelo-25010">1. Modelo ISO/IEC 25010 — Performance Efficiency</a></li>
+      <li><a href="#tipos">2. Tipos de pruebas de performance</a></li>
+      <li><a href="#metricas">3. Métricas core (latencia, throughput, error rate)</a></li>
+      <li><a href="#web-vitals">4. Web Vitals modernos (LCP, INP, CLS)</a></li>
+      <li><a href="#sli-slo">5. SLI / SLO / Error Budget</a></li>
+      <li><a href="#perfiles">6. Perfiles de carga (open vs closed model)</a></li>
+      <li><a href="#k6">7. k6 — scripts y patrones recomendados</a></li>
+      <li><a href="#lighthouse">8. Lighthouse CI en pipeline</a></li>
+      <li><a href="#observabilidad">9. Observabilidad y APM</a></li>
+      <li><a href="#shift-left">10. Performance shift-left (presupuestos en PR)</a></li>
+      <li><a href="#plantilla">11. Plantilla — Performance Test Plan</a></li>
+      <li><a href="#anti-patterns">12. Anti-patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="modelo-25010">
+    <h2>1. Modelo ISO/IEC 25010 — Performance Efficiency</h2>
+    <p>ISO/IEC 25010:2023 define <strong>Performance Efficiency</strong> con tres sub-características. Toda prueba de performance debería poder mapearse a una de ellas:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Sub-característica</th>
+        <th style="width: 35%;">Definición</th>
+        <th style="width: 40%;">Cómo se prueba</th>
+      </tr>
+      <tr>
+        <td class="field-label">Time behaviour</td>
+        <td>Tiempos de respuesta, procesamiento y throughput cumplen lo esperado</td>
+        <td>Load tests con métricas p50/p95/p99, stress tests para identificar el punto de quiebre</td>
+      </tr>
+      <tr>
+        <td class="field-label">Resource utilization</td>
+        <td>Cantidad y tipos de recursos usados son apropiados</td>
+        <td>Monitoreo de CPU, memoria, I/O, red durante load tests; profile de aplicación</td>
+      </tr>
+      <tr>
+        <td class="field-label">Capacity</td>
+        <td>El sistema soporta el número máximo declarado de usuarios/transacciones</td>
+        <td>Stress + scalability testing, identificar saturación</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="tipos">
+    <h2>2. Tipos de pruebas de performance</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 18%;">Tipo</th>
+        <th style="width: 32%;">Objetivo</th>
+        <th style="width: 25%;">Forma de carga</th>
+        <th style="width: 25%;">Cuándo aplicarlo</th>
+      </tr>
+      <tr>
+        <td class="field-label">Smoke</td>
+        <td>Validar que el sistema responde bajo carga mínima</td>
+        <td>1-5 VUs por pocos minutos</td>
+        <td>Cada deploy; gate básico en CI</td>
+      </tr>
+      <tr>
+        <td class="field-label">Load</td>
+        <td>Comportamiento bajo carga esperada (p95 SLO cumple)</td>
+        <td>Carga ramp-up hasta target sostenido</td>
+        <td>Pre-release, semanal en staging</td>
+      </tr>
+      <tr>
+        <td class="field-label">Stress</td>
+        <td>Encontrar el <strong>punto de quiebre</strong> y observar degradación</td>
+        <td>Carga creciente hasta que error rate &gt; 1% o p95 &gt; 2× SLO</td>
+        <td>Antes de eventos esperados (Black Friday, lanzamiento)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Spike</td>
+        <td>Resistencia a picos súbitos de tráfico</td>
+        <td>0 → 10× target en &lt; 30s, sostener 1-5 min</td>
+        <td>Sistemas con tráfico viral / lanzamientos / campañas</td>
+      </tr>
+      <tr>
+        <td class="field-label">Soak / Endurance</td>
+        <td>Detectar memory leaks, fugas de connections, degradación gradual</td>
+        <td>Carga moderada sostenida por 4-24h</td>
+        <td>Pre-release de versiones críticas</td>
+      </tr>
+      <tr>
+        <td class="field-label">Scalability</td>
+        <td>Verificar que añadir recursos mejora capacidad linealmente</td>
+        <td>Load tests con 1, 2, 4, 8 instancias</td>
+        <td>Validar autoscaling, capacity planning</td>
+      </tr>
+      <tr>
+        <td class="field-label">Volume</td>
+        <td>Performance bajo gran volumen de datos (no de tráfico)</td>
+        <td>Carga normal con DB de tamaño realista (TB)</td>
+        <td>Sistemas con datasets que crecen mucho</td>
+      </tr>
+      <tr>
+        <td class="field-label">Frontend / Web Vitals</td>
+        <td>Performance percibida por el usuario final (LCP, INP, CLS)</td>
+        <td>Lighthouse, RUM (Real User Monitoring)</td>
+        <td>Cada PR de UI; continuo en producción</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="metricas">
+    <h2>3. Métricas core</h2>
+
+    <h3>3.1 Latencia: NUNCA promedio, SIEMPRE percentiles</h3>
+    <div class="warn-box">
+      <strong>⚠️ Regla fundamental:</strong> el <em>promedio</em> de latencia es <strong>una mentira estadística</strong>. Una API con p50=100ms, p95=200ms, p99=5s tiene "promedio" engañosamente bajo, pero el 1% de tus usuarios tiene una experiencia terrible. <strong>Usar siempre p50, p95, p99 (y p99.9 para sistemas críticos).</strong>
+    </div>
+
+    <table class="guide-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Qué mide</th>
+        <th>Target típico (web)</th>
+      </tr>
+      <tr><td class="field-label">p50 (mediana)</td><td>50% de requests más rápidos que esto</td><td>&lt; 200ms</td></tr>
+      <tr><td class="field-label">p95</td><td>95% de requests más rápidos que esto</td><td>&lt; 1000ms</td></tr>
+      <tr><td class="field-label">p99</td><td>99% de requests — la cola "lenta"</td><td>&lt; 2000ms</td></tr>
+      <tr><td class="field-label">p99.9</td><td>Solo sistemas críticos — la cola extrema</td><td>SLO específico</td></tr>
+      <tr><td class="field-label">Tail ratio</td><td>p99 / p50 — qué tan estable es el sistema</td><td>&lt; 10×</td></tr>
+    </table>
+
+    <h3>3.2 Throughput, error rate, saturation</h3>
+    <table class="guide-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Definición</th>
+        <th>Cómo medirla</th>
+      </tr>
+      <tr><td class="field-label">RPS / TPS</td><td>Requests / transactions per second</td><td>k6 <code>http_reqs</code> rate, APM</td></tr>
+      <tr><td class="field-label">Error rate</td><td>% de respuestas con status ≥ 500 o errores aplicativos</td><td>k6 <code>http_req_failed</code>, APM</td></tr>
+      <tr><td class="field-label">Saturation (USE)</td><td>% de uso del recurso más restringido (CPU, conn pool, queue)</td><td>Prometheus, métricas de aplicación</td></tr>
+      <tr><td class="field-label">Apdex</td><td>Índice de satisfacción 0-1 basado en thresholds T y 4T</td><td>APM (New Relic, Datadog)</td></tr>
+    </table>
+
+    <h3>3.3 Modelo USE (Brendan Gregg) para diagnóstico</h3>
+    <p>Para cada recurso del sistema (CPU, memoria, disco, red), revisar:</p>
+    <ul>
+      <li><strong>Utilization</strong> — % del tiempo que el recurso está ocupado</li>
+      <li><strong>Saturation</strong> — cuánto trabajo extra está esperando (queue length)</li>
+      <li><strong>Errors</strong> — cuántos errores produce ese recurso</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="web-vitals">
+    <h2>4. Web Vitals modernos (Google, 2024)</h2>
+    <p>Las <strong>Core Web Vitals</strong> de Google son el estándar de la industria para frontend performance. <strong>INP reemplazó a FID en marzo 2024</strong>, así que si tu material cita FID, está desactualizado.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Qué mide</th>
+        <th>Bueno</th>
+        <th>A mejorar</th>
+        <th>Pobre</th>
+      </tr>
+      <tr>
+        <td class="field-label">LCP<br><em>Largest Contentful Paint</em></td>
+        <td>Tiempo hasta renderizar el elemento más grande visible</td>
+        <td>≤ 2.5s</td>
+        <td>≤ 4.0s</td>
+        <td>&gt; 4.0s</td>
+      </tr>
+      <tr>
+        <td class="field-label">INP<br><em>Interaction to Next Paint</em></td>
+        <td>Latencia de la interacción más lenta del usuario (reemplazó FID en mar 2024)</td>
+        <td>≤ 200ms</td>
+        <td>≤ 500ms</td>
+        <td>&gt; 500ms</td>
+      </tr>
+      <tr>
+        <td class="field-label">CLS<br><em>Cumulative Layout Shift</em></td>
+        <td>Suma de cambios inesperados de layout</td>
+        <td>≤ 0.10</td>
+        <td>≤ 0.25</td>
+        <td>&gt; 0.25</td>
+      </tr>
+      <tr>
+        <td class="field-label">FCP<br><em>First Contentful Paint</em></td>
+        <td>Cuándo aparece el primer texto/imagen (métrica complementaria)</td>
+        <td>≤ 1.8s</td>
+        <td>≤ 3.0s</td>
+        <td>&gt; 3.0s</td>
+      </tr>
+      <tr>
+        <td class="field-label">TTFB<br><em>Time to First Byte</em></td>
+        <td>Tiempo del backend hasta el primer byte</td>
+        <td>≤ 0.8s</td>
+        <td>≤ 1.8s</td>
+        <td>&gt; 1.8s</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Lab vs Field:</strong> Lighthouse mide <em>lab data</em> (entorno sintético controlado). Para producción usá <strong>RUM</strong> (Real User Monitoring) — Chrome UX Report, Datadog RUM, Sentry. Las métricas pueden divergir hasta 30%.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="sli-slo">
+    <h2>5. SLI / SLO / Error Budget</h2>
+    <p>Marco de Site Reliability Engineering (Google SRE Book). Convierte performance de "intentamos que sea rápido" a un compromiso medible:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Concepto</th>
+        <th style="width: 40%;">Definición</th>
+        <th style="width: 40%;">Ejemplo</th>
+      </tr>
+      <tr>
+        <td class="field-label">SLI<br><em>Service Level Indicator</em></td>
+        <td>Métrica observable cuantitativa</td>
+        <td>"% de requests con latencia &lt; 500ms"</td>
+      </tr>
+      <tr>
+        <td class="field-label">SLO<br><em>Service Level Objective</em></td>
+        <td>Objetivo interno sobre el SLI</td>
+        <td>"99% de requests &lt; 500ms en ventana de 28 días"</td>
+      </tr>
+      <tr>
+        <td class="field-label">SLA<br><em>Service Level Agreement</em></td>
+        <td>Compromiso contractual con el cliente (con consecuencias)</td>
+        <td>"95% de uptime mensual o 10% de crédito"</td>
+      </tr>
+      <tr>
+        <td class="field-label">Error budget</td>
+        <td>1 - SLO. Cuánto error te podés permitir antes de gatear features.</td>
+        <td>SLO 99.9% → budget = 0.1% = 43.2 min/mes de downtime</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Política operativa típica:</strong> mientras el error budget no se haya consumido, el equipo lanza features libremente. Si se consume, <strong>se pausan features</strong> y se prioriza estabilidad. Esto crea un balance objetivo entre velocidad y confiabilidad.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="perfiles">
+    <h2>6. Perfiles de carga: Open vs Closed Model</h2>
+    <p>Diferencia fundamental que la mayoría de herramientas viejas (JMeter clásico) ignoran:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Modelo</th>
+        <th style="width: 40%;">Descripción</th>
+        <th style="width: 35%;">Cuándo usarlo</th>
+      </tr>
+      <tr>
+        <td class="field-label">Closed model<br>(Virtual Users / VUs)</td>
+        <td>N usuarios concurrentes, cada uno espera la respuesta antes de mandar la siguiente. Si el sistema se lentifica, los VUs envían menos.</td>
+        <td>Apps internas con número fijo de usuarios concurrentes (CRM, ERP)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Open model<br>(Arrival rate)</td>
+        <td>X requests/segundo entran independientemente del estado del sistema. Si se lentifica, las queues crecen.</td>
+        <td>APIs públicas, e-commerce, cualquier sistema con tráfico real (la mayoría)</td>
+      </tr>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠️ Coordinated omission:</strong> el closed model <strong>esconde</strong> el peor caso porque los VUs lentos automáticamente reducen la carga. Si tu sistema responde a usuarios que llegan según Poisson (la mayoría), usá <strong>open model</strong> (en k6: <code>ramping-arrival-rate</code> o <code>constant-arrival-rate</code>).
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="k6">
+    <h2>7. k6 — scripts y patrones recomendados</h2>
+
+    <h3>7.1 Load test básico con thresholds</h3>
+    <div class="code-box"><span class="c">// load-test.js — load test estándar con SLOs como thresholds</span>
+<span class="k">import</span> http <span class="k">from</span> <span class="s">'k6/http'</span>;
+<span class="k">import</span> { check, group } <span class="k">from</span> <span class="s">'k6'</span>;
+
+<span class="k">export const</span> options = {
+  scenarios: {
+    api_load: {
+      executor: <span class="s">'ramping-arrival-rate'</span>,    <span class="c">// open model</span>
+      startRate: <span class="s">10</span>,
+      timeUnit: <span class="s">'1s'</span>,
+      preAllocatedVUs: <span class="s">100</span>,
+      maxVUs: <span class="s">500</span>,
+      stages: [
+        { target: <span class="s">50</span>,  duration: <span class="s">'2m'</span> },   <span class="c">// ramp-up</span>
+        { target: <span class="s">200</span>, duration: <span class="s">'5m'</span> },   <span class="c">// load</span>
+        { target: <span class="s">200</span>, duration: <span class="s">'10m'</span> },  <span class="c">// sustained</span>
+        { target: <span class="s">0</span>,   duration: <span class="s">'2m'</span> },   <span class="c">// ramp-down</span>
+      ],
+    },
+  },
+  thresholds: {
+    <span class="c">// SLOs como gates: el test FALLA si no se cumplen</span>
+    <span class="s">'http_req_duration{name:GET /products}'</span>: [<span class="s">'p(95)&lt;500'</span>, <span class="s">'p(99)&lt;1500'</span>],
+    <span class="s">'http_req_duration{name:POST /orders}'</span>:  [<span class="s">'p(95)&lt;1000'</span>, <span class="s">'p(99)&lt;2500'</span>],
+    <span class="s">'http_req_failed'</span>:                       [<span class="s">'rate&lt;0.01'</span>],   <span class="c">// &lt;1% errores</span>
+    <span class="s">'checks'</span>:                                [<span class="s">'rate&gt;0.99'</span>],
+  },
+};
+
+<span class="k">export default function</span> () {
+  group(<span class="s">'browse-and-buy'</span>, () =&gt; {
+    <span class="k">const</span> r1 = http.get(<span class="s">'https://api.example.com/products'</span>,
+      { tags: { name: <span class="s">'GET /products'</span> } });
+    check(r1, { <span class="s">'200 ok'</span>: r =&gt; r.status === <span class="s">200</span>,
+                <span class="s">'has items'</span>: r =&gt; r.json(<span class="s">'items.length'</span>) &gt; <span class="s">0</span> });
+
+    <span class="k">const</span> r2 = http.post(<span class="s">'https://api.example.com/orders'</span>,
+      JSON.stringify({ productId: <span class="s">'p1'</span>, qty: <span class="s">1</span> }),
+      { headers: { <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span> },
+        tags: { name: <span class="s">'POST /orders'</span> } });
+    check(r2, { <span class="s">'201 created'</span>: r =&gt; r.status === <span class="s">201</span> });
+  });
+}</div>
+
+    <h3>7.2 Stress test — encontrar el punto de quiebre</h3>
+    <div class="code-box"><span class="k">export const</span> options = {
+  executor: <span class="s">'ramping-arrival-rate'</span>,
+  preAllocatedVUs: <span class="s">100</span>,
+  maxVUs: <span class="s">2000</span>,
+  stages: [
+    { target: <span class="s">100</span>,  duration: <span class="s">'2m'</span> },
+    { target: <span class="s">500</span>,  duration: <span class="s">'5m'</span> },
+    { target: <span class="s">1000</span>, duration: <span class="s">'5m'</span> },
+    { target: <span class="s">2000</span>, duration: <span class="s">'5m'</span> },
+    { target: <span class="s">5000</span>, duration: <span class="s">'5m'</span> },   <span class="c">// hasta romper</span>
+  ],
+  <span class="c">// sin thresholds — queremos VER dónde rompe</span>
+};</div>
+
+    <h3>7.3 Soak test — 8 horas para detectar memory leaks</h3>
+    <div class="code-box"><span class="k">export const</span> options = {
+  executor: <span class="s">'constant-arrival-rate'</span>,
+  rate: <span class="s">100</span>, timeUnit: <span class="s">'1s'</span>,
+  duration: <span class="s">'8h'</span>,
+  preAllocatedVUs: <span class="s">200</span>,
+  thresholds: {
+    <span class="s">'http_req_duration'</span>: [<span class="s">'p(95)&lt;500'</span>],   <span class="c">// debe mantenerse 8h</span>
+    <span class="s">'http_req_failed'</span>: [<span class="s">'rate&lt;0.005'</span>],
+  },
+};</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="lighthouse">
+    <h2>8. Lighthouse CI en pipeline</h2>
+    <div class="code-box"><span class="c"># lighthouserc.json</span>
+{
+  <span class="s">"ci"</span>: {
+    <span class="s">"collect"</span>: {
+      <span class="s">"url"</span>: [<span class="s">"https://staging.example.com/"</span>, <span class="s">"https://staging.example.com/products"</span>],
+      <span class="s">"numberOfRuns"</span>: <span class="s">3</span>
+    },
+    <span class="s">"assert"</span>: {
+      <span class="s">"assertions"</span>: {
+        <span class="s">"categories:performance"</span>: [<span class="s">"error"</span>, { <span class="s">"minScore"</span>: <span class="s">0.85</span> }],
+        <span class="s">"categories:accessibility"</span>: [<span class="s">"error"</span>, { <span class="s">"minScore"</span>: <span class="s">0.95</span> }],
+        <span class="s">"largest-contentful-paint"</span>: [<span class="s">"error"</span>, { <span class="s">"maxNumericValue"</span>: <span class="s">2500</span> }],
+        <span class="s">"interaction-to-next-paint"</span>: [<span class="s">"error"</span>, { <span class="s">"maxNumericValue"</span>: <span class="s">200</span> }],
+        <span class="s">"cumulative-layout-shift"</span>: [<span class="s">"error"</span>, { <span class="s">"maxNumericValue"</span>: <span class="s">0.10</span> }]
+      }
+    },
+    <span class="s">"upload"</span>: { <span class="s">"target"</span>: <span class="s">"temporary-public-storage"</span> }
+  }
+}</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="observabilidad">
+    <h2>9. Observabilidad y APM</h2>
+    <p>Performance testing sin observabilidad es ciego. Stack mínimo recomendado:</p>
+
+    <table class="guide-table">
+      <tr><th>Capa</th><th>Open source</th><th>SaaS</th><th>Para qué</th></tr>
+      <tr><td class="field-label">Métricas</td><td>Prometheus + Grafana</td><td>Datadog, New Relic</td><td>RPS, latencia p95/p99, error rate, saturation</td></tr>
+      <tr><td class="field-label">Logs</td><td>Loki, OpenSearch</td><td>Datadog Logs, Splunk</td><td>Errores con contexto, correlación con traces</td></tr>
+      <tr><td class="field-label">Traces</td><td>Jaeger, Tempo</td><td>Honeycomb, Datadog APM</td><td>Distributed tracing, identificar bottleneck por servicio</td></tr>
+      <tr><td class="field-label">RUM (frontend)</td><td>Sentry self-hosted</td><td>Sentry, Datadog RUM</td><td>Web Vitals reales del usuario final</td></tr>
+      <tr><td class="field-label">Profiling</td><td>Pyroscope, Parca</td><td>Datadog Continuous Profiler</td><td>Encontrar hot paths en CPU/memoria</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Estándar emergente:</strong> <strong>OpenTelemetry</strong> (OTel). Define un único protocolo y SDK para métricas, logs y traces. Si vas a empezar de cero, hacelo OTel-native — te desacopla de cualquier vendor.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="shift-left">
+    <h2>10. Performance shift-left: presupuestos en PR</h2>
+    <p>El error más común es probar performance solo al final. La mejora 10× viene de <strong>romper el build cuando un PR introduce regresiones</strong>:</p>
+
+    <table class="guide-table">
+      <tr><th>Etapa</th><th>Test</th><th>Trigger</th><th>Tiempo</th></tr>
+      <tr><td class="field-label">PR</td><td>Lighthouse CI (frontend) + smoke k6 (backend)</td><td>Cada commit</td><td>&lt; 5 min</td></tr>
+      <tr><td class="field-label">Merge a main</td><td>Load test corto (5 min)</td><td>Auto post-merge</td><td>&lt; 10 min</td></tr>
+      <tr><td class="field-label">Pre-release</td><td>Load + soak + spike completo</td><td>Manual o release branch</td><td>30 min - 2 h</td></tr>
+      <tr><td class="field-label">Producción</td><td>Synthetic monitoring + RUM</td><td>Continuo</td><td>24/7</td></tr>
+    </table>
+
+    <h3>10.1 Workflow de presupuesto en PR (GitHub Actions)</h3>
+    <div class="code-box"><span class="k">name:</span> Performance Budget
+<span class="k">on:</span> [pull_request]
+<span class="k">jobs:</span>
+  perf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - <span class="k">name:</span> Lighthouse CI
+        run: |
+          npm i -g @lhci/cli
+          lhci autorun --config=./lighthouserc.json
+      - <span class="k">name:</span> k6 smoke
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: tests/perf/smoke.js
+          flags: --vus 10 --duration 2m</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="plantilla">
+    <h2>11. Plantilla — Performance Test Plan</h2>
+    <div class="template-box"># Performance Test Plan — &lt;sistema&gt;
+
+## 1. Identificación
+- Sistema: …
+- Versión: …
+- Owner: …
+- Fecha: 2026-04-26
+
+## 2. Contexto y objetivos
+- Tráfico actual de pico: 1200 RPS
+- Crecimiento esperado en 6 meses: 3×
+- Objetivo del test: validar que escala a 4000 RPS con SLOs intactos
+
+## 3. SLOs definidos
+| Endpoint                  | SLI                         | SLO                  |
+|---------------------------|-----------------------------|-----------------------|
+| GET /products             | latencia p95                | &lt; 300 ms          |
+| POST /orders              | latencia p95                | &lt; 800 ms          |
+| GET /search               | latencia p95                | &lt; 500 ms          |
+| Toda la API               | error rate                  | &lt; 0.5%            |
+| Toda la API               | disponibilidad mensual      | ≥ 99.9%              |
+
+## 4. Tipos de test a ejecutar
+| Test       | Carga             | Duración | Criterio éxito |
+|------------|-------------------|----------|----------------|
+| Smoke      | 10 RPS            | 2 min    | 0 errores 5xx  |
+| Load       | 1500 RPS          | 30 min   | SLOs cumplidos |
+| Stress     | 100 → 6000 RPS    | 30 min   | Identificar quiebre &gt; 4000 |
+| Spike      | 100 → 5000 en 30s | 10 min   | Recovery &lt; 60s |
+| Soak       | 800 RPS           | 8 h      | Sin degradación, sin leaks |
+
+## 5. Datos de prueba
+- 100k usuarios sintéticos pre-creados
+- Catálogo: copia del prod (anonimizado)
+- Datasets en CSV + parametrización en k6
+
+## 6. Entornos
+- Test ejecutado contra: staging-perf (idéntico a prod, escalado al 100%)
+- NO en prod salvo synthetic monitoring continuo
+
+## 7. Observabilidad
+- Grafana dashboard "perf-test-suite"
+- APM: Datadog, capturando p50/p95/p99 por endpoint
+- Profiling: Continuous Profiler activo durante el test
+
+## 8. Criterios de salida
+- [ ] Todos los SLOs cumplidos en el load test
+- [ ] Stress test identifica punto de quiebre y degradación es graceful
+- [ ] Spike test: recovery automático &lt; 60s
+- [ ] Soak: memoria estable, sin leaks
+- [ ] Reporte HTML + dashboard linkeado en release notes</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="anti-patterns">
+    <h2>12. Anti-patterns</h2>
+    <div class="danger-box">
+      <ul>
+        <li><strong>Reportar el promedio de latencia.</strong> Solo p50/p95/p99/p99.9 cuentan.</li>
+        <li><strong>Probar en una máquina compartida con la aplicación.</strong> El generador de carga debe ser independiente.</li>
+        <li><strong>Pruebas con datos vacíos.</strong> 10 productos en DB vs 10M es un mundo distinto. Volumen real (o sintético equivalente).</li>
+        <li><strong>Closed model cuando deberías usar open model.</strong> Coordinated omission esconde problemas.</li>
+        <li><strong>"Pasamos el load test" sin medir saturación de recursos.</strong> Si CPU está al 95% o pool de conexiones al límite, no escala.</li>
+        <li><strong>Performance test al final del proyecto.</strong> Imposible corregir tarde — Shift-left con presupuestos en PR.</li>
+        <li><strong>Lighthouse score como única métrica frontend.</strong> Es lab data — agregar RUM en producción.</li>
+        <li><strong>No pre-calentar el sistema.</strong> JIT warm-up, cache fría, pool sin establecer → primeras métricas son irreales.</li>
+        <li><strong>Test "sintético" muy distinto del tráfico real.</strong> Distribución de endpoints debe parecerse al pareto real.</li>
+        <li><strong>No correlacionar resultados con observabilidad.</strong> Sin trace, no sabés POR QUÉ es lento.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📚 Referencias</h2>
+    <ul>
+      <li>ISO/IEC 25010:2023 — System and software quality models</li>
+      <li>Google Web Vitals (web.dev/vitals)</li>
+      <li>Google SRE Workbook — capítulos sobre SLO/SLI/Error Budget</li>
+      <li>k6 documentation — k6.io/docs</li>
+      <li>Brendan Gregg — USE method (brendangregg.com/usemethod.html)</li>
+      <li>Gil Tene — "How NOT to measure latency" (sobre coordinated omission)</li>
+      <li>OpenTelemetry — opentelemetry.io</li>
+    </ul>
+  </div>
+
+  <div class="guide-meta" style="text-align: center; margin-top: 40px;">
+    <strong>QA Shift-Left Methodology · by E-Gregorio</strong><br>
+    Guía Performance — alineada a ISO/IEC 25010:2023 y Web Vitals 2024
+  </div>
+
+</div>
+</body>
+</html>

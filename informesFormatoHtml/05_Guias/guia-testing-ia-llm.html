@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Testing de IA / LLM — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; color: #1a1a1a; }
+  .guide-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; padding: 25px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-header .subtitle { font-size: 14px; font-weight: normal; opacity: 0.9; margin-top: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #1D4ED8; margin-top: 25px; }
+  .guide-section h4 { color: #1E40AF; margin-top: 18px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #DBEAFE; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .warn-box { background: #FFF3E0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #F97316; }
+  .danger-box { background: #FEE2E2; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #EF4444; }
+  .ok-box { background: #D1FAE5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #10B981; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .code-box { background: #0F172A; color: #E2E8F0; padding: 18px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; line-height: 1.5; }
+  .code-box .k { color: #60A5FA; }
+  .code-box .s { color: #FCD34D; }
+  .code-box .c { color: #94A3B8; font-style: italic; }
+  .template-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Consolas', monospace; font-size: 13px; border: 1px solid #ddd; white-space: pre-wrap; }
+  .standard-pill { display: inline-block; background: #2563EB; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .standard-pill.green { background: #10B981; }
+  .standard-pill.red { background: #EF4444; }
+  .standard-pill.amber { background: #F59E0B; }
+  .nav-back { display: inline-block; margin-bottom: 20px; padding: 8px 16px; background: #2563EB; color: white; text-decoration: none; border-radius: 4px; }
+  .nav-back:hover { background: #1D4ED8; }
+  .metric-card { display: inline-block; background: #DBEAFE; border: 2px solid #2563EB; border-radius: 8px; padding: 12px 18px; margin: 6px; min-width: 180px; vertical-align: top; }
+  .metric-card .metric-name { font-weight: bold; color: #1E40AF; font-size: 14px; }
+  .metric-card .metric-target { color: #10B981; font-weight: bold; margin-top: 4px; }
+  .metric-card .metric-desc { font-size: 12px; color: #475569; margin-top: 4px; }
+  .toc { background: #f8f9fa; padding: 18px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #F59E0B; }
+  .toc ul { columns: 2; list-style-type: none; padding-left: 0; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: #2563EB; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+
+  <a href="index.html" class="nav-back">← Volver al portal de guías</a>
+
+  <div class="guide-header">
+    <div>🤖 GUÍA TESTING DE IA / LLM</div>
+    <div class="subtitle">Cómo probar, medir y validar aplicaciones basadas en modelos de lenguaje y sistemas de IA</div>
+  </div>
+
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong>
+    </div>
+    <div style="text-align: center; margin-bottom: 12px;">
+      <span class="standard-pill green">ISO/IEC TR 29119-11:2020</span>
+      <span class="standard-pill green">ISO/IEC 25059:2023</span>
+      <span class="standard-pill green">NIST AI RMF 1.0</span>
+      <span class="standard-pill red">OWASP LLM Top 10 (2025)</span>
+      <span class="standard-pill amber">EU AI Act (referencia)</span>
+      <span class="standard-pill">MLPerf · HELM · MMLU</span>
+    </div>
+    <div class="info-box">
+      Esta guía establece el <strong>marco metodológico</strong> para validar la calidad, seguridad, performance y robustez de aplicaciones que usan <strong>LLMs (Large Language Models)</strong> y, en general, sistemas con componentes de IA. Cubre los desafíos únicos del testing no determinístico y aporta plantillas, métricas y pipelines listos para usar.
+    </div>
+  </div>
+
+  <div class="toc">
+    <strong>📋 Contenido</strong>
+    <ul>
+      <li><a href="#por-que-distinto">1. ¿Por qué testing de IA/LLM es distinto?</a></li>
+      <li><a href="#marco-normativo">2. Marco normativo aplicable</a></li>
+      <li><a href="#tipos-testing">3. Tipos de testing aplicables a LLMs</a></li>
+      <li><a href="#owasp-llm">4. OWASP LLM Top 10 (2025)</a></li>
+      <li><a href="#metricas-calidad">5. Métricas de calidad de respuesta</a></li>
+      <li><a href="#evals">6. Evals: el equivalente a "tests unitarios"</a></li>
+      <li><a href="#performance-llm">7. Performance de LLMs</a></li>
+      <li><a href="#rag-testing">8. Testing de sistemas RAG</a></li>
+      <li><a href="#tooling">9. Tooling recomendado</a></li>
+      <li><a href="#pipeline">10. Pipeline CI/CD con evals continuos</a></li>
+      <li><a href="#plantilla-plan">11. Plantilla: Plan de pruebas LLM</a></li>
+      <li><a href="#anti-patterns">12. Anti-patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="por-que-distinto">
+    <h2>1. ¿Por qué testing de IA/LLM es distinto?</h2>
+    <p>El testing tradicional asume <strong>determinismo</strong>: dada una entrada, la salida es predecible y verificable con un <code>assert exact_match</code>. Los sistemas con LLM rompen ese supuesto:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 30%;">Aspecto</th>
+        <th style="width: 35%;">Software tradicional</th>
+        <th style="width: 35%;">Aplicación con LLM</th>
+      </tr>
+      <tr>
+        <td class="field-label">Determinismo</td>
+        <td>Misma entrada → misma salida</td>
+        <td>Misma entrada → salida <em>distribución probabilística</em> (incluso con temperature=0 hay no determinismo a nivel de hardware)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Oráculo de prueba</td>
+        <td><code>expected == actual</code></td>
+        <td>Múltiples respuestas válidas → necesita <strong>scoring semántico</strong> o <strong>LLM-as-a-judge</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Cobertura</td>
+        <td>Líneas, ramas, mutaciones</td>
+        <td>Cobertura de <strong>casos de uso</strong> + <strong>casos adversariales</strong> + <strong>distribuciones de entrada</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Regresión</td>
+        <td>Test pasa o falla</td>
+        <td>Métrica agregada sobre golden set; degradación medida en %</td>
+      </tr>
+      <tr>
+        <td class="field-label">Defectos típicos</td>
+        <td>Bugs lógicos, edge cases</td>
+        <td>Alucinaciones, sesgos, jailbreaks, drift, prompt injection, data leakage</td>
+      </tr>
+      <tr>
+        <td class="field-label">Versionado</td>
+        <td>Código + dependencias</td>
+        <td>Código + <strong>modelo</strong> + <strong>prompt</strong> + <strong>retrieval index</strong> + <strong>fine-tuning</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Costo de un test</td>
+        <td>~ms, gratis</td>
+        <td>USD reales por llamada al modelo + latencia variable</td>
+      </tr>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠️ Implicación práctica:</strong> el testing de LLMs requiere <strong>métricas estadísticas agregadas</strong>, no asserts binarios. Hablamos de <em>"el sistema responde correctamente al 95% del golden set"</em>, no de <em>"el test pasa"</em>.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="marco-normativo">
+    <h2>2. Marco normativo aplicable</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Estándar</th>
+        <th style="width: 15%;">Año</th>
+        <th style="width: 60%;">Aporte al testing</th>
+      </tr>
+      <tr>
+        <td class="field-label">ISO/IEC TR 29119-11</td>
+        <td>2020</td>
+        <td>Primer Technical Report formal sobre <strong>testing de sistemas basados en IA</strong>. Define características específicas (adaptabilidad, autonomía, evolución), tipos de prueba aplicables y consideraciones de oráculo no determinístico.</td>
+      </tr>
+      <tr>
+        <td class="field-label">ISO/IEC 25059</td>
+        <td>2023</td>
+        <td>Extiende ISO 25010 con un <strong>modelo de calidad para sistemas IA</strong>. Añade características como <em>functional adaptability</em>, <em>user controllability</em>, <em>transparency</em>, <em>robustness</em>, <em>intervenability</em>.</td>
+      </tr>
+      <tr>
+        <td class="field-label">ISO/IEC 5338</td>
+        <td>2023</td>
+        <td><strong>AI System Life Cycle Processes</strong>. Procesos de validación, verificación y monitoreo aplicables a sistemas IA.</td>
+      </tr>
+      <tr>
+        <td class="field-label">ISO/IEC 23894</td>
+        <td>2023</td>
+        <td><strong>AI risk management</strong>. Marco de gestión de riesgos específico para IA (input para risk-based testing).</td>
+      </tr>
+      <tr>
+        <td class="field-label">NIST AI RMF 1.0</td>
+        <td>2023</td>
+        <td>Marco de gestión de riesgos del NIST. Funciones <strong>Govern, Map, Measure, Manage</strong>. El <em>Generative AI Profile</em> (jul 2024) lo adapta a GenAI/LLMs.</td>
+      </tr>
+      <tr>
+        <td class="field-label">OWASP LLM Top 10</td>
+        <td>2025</td>
+        <td>Listado de los 10 riesgos de seguridad más críticos en aplicaciones LLM. Imprescindible para security testing de LLMs.</td>
+      </tr>
+      <tr>
+        <td class="field-label">OWASP ML Top 10</td>
+        <td>2023</td>
+        <td>Equivalente para sistemas ML clásicos (data poisoning, model inversion, etc.).</td>
+      </tr>
+      <tr>
+        <td class="field-label">EU AI Act</td>
+        <td>2024</td>
+        <td>Regulación europea. Obligaciones de testing y monitoreo según nivel de riesgo (prohibido, alto, limitado, mínimo). Aplicable a sistemas <em>"general-purpose AI"</em>.</td>
+      </tr>
+      <tr>
+        <td class="field-label">MLPerf Inference / Training</td>
+        <td>continuo</td>
+        <td>Suite de benchmarks de la industria para comparar performance de modelos en hardware específico.</td>
+      </tr>
+      <tr>
+        <td class="field-label">HELM (Stanford)</td>
+        <td>continuo</td>
+        <td>Holistic Evaluation of Language Models. Suite open de evals con métricas multidimensionales.</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Para auditorías:</strong> si tu sistema cae bajo el <strong>EU AI Act</strong> como <em>"high-risk AI system"</em>, vas a necesitar <strong>evidencia documental</strong> de testing post-deployment. El stack ISO/IEC 29119-11 + 25059 + NIST AI RMF da la cobertura mínima esperada.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="tipos-testing">
+    <h2>3. Tipos de testing aplicables a LLMs</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Tipo</th>
+        <th style="width: 30%;">Qué valida</th>
+        <th style="width: 25%;">Técnica</th>
+        <th style="width: 25%;">Herramienta</th>
+      </tr>
+      <tr>
+        <td class="field-label">Functional</td>
+        <td>El sistema responde lo que debe responder a casos esperados</td>
+        <td>Golden dataset + scoring</td>
+        <td>promptfoo, DeepEval</td>
+      </tr>
+      <tr>
+        <td class="field-label">Robustez</td>
+        <td>Respuesta estable ante perturbaciones (typos, paráfrasis, idiomas)</td>
+        <td>Adversarial perturbations, mutation testing semántico</td>
+        <td>TextAttack, NLPAug</td>
+      </tr>
+      <tr>
+        <td class="field-label">Bias / Fairness</td>
+        <td>No hay sesgos discriminatorios por género, raza, edad, etc.</td>
+        <td>Counterfactual prompts, BBQ benchmark</td>
+        <td>Aequitas, Fairlearn, BBQ</td>
+      </tr>
+      <tr>
+        <td class="field-label">Toxicidad</td>
+        <td>El modelo no genera contenido tóxico/ofensivo</td>
+        <td>Toxicity scoring</td>
+        <td>Perspective API, Detoxify</td>
+      </tr>
+      <tr>
+        <td class="field-label">Hallucination / Groundedness</td>
+        <td>Las afirmaciones están respaldadas por la evidencia (RAG)</td>
+        <td>Groundedness scoring contra contexto recuperado</td>
+        <td>Ragas, TruLens</td>
+      </tr>
+      <tr>
+        <td class="field-label">Security (LLM)</td>
+        <td>No hay prompt injection, jailbreaks, data leakage</td>
+        <td>Pentesting de prompts, red-teaming</td>
+        <td>garak, PyRIT (Microsoft)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Performance</td>
+        <td>Latencia, throughput, cost-per-call</td>
+        <td>Load testing con prompts realistas</td>
+        <td>k6 + custom, Locust</td>
+      </tr>
+      <tr>
+        <td class="field-label">Drift</td>
+        <td>El modelo no degrada en producción a lo largo del tiempo</td>
+        <td>Monitoring continuo de métricas + golden set scheduled</td>
+        <td>Helicone, LangSmith, Arize</td>
+      </tr>
+      <tr>
+        <td class="field-label">A/B testing</td>
+        <td>Una versión del prompt/modelo es estadísticamente mejor</td>
+        <td>Online experiments con métricas de negocio</td>
+        <td>LaunchDarkly + custom analytics</td>
+      </tr>
+      <tr>
+        <td class="field-label">Regression</td>
+        <td>Cambios en prompt/modelo no rompen casos existentes</td>
+        <td>Eval suite ejecutada en cada PR</td>
+        <td>promptfoo en CI, OpenAI evals</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="owasp-llm">
+    <h2>4. OWASP LLM Top 10 (2025)</h2>
+    <p>Los 10 riesgos de seguridad más críticos en aplicaciones LLM. Cada uno con técnica de prueba recomendada:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 25%;">Riesgo</th>
+        <th style="width: 35%;">Descripción</th>
+        <th style="width: 35%;">Cómo probarlo</th>
+      </tr>
+      <tr>
+        <td><strong>LLM01</strong></td>
+        <td class="field-label">Prompt Injection</td>
+        <td>Atacante manipula el prompt (directo o indirecto vía documento envenenado) para alterar el comportamiento</td>
+        <td>Suite de prompts adversariales conocidos + indirect injection vía RAG. Tools: <code>garak</code>, <code>PyRIT</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM02</strong></td>
+        <td class="field-label">Sensitive Information Disclosure</td>
+        <td>El modelo revela datos confidenciales en respuesta (PII, secretos, datos de entrenamiento)</td>
+        <td>Probes con técnicas de extracción + scanning de output con Presidio/regex de PII.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM03</strong></td>
+        <td class="field-label">Supply Chain</td>
+        <td>Modelo, dataset, plugin o librería comprometida en la cadena de suministro</td>
+        <td>SCA del modelo (origen, hash, licencia). Verificación de procedencia.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM04</strong></td>
+        <td class="field-label">Data and Model Poisoning</td>
+        <td>Datos de entrenamiento o fine-tuning manipulados para introducir backdoors</td>
+        <td>Backdoor detection (trigger probes), análisis estadístico del dataset.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM05</strong></td>
+        <td class="field-label">Improper Output Handling</td>
+        <td>Output del LLM se usa sin sanitizar en SQL, shell, render HTML → XSS, SSRF, RCE</td>
+        <td>Probes que generen XSS/SQL/shell payloads en la respuesta + verificación de sanitización downstream.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM06</strong></td>
+        <td class="field-label">Excessive Agency</td>
+        <td>El agente LLM tiene permisos/herramientas excesivos (delete DB, send email)</td>
+        <td>Threat modeling de tool-calling. Test de privilege escalation. Sandbox obligatorio.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM07</strong></td>
+        <td class="field-label">System Prompt Leakage</td>
+        <td>El system prompt (que puede contener IP o reglas) es extraído por el atacante</td>
+        <td>Suite de probes "ignore previous instructions / repeat your system prompt".</td>
+      </tr>
+      <tr>
+        <td><strong>LLM08</strong></td>
+        <td class="field-label">Vector and Embedding Weaknesses</td>
+        <td>Vector store con datos cross-tenant, embeddings invertibles, índice envenenado</td>
+        <td>Tests de aislamiento por tenant + embedding inversion attacks.</td>
+      </tr>
+      <tr>
+        <td><strong>LLM09</strong></td>
+        <td class="field-label">Misinformation</td>
+        <td>El modelo afirma información falsa con confianza (hallucination en dominios críticos)</td>
+        <td>Groundedness scoring + factuality benchmarks (TruthfulQA).</td>
+      </tr>
+      <tr>
+        <td><strong>LLM10</strong></td>
+        <td class="field-label">Unbounded Consumption</td>
+        <td>Atacante fuerza prompts caros (long-context, recursión) → DoS o factura inesperada</td>
+        <td>Rate limiting tests + cost tests. Token-bucket por usuario.</td>
+      </tr>
+    </table>
+
+    <div class="danger-box">
+      <strong>🚨 Top 3 que más se ven en producción:</strong> Prompt Injection (LLM01), Sensitive Information Disclosure (LLM02) y Improper Output Handling (LLM05). En tu primer ciclo de security testing, priorizá estos.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="metricas-calidad">
+    <h2>5. Métricas de calidad de respuesta</h2>
+
+    <h3>5.1 Métricas semánticas (correctness)</h3>
+    <div>
+      <div class="metric-card">
+        <div class="metric-name">Exact Match</div>
+        <div class="metric-target">cuando aplica</div>
+        <div class="metric-desc">Solo válido para tareas con única respuesta correcta (clasificación, extracción).</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Semantic Similarity</div>
+        <div class="metric-target">≥ 0.80 (cosine)</div>
+        <div class="metric-desc">Embedding de respuesta vs. golden, distancia coseno.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">BLEU / ROUGE</div>
+        <div class="metric-target">depende task</div>
+        <div class="metric-desc">N-gram overlap. Útil en traducción/resumen, limitado para QA libre.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">BERTScore</div>
+        <div class="metric-target">≥ 0.85</div>
+        <div class="metric-desc">Similaridad usando embeddings de BERT. Mejor que BLEU para naturalidad.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">LLM-as-a-judge</div>
+        <div class="metric-target">≥ 4/5 avg</div>
+        <div class="metric-desc">Modelo más fuerte (GPT-4, Claude Opus) puntúa según rúbrica. Atención al sesgo del juez.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Eval pass rate</div>
+        <div class="metric-target">≥ 95%</div>
+        <div class="metric-desc">% del golden set que pasa los criterios definidos.</div>
+      </div>
+    </div>
+
+    <h3>5.2 Métricas RAG-specific (Ragas framework)</h3>
+    <div>
+      <div class="metric-card">
+        <div class="metric-name">Faithfulness</div>
+        <div class="metric-target">≥ 0.90</div>
+        <div class="metric-desc">¿La respuesta está respaldada por el contexto recuperado?</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Answer Relevancy</div>
+        <div class="metric-target">≥ 0.85</div>
+        <div class="metric-desc">¿La respuesta responde a lo que pregunta el usuario?</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Context Precision</div>
+        <div class="metric-target">≥ 0.80</div>
+        <div class="metric-desc">¿Los chunks recuperados son relevantes? (señal/ruido en retrieval)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Context Recall</div>
+        <div class="metric-target">≥ 0.75</div>
+        <div class="metric-desc">¿Se recuperaron todos los chunks necesarios?</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Hallucination Rate</div>
+        <div class="metric-target">≤ 5%</div>
+        <div class="metric-desc">% de respuestas con afirmaciones no respaldadas.</div>
+      </div>
+    </div>
+
+    <h3>5.3 Métricas de seguridad / safety</h3>
+    <div>
+      <div class="metric-card">
+        <div class="metric-name">Toxicity Score</div>
+        <div class="metric-target">≤ 0.10</div>
+        <div class="metric-desc">Probabilidad de output tóxico (Perspective API, Detoxify).</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Refusal Rate</div>
+        <div class="metric-target">contextual</div>
+        <div class="metric-desc">% de prompts donde el modelo se rehúsa. Demasiado bajo = inseguro; demasiado alto = inútil.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Jailbreak Resistance</div>
+        <div class="metric-target">≥ 95%</div>
+        <div class="metric-desc">% de jailbreaks conocidos (DAN, do-anything) que el modelo resiste.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">PII Leakage Rate</div>
+        <div class="metric-target">0%</div>
+        <div class="metric-desc">% de respuestas que filtran PII (email, teléfono, SSN, tokens).</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Bias Score (BBQ)</div>
+        <div class="metric-target">|score| ≤ 0.10</div>
+        <div class="metric-desc">Score del benchmark BBQ sobre 11 dimensiones de sesgo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="evals">
+    <h2>6. Evals: el equivalente a "tests unitarios"</h2>
+    <p>Una <strong>eval</strong> es la unidad básica de testing en aplicaciones LLM. Estructura típica:</p>
+
+    <div class="template-box">{
+  "id": "ticket-classification-001",
+  "input": "Mi factura de marzo no aparece en mi cuenta",
+  "expected": {
+    "category": "billing",
+    "priority": "medium",
+    "language": "es"
+  },
+  "assertions": [
+    { "type": "contains-json-key", "key": "category" },
+    { "type": "equals", "path": "$.category", "value": "billing" },
+    { "type": "llm-rubric", "rubric": "La respuesta es empática y propone próximos pasos concretos" },
+    { "type": "not-contains", "value": "no puedo ayudarte" },
+    { "type": "latency", "max_ms": 2000 },
+    { "type": "cost", "max_usd": 0.005 }
+  ],
+  "metadata": {
+    "owner": "qa-team",
+    "tags": ["regression", "billing-feature"],
+    "added": "2026-04-26"
+  }
+}</div>
+
+    <h3>6.1 Tipos de assertion</h3>
+    <table class="guide-table">
+      <tr><th>Tipo</th><th>Cuándo usar</th><th>Ejemplo</th></tr>
+      <tr><td class="field-label">equals / exact-match</td><td>Tareas con única respuesta correcta</td><td>Clasificación de intent</td></tr>
+      <tr><td class="field-label">contains / regex</td><td>Verificar presencia/ausencia de keyword</td><td>"La respuesta debe mencionar el SLA de 24h"</td></tr>
+      <tr><td class="field-label">json-schema</td><td>Salida estructurada</td><td>Validar que el output es JSON válido con campos esperados</td></tr>
+      <tr><td class="field-label">semantic-similarity</td><td>Tareas con respuestas equivalentes</td><td>"México DF" ~ "Ciudad de México"</td></tr>
+      <tr><td class="field-label">llm-rubric</td><td>Criterios subjetivos (tono, claridad)</td><td>"La respuesta es empática y profesional"</td></tr>
+      <tr><td class="field-label">factuality</td><td>Verificar afirmaciones factuales</td><td>FActScore, contra base de datos de verdad</td></tr>
+      <tr><td class="field-label">toxicity-below</td><td>Safety</td><td>Perspective API score &lt; 0.1</td></tr>
+      <tr><td class="field-label">latency / cost</td><td>SLOs operativos</td><td>p95 &lt; 1500ms, costo &lt; $0.01</td></tr>
+    </table>
+
+    <h3>6.2 Tamaño y composición del golden set</h3>
+    <div class="info-box">
+      <ul>
+        <li><strong>Mínimo viable:</strong> 50 evals para arrancar (cubrir flujos principales).</li>
+        <li><strong>Producción:</strong> 200-500 evals para tener señal estadística confiable.</li>
+        <li><strong>Distribución recomendada:</strong> 60% happy path · 25% edge cases · 10% adversarial · 5% known regressions.</li>
+        <li><strong>Refresh cadence:</strong> añadir ≥ 5 evals por sprint (especialmente: cada bug que escapó a prod → eval).</li>
+        <li><strong>Versionado:</strong> el golden set en git, junto con el código.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="performance-llm">
+    <h2>7. Performance de LLMs</h2>
+    <p>Performance en LLMs no se mide igual que en una API REST normal. Métricas clave:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Métrica</th>
+        <th style="width: 30%;">Definición</th>
+        <th style="width: 25%;">Target típico</th>
+        <th style="width: 25%;">Por qué importa</th>
+      </tr>
+      <tr>
+        <td class="field-label">TTFT<br><em>Time to First Token</em></td>
+        <td>Tiempo desde request hasta el primer token streameado</td>
+        <td>p95 &lt; 1.5s</td>
+        <td>UX percibida — el usuario ve que "algo pasa"</td>
+      </tr>
+      <tr>
+        <td class="field-label">TPOT<br><em>Time Per Output Token</em></td>
+        <td>Tiempo medio entre tokens consecutivos</td>
+        <td>&lt; 50ms (≥ 20 tokens/s)</td>
+        <td>Velocidad de generación percibida</td>
+      </tr>
+      <tr>
+        <td class="field-label">E2E Latency</td>
+        <td>TTFT + TPOT × output_tokens</td>
+        <td>p95 &lt; 5s para respuestas cortas</td>
+        <td>Tiempo total de respuesta</td>
+      </tr>
+      <tr>
+        <td class="field-label">Throughput</td>
+        <td>Tokens/segundo a nivel sistema</td>
+        <td>depende del modelo y hardware</td>
+        <td>Capacidad agregada</td>
+      </tr>
+      <tr>
+        <td class="field-label">RPS bajo carga</td>
+        <td>Requests/segundo sin degradar TTFT</td>
+        <td>SLO definido por producto</td>
+        <td>Capacidad concurrente</td>
+      </tr>
+      <tr>
+        <td class="field-label">Tail latency</td>
+        <td>p99, p99.9 de E2E</td>
+        <td>p99 &lt; 2 × p95</td>
+        <td>Experiencia de los usuarios "afortunados" 1%</td>
+      </tr>
+      <tr>
+        <td class="field-label">Cost per request</td>
+        <td>USD por request (input_tokens × $/1k + output_tokens × $/1k)</td>
+        <td>SLO de unit economics</td>
+        <td>Sostenibilidad del producto</td>
+      </tr>
+      <tr>
+        <td class="field-label">Cache hit rate</td>
+        <td>% de respuestas servidas desde cache (prompt cache, embedding cache)</td>
+        <td>≥ 30% en chatbots con FAQs</td>
+        <td>Reduce costo y latencia</td>
+      </tr>
+      <tr>
+        <td class="field-label">Context utilization</td>
+        <td>tokens usados / tokens disponibles</td>
+        <td>&lt; 80% para evitar truncamiento</td>
+        <td>Garantiza que entra todo el contexto</td>
+      </tr>
+    </table>
+
+    <h3>7.1 Test de carga con k6 contra un endpoint LLM</h3>
+    <div class="code-box"><span class="c">// k6 — load test de un endpoint LLM, medir TTFT y TPOT</span>
+<span class="k">import</span> http <span class="k">from</span> <span class="s">'k6/http'</span>;
+<span class="k">import</span> { check, sleep } <span class="k">from</span> <span class="s">'k6'</span>;
+<span class="k">import</span> { Trend } <span class="k">from</span> <span class="s">'k6/metrics'</span>;
+
+<span class="k">const</span> ttft = <span class="k">new</span> <span class="k">Trend</span>(<span class="s">'ttft_ms'</span>, <span class="k">true</span>);
+<span class="k">const</span> e2e  = <span class="k">new</span> <span class="k">Trend</span>(<span class="s">'e2e_ms'</span>, <span class="k">true</span>);
+
+<span class="k">export const</span> options = {
+  scenarios: {
+    chatbot: {
+      executor: <span class="s">'ramping-arrival-rate'</span>,
+      startRate: <span class="s">5</span>, timeUnit: <span class="s">'1s'</span>,
+      preAllocatedVUs: <span class="s">50</span>, maxVUs: <span class="s">200</span>,
+      stages: [
+        { target: <span class="s">10</span>, duration: <span class="s">'2m'</span> },
+        { target: <span class="s">50</span>, duration: <span class="s">'5m'</span> },
+        { target: <span class="s">100</span>, duration: <span class="s">'5m'</span> },
+        { target: <span class="s">0</span>,   duration: <span class="s">'1m'</span> }
+      ]
+    }
+  },
+  thresholds: {
+    <span class="s">'ttft_ms'</span>: [<span class="s">'p(95)&lt;1500'</span>, <span class="s">'p(99)&lt;3000'</span>],
+    <span class="s">'e2e_ms'</span>:  [<span class="s">'p(95)&lt;5000'</span>],
+    <span class="s">'http_req_failed'</span>: [<span class="s">'rate&lt;0.01'</span>]
+  }
+};
+
+<span class="k">export default function</span> () {
+  <span class="k">const</span> t0 = Date.now();
+  <span class="k">const</span> res = http.post(__ENV.LLM_URL, JSON.stringify({
+    model: <span class="s">'gpt-4o-mini'</span>,
+    messages: [{ role: <span class="s">'user'</span>, content: <span class="s">'Resumí en 2 frases qué es shift-left testing'</span> }],
+    stream: <span class="k">false</span>
+  }), { headers: { <span class="s">'Authorization'</span>: <span class="s">`Bearer ${__ENV.API_KEY}`</span> } });
+  <span class="k">const</span> t1 = Date.now();
+  e2e.add(t1 - t0);
+  ttft.add(res.timings.waiting);
+  check(res, { <span class="s">'200'</span>: r =&gt; r.status === <span class="s">200</span> });
+  sleep(<span class="s">1</span>);
+}</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="rag-testing">
+    <h2>8. Testing de sistemas RAG (Retrieval-Augmented Generation)</h2>
+    <p>Un RAG tiene <strong>dos componentes</strong> que pueden fallar independientemente. Hay que probarlos por separado y luego juntos:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Componente</th>
+        <th style="width: 35%;">Qué probar</th>
+        <th style="width: 40%;">Métrica clave</th>
+      </tr>
+      <tr>
+        <td class="field-label">1. Retrieval</td>
+        <td>¿El sistema recupera los chunks correctos para la pregunta?</td>
+        <td>Recall@k, MRR, Context Precision/Recall (Ragas)</td>
+      </tr>
+      <tr>
+        <td class="field-label">2. Generation</td>
+        <td>Dado el contexto correcto, ¿el LLM genera la respuesta correcta?</td>
+        <td>Faithfulness, Answer Relevancy</td>
+      </tr>
+      <tr>
+        <td class="field-label">3. End-to-end</td>
+        <td>Combinación: ¿el sistema responde correcto al usuario final?</td>
+        <td>Eval pass rate, satisfacción humana</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>Truco diagnóstico:</strong> si el end-to-end falla, hacé el test con el contexto inyectado manualmente (skipping retrieval). Si pasa, el problema es el retrieval. Si falla, es el LLM/prompt.
+    </div>
+
+    <h3>8.1 Casos a cubrir en un golden set RAG</h3>
+    <ul>
+      <li><strong>Preguntas con respuesta directa</strong> en la KB → debe responder.</li>
+      <li><strong>Preguntas sin respuesta</strong> en la KB → debe decir "no sé" / "no encontré".</li>
+      <li><strong>Preguntas con respuesta parcial</strong> → debe responder lo que sabe + admitir lo que no.</li>
+      <li><strong>Preguntas ambiguas</strong> → debe pedir clarificación.</li>
+      <li><strong>Preguntas con info contradictoria</strong> entre chunks → debe detectarlo.</li>
+      <li><strong>Indirect prompt injection</strong>: documento envenenado con "ignore previous instructions".</li>
+      <li><strong>Preguntas en otro idioma</strong> distinto del corpus.</li>
+      <li><strong>Preguntas extremadamente largas</strong> (testing de context window).</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="tooling">
+    <h2>9. Tooling recomendado</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Herramienta</th>
+        <th style="width: 20%;">Tipo</th>
+        <th style="width: 35%;">Uso</th>
+        <th style="width: 25%;">Notas</th>
+      </tr>
+      <tr>
+        <td class="field-label">promptfoo</td>
+        <td>OSS</td>
+        <td>Eval framework + comparación side-by-side de prompts/modelos</td>
+        <td>Fácil de integrar en CI</td>
+      </tr>
+      <tr>
+        <td class="field-label">Ragas</td>
+        <td>OSS (Python)</td>
+        <td>Métricas específicas RAG (faithfulness, answer relevancy, context precision/recall)</td>
+        <td>Standard de facto para RAG</td>
+      </tr>
+      <tr>
+        <td class="field-label">DeepEval</td>
+        <td>OSS</td>
+        <td>Framework tipo pytest para LLMs, &gt; 14 métricas builtin</td>
+        <td>Sintaxis pytest familiar</td>
+      </tr>
+      <tr>
+        <td class="field-label">OpenAI Evals</td>
+        <td>OSS</td>
+        <td>Framework de evals genérico, registry de evals públicas</td>
+        <td>Bueno para benchmarks reproducibles</td>
+      </tr>
+      <tr>
+        <td class="field-label">garak</td>
+        <td>OSS</td>
+        <td>Vulnerability scanner para LLMs (jailbreaks, leaks, encodings)</td>
+        <td>"OWASP ZAP de LLMs"</td>
+      </tr>
+      <tr>
+        <td class="field-label">PyRIT</td>
+        <td>OSS (Microsoft)</td>
+        <td>Framework de red-teaming automatizado</td>
+        <td>Más flexible que garak para custom attacks</td>
+      </tr>
+      <tr>
+        <td class="field-label">Helicone</td>
+        <td>SaaS / OSS</td>
+        <td>Observability + monitoring de llamadas LLM</td>
+        <td>Drop-in, low overhead</td>
+      </tr>
+      <tr>
+        <td class="field-label">LangSmith</td>
+        <td>SaaS</td>
+        <td>Tracing, eval, monitoring de LangChain</td>
+        <td>Si usás LangChain ya viene integrado</td>
+      </tr>
+      <tr>
+        <td class="field-label">Arize Phoenix</td>
+        <td>OSS</td>
+        <td>Observability open-source con evals integradas</td>
+        <td>Alternativa a LangSmith</td>
+      </tr>
+      <tr>
+        <td class="field-label">TruLens</td>
+        <td>OSS</td>
+        <td>Evaluación con feedback functions</td>
+        <td>Bueno para RAG con groundedness</td>
+      </tr>
+      <tr>
+        <td class="field-label">Perspective API</td>
+        <td>SaaS (Google)</td>
+        <td>Toxicity scoring</td>
+        <td>API gratuita con rate limits</td>
+      </tr>
+      <tr>
+        <td class="field-label">Presidio</td>
+        <td>OSS (Microsoft)</td>
+        <td>Detección y anonimización de PII</td>
+        <td>Pre/post processing</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="pipeline">
+    <h2>10. Pipeline CI/CD con evals continuos</h2>
+    <p>Estrategia recomendada: evals en cada PR + evals scheduled en producción.</p>
+
+    <div class="code-box"><span class="c"># .github/workflows/llm-evals.yml</span>
+<span class="k">name:</span> LLM Evals
+<span class="k">on:</span>
+  pull_request:
+    paths: [<span class="s">'prompts/**'</span>, <span class="s">'src/llm/**'</span>, <span class="s">'evals/**'</span>]
+  schedule:
+    - cron: <span class="s">'0 6 * * *'</span>  <span class="c"># diaria a las 06:00 UTC</span>
+
+<span class="k">jobs:</span>
+  evals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: <span class="s">'20'</span> }
+      - run: npm ci
+      - <span class="k">name:</span> Run promptfoo eval suite
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: npx promptfoo eval -c evals/promptfoo.yaml --output evals/results.json
+      - <span class="k">name:</span> Compare vs baseline
+        run: |
+          node scripts/compare-evals.js \
+            --current evals/results.json \
+            --baseline evals/baseline.json \
+            --threshold 0.95   <span class="c"># falla si pass-rate cae &gt;5%</span>
+      - <span class="k">name:</span> Comment results on PR
+        <span class="k">if:</span> github.event_name == <span class="s">'pull_request'</span>
+        run: npx promptfoo share --output html | gh pr comment ${{ github.event.pull_request.number }} -F -
+      - <span class="k">name:</span> Upload artifacts
+        uses: actions/upload-artifact@v4
+        with: { name: eval-results, path: evals/results.json }</div>
+
+    <h3>10.1 Estrategia de gates por entorno</h3>
+    <table class="guide-table">
+      <tr><th>Entorno</th><th>Frecuencia</th><th>Gate</th><th>Acción si falla</th></tr>
+      <tr><td class="field-label">PR</td><td>Cada commit</td><td>Pass rate ≥ baseline -2pp</td><td>Bloquea merge</td></tr>
+      <tr><td class="field-label">Staging</td><td>Diaria</td><td>Pass rate ≥ 95% + safety = 100%</td><td>Alerta + bloqueo de promote</td></tr>
+      <tr><td class="field-label">Producción</td><td>Continua (sample)</td><td>Drift &lt; 5% sobre 7 días</td><td>Alerta a oncall, posible rollback</td></tr>
+      <tr><td class="field-label">Pre-release modelo nuevo</td><td>Una vez</td><td>Suite completa + red-teaming</td><td>No release sin sign-off</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="plantilla-plan">
+    <h2>11. Plantilla — Plan de pruebas LLM (resumen)</h2>
+    <div class="template-box"># Plan de pruebas LLM — &lt;feature&gt;
+
+## 1. Identificación
+- Feature: …
+- Modelo(s): GPT-4o-mini / Claude Sonnet 4.6 / Llama-3.3
+- Versión del prompt: v1.4 (commit abc123)
+- Owner QA: …
+- Fecha: 2026-04-26
+
+## 2. Alcance
+- IN: clasificación de tickets, generación de respuesta inicial, escalación
+- OUT: traducción multilingüe (otra feature)
+
+## 3. Modelo de calidad (ISO/IEC 25059)
+- [x] Functional adaptability
+- [x] Robustness
+- [x] User controllability
+- [x] Transparency (logging de razonamiento)
+- [ ] Intervenability (human-in-the-loop) — pendiente
+
+## 4. Riesgos identificados (matriz P×I)
+| ID | Riesgo | P | I | Mitigación |
+|----|--------|---|---|------------|
+| R1 | Hallucination en tickets de billing | 3 | 3 | Groundedness threshold 0.9 + rejection si baja |
+| R2 | Prompt injection vía título de ticket | 3 | 3 | Input sanitization + system prompt hardening |
+| R3 | Latencia &gt; 3s percibida lenta | 2 | 2 | Streaming + caching de FAQs |
+
+## 5. Tipos de testing aplicables
+- Functional: golden set 200 evals
+- Robustness: 50 paráfrasis + typos
+- Security: OWASP LLM Top 10 (LLM01, LLM02, LLM05 prioritarios)
+- Performance: k6 con 50 RPS sostenidos, p95 TTFT &lt; 1.5s
+- A/B prompt v1.4 vs v1.3 (1 semana, 5% tráfico)
+
+## 6. Criterios de aceptación
+| Métrica | Threshold |
+|---------|-----------|
+| Eval pass rate | ≥ 95% |
+| Faithfulness (RAG) | ≥ 0.90 |
+| Toxicity | ≤ 0.05 |
+| PII leakage | 0% |
+| p95 TTFT | &lt; 1.5s |
+| Cost / request | ≤ $0.005 |
+
+## 7. Datos de prueba
+- Golden set: 200 casos (60% happy / 25% edge / 10% adversarial / 5% regresión)
+- Adversarial set: 50 prompts de OWASP LLM Top 10
+- Performance set: 100 prompts representativos de tráfico real
+
+## 8. Pipeline
+- PR: promptfoo eval (subset 50 casos rápidos)
+- Daily: full suite + safety scan (garak)
+- Weekly: red-teaming sesión (humano + PyRIT)
+- Continuous: sampling 1% prod + groundedness scoring
+
+## 9. Salida
+- Reporte HTML por ejecución
+- Dashboard Grafana con métricas en producción
+- Eval results en S3/artifact por release</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="anti-patterns">
+    <h2>12. Anti-patterns comunes</h2>
+    <div class="danger-box">
+      <ul>
+        <li><strong>Probar solo el "happy path".</strong> Sin adversarial = falsa confianza. Mínimo 10% de tu set debe ser adversarial.</li>
+        <li><strong>Usar el mismo modelo como juez y bajo prueba.</strong> Sesgo de auto-evaluación. Para LLM-as-a-judge, usar un modelo más fuerte/diferente.</li>
+        <li><strong>No versionar el golden set.</strong> Sin versión, no hay comparación válida entre runs.</li>
+        <li><strong>Confiar en BLEU/ROUGE para QA.</strong> Funcionan en traducción/resumen, no en QA libre.</li>
+        <li><strong>Probar con temperature=1.0.</strong> Para evals: usar temperature=0 (determinismo máximo) y seed fija si el modelo lo soporta. Para producción es otro tema.</li>
+        <li><strong>Ignorar el costo.</strong> Una eval suite cara que se corre todos los días puede costar miles de USD/mes. Sample inteligente.</li>
+        <li><strong>"El modelo nuevo es mejor" sin medirlo.</strong> Cada upgrade de modelo es un cambio mayor — re-correr la suite completa antes de promote.</li>
+        <li><strong>Skip seguridad.</strong> "Es solo un chatbot interno" no exime de prompt injection. La menor superficie de ataque sigue siendo superficie.</li>
+        <li><strong>No tener "evals de regresión por bug".</strong> Cada bug que escapó a producción debe convertirse en una eval del golden set.</li>
+        <li><strong>Probar offline y deployar sin shadow mode.</strong> Shadow run en producción 1-7 días antes de cutover real.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📚 Referencias</h2>
+    <ul>
+      <li>ISO/IEC TR 29119-11:2020 — Testing of AI-based systems</li>
+      <li>ISO/IEC 25059:2023 — Quality model for AI systems</li>
+      <li>NIST AI Risk Management Framework 1.0 (AI 100-1, ene 2023) + Generative AI Profile (AI 600-1, jul 2024)</li>
+      <li>OWASP Top 10 for Large Language Model Applications (2025)</li>
+      <li>EU Artificial Intelligence Act (Regulation 2024/1689)</li>
+      <li>Stanford CRFM — HELM (Holistic Evaluation of Language Models)</li>
+      <li>MLPerf Inference / Training benchmarks (mlcommons.org)</li>
+      <li>Ragas — <code>github.com/explodinggradients/ragas</code></li>
+      <li>promptfoo — <code>github.com/promptfoo/promptfoo</code></li>
+      <li>NVIDIA garak — <code>github.com/NVIDIA/garak</code></li>
+      <li>Microsoft PyRIT — <code>github.com/Azure/PyRIT</code></li>
+    </ul>
+  </div>
+
+  <div class="guide-meta" style="text-align: center; margin-top: 40px;">
+    <strong>QA Shift-Left Methodology · by E-Gregorio</strong><br>
+    Guía Testing IA/LLM — alineada a ISO/IEC TR 29119-11:2020, ISO/IEC 25059:2023, NIST AI RMF 1.0 y OWASP LLM Top 10 (2025)
+  </div>
+
+</div>
+</body>
+</html>

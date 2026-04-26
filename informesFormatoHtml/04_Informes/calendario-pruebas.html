@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calendario de Pruebas — Test Schedule</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .cal-container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .cal-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .cal-logo { width: 60px; height: 60px; background: white; border-radius: 50%; margin-right: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #2563EB; font-size: 18px; }
+  .cal-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .cal-section { margin: 30px 0; }
+  .cal-section h2 { color: #2c3e50; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .cal-section h3 { color: #34495e; margin-top: 25px; }
+  .cal-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .cal-table td, .cal-table th { border: 1px solid #ddd; padding: 10px; vertical-align: top; text-align: left; }
+  .cal-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .cal-table tr:nth-child(even) { background: #f8f9fa; }
+  .highlight-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2196f3; }
+  .milestone-box { background: #fff8e1; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ffc107; }
+  .criteria-box { background: #f1f8e9; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #4caf50; }
+  .integration-box { background: #f3e5f5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #9c27b0; }
+  .field-label { font-weight: bold; color: #2c3e50; }
+  .divider { border-top: 2px solid #ecf0f1; margin: 30px 0; }
+  .phase-name { font-weight: bold; color: #2563EB; }
+</style>
+</head>
+<body>
+<div class="cal-container">
+  
+  <div class="cal-header">
+    <div>CALENDARIO DE PRUEBAS</div>
+  </div>
+  
+  <div class="cal-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="highlight-box">
+      <strong>Normas de referencia:</strong> ISO/IEC/IEEE 29119-3 (Test Schedule), ISO/IEC/IEEE 29119-3 §6 (Test Schedule), ISTQB v4 Cap.5
+    </div>
+    
+    <table class="cal-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Sistema:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión / Release objetivo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable QA:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de inicio planificada:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de fin planificada:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="cal-section">
+    <h2>1. Propósito</h2>
+    <div class="highlight-box">
+      <p>Este calendario detalla las <strong>fases, actividades y dependencias de las pruebas</strong> de todo el proyecto.</p>
+      <p>Es un documento vivo que guía la planificación y permite seguimiento preciso de avances, riesgos y retrasos.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cal-section">
+    <h2>2. Estructura del Calendario</h2>
+    
+    <table class="cal-table">
+      <tr>
+        <th style="width: 25%;">Fase / Actividad</th>
+        <th style="width: 12%;">Fecha inicio planificada</th>
+        <th style="width: 12%;">Fecha fin planificada</th>
+        <th style="width: 15%;">Responsable</th>
+        <th style="width: 16%;">Dependencias</th>
+        <th style="width: 20%;">Entregables</th>
+      </tr>
+      <tr>
+        <td class="phase-name">Preparación de datos y ambientes</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Diseño de casos de prueba</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Ejecución de pruebas de componente</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Ejecución de pruebas de integración</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Ejecución de pruebas de sistema</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Pruebas de rendimiento / estrés</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Pruebas de seguridad</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Ejecución de regresión</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Informe de avance (semanal)</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+      <tr>
+        <td class="phase-name">Informe de cierre</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+        <td>____________</td>
+      </tr>
+    </table>
+    
+    <div class="criteria-box">
+      <strong>📝 Nota:</strong> Ajustar las fases según la metodología (ágil, cascada, híbrida).
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cal-section">
+    <h2>3. Hitos principales</h2>
+    
+    <table class="cal-table">
+      <tr>
+        <th style="width: 15%;">Hito</th>
+        <th style="width: 55%;">Descripción</th>
+        <th style="width: 30%;">Fecha objetivo</th>
+      </tr>
+      <tr>
+        <td><strong>H1</strong></td>
+        <td>Master Test Plan aprobado</td>
+        <td>_______________________</td>
+      </tr>
+      <tr>
+        <td><strong>H2</strong></td>
+        <td>Test Plan del Sprint 1 aprobado</td>
+        <td>_______________________</td>
+      </tr>
+      <tr>
+        <td><strong>H3</strong></td>
+        <td>Primer informe de avance</td>
+        <td>_______________________</td>
+      </tr>
+      <tr>
+        <td><strong>H4</strong></td>
+        <td>Ejecución completa de pruebas de sistema</td>
+        <td>_______________________</td>
+      </tr>
+      <tr>
+        <td><strong>H5</strong></td>
+        <td>Informe de cierre y sign-off</td>
+        <td>_______________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cal-section">
+    <h2>4. Criterios de Seguimiento</h2>
+    <div class="milestone-box">
+      <ul>
+        <li>Las actividades se monitorean <strong>semanalmente</strong> (o según el ritmo del sprint).</li>
+        <li>Toda desviación <strong>≥10%</strong> del plan se reporta como riesgo.</li>
+        <li>La replanificación requiere aprobación del <strong>Líder QA</strong> y del <strong>Project Manager</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cal-section">
+    <h2>5. Integración con la Base de Datos</h2>
+    <div class="integration-box">
+      <p><strong>El calendario se relacionará con las tablas:</strong></p>
+      <ul>
+        <li><strong>epics / user_stories:</strong> para alinear las fechas de prueba de cada historia.</li>
+        <li><strong>test_suites / test_cases:</strong> para monitorear ejecución en tiempo real.</li>
+        <li><strong>progress_reports:</strong> para generar métricas automáticas de cumplimiento.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

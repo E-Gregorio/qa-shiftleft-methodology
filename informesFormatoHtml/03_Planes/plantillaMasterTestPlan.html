@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Master Test Plan (MTP) — Plantilla Completa</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .mtp-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .mtp-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .mtp-logo { width: 60px; height: 60px; background: white; border-radius: 50%; margin-right: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #2563EB; font-size: 18px; }
+  .mtp-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .mtp-section { margin: 30px 0; }
+  .mtp-section h2 { color: #2c3e50; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .mtp-section h3 { color: #34495e; margin-top: 25px; }
+  .mtp-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .mtp-table td, .mtp-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .mtp-table th { background: #2563EB; color: white; font-weight: bold; }
+  .mtp-table tr:nth-child(even) { background: #f8f9fa; }
+  .highlight-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2196f3; }
+  .criteria-list { background: #f1f8e9; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #4caf50; }
+  .risk-section { background: #fff3e0; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #ff9800; }
+  ul { margin: 10px 0; }
+  li { margin-bottom: 5px; }
+  .field-label { font-weight: bold; color: #2c3e50; }
+  .divider { border-top: 2px solid #ecf0f1; margin: 30px 0; }
+</style>
+</head>
+<body>
+<div class="mtp-container">
+  
+  <div class="mtp-header">
+    <div>MASTER TEST PLAN</div>
+  </div>
+  
+  <div class="mtp-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="highlight-box">
+      <strong>Norma de referencia:</strong> ISO/IEC/IEEE 29119-3 — Test Planning<br>
+      <strong>Complemento:</strong> ISO/IEC/IEEE 29119-3:2021 — Test Documentation (sucesor de ISO/IEC/IEEE 29119-3)
+    </div>
+    
+    <table class="mtp-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Sistema:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión / Release objetivo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de elaboración:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable / Equipo QA:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="mtp-section">
+    <h2>1. Propósito y Referencias Normativas</h2>
+    <div class="highlight-box">
+      <p>Este documento se elabora conforme a <strong>ISO/IEC/IEEE 29119-3 (sección Test Planning)</strong> 
+      y <strong>ISO/IEC/IEEE 29119-3 §5 (Test Plan / Master Test Plan)</strong>.</p>
+      
+      <p>Su objetivo es definir el enfoque, los recursos y el calendario de todas las pruebas del proyecto, 
+      establecer criterios de entrada, salida, suspensión y reanudación, 
+      y asegurar trazabilidad y control de calidad durante todo el ciclo de vida del software.</p>
+    </div>
+    
+    <div class="criteria-list">
+      <strong>Referencias específicas:</strong>
+      <ul>
+        <li>ISTQB v4 – Capítulo 5: Planificación y Control de Pruebas</li>
+        <li>ISO/IEC/IEEE 29119-3 – Test Plan & Master Test Plan</li>
+        <li>ISO/IEC/IEEE 29119-3:2021 – Test Documentation (sucesor de ISO/IEC/IEEE 29119-3)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>2. Alcance del Proyecto de Pruebas</h2>
+    
+    <h3>2.1 Alcance Incluido</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Sistemas / módulos y componentes a probar.</li>
+        <li>Interfaces internas y externas.</li>
+        <li>Tipos de prueba (funcional, integración, rendimiento, seguridad, etc.).</li>
+      </ul>
+    </div>
+    
+    <h3>2.2 Fuera de Alcance</h3>
+    <div class="risk-section">
+      <ul>
+        <li>Elementos excluidos y su justificación.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>3. Estrategia de Prueba</h2>
+    <div class="highlight-box">
+      <ul>
+        <li>Enfoque general (ágil, cascada, híbrido; shift-left; automatización).</li>
+        <li>Niveles de prueba: componente, integración, sistema, aceptación.</li>
+        <li>Tipos y técnicas de prueba: análisis de valores límite, partición de equivalencia, etc.</li>
+        <li>Datos de prueba: diseño, generación, mantenimiento.</li>
+        <li>Herramientas y entornos: CI/CD, frameworks de automatización, monitoreo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>4. Organización y Roles</h2>
+    <table class="mtp-table">
+      <tr>
+        <th>Rol / Perfil</th>
+        <th>Responsabilidades</th>
+      </tr>
+      <tr>
+        <td><strong>Líder QA</strong></td>
+        <td>Planificación y supervisión global del MTP</td>
+      </tr>
+      <tr>
+        <td><strong>QA Analistas / Automation</strong></td>
+        <td>Diseño y ejecución de pruebas, automatización, reporte de defectos</td>
+      </tr>
+      <tr>
+        <td><strong>Desarrolladores</strong></td>
+        <td>Corrección de defectos, soporte técnico</td>
+      </tr>
+      <tr>
+        <td><strong>PO / Stakeholders</strong></td>
+        <td>Aprobación de criterios, aceptación final</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>5. Recursos y Calendario</h2>
+    
+    <h3>5.1 Recursos</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Personal, infraestructura, licencias de herramientas, ambientes de prueba.</li>
+      </ul>
+    </div>
+    
+    <h3>5.2 Cronograma Global</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Fases y hitos de prueba.</li>
+        <li>Entregables principales.</li>
+        <li>Dependencias con otros proyectos o equipos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>6. Gestión de Riesgos</h2>
+    <table class="mtp-table">
+      <tr>
+        <th>Riesgo</th>
+        <th>Probabilidad</th>
+        <th>Impacto</th>
+        <th>Mitigación</th>
+        <th>Contingencia</th>
+      </tr>
+      <tr>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+      </tr>
+      <tr>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>7. Criterios de Entrada, Salida y Suspensión/Reanudación</h2>
+    
+    <h3>7.1 Criterios de Entrada</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Requisitos baselined, ambiente configurado, datos listos, código integrado.</li>
+      </ul>
+    </div>
+    
+    <h3>7.2 Criterios de Salida</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Cobertura mínima de requisitos, defectos críticos resueltos, métricas de calidad alcanzadas.</li>
+      </ul>
+    </div>
+    
+    <h3>7.3 Criterios de Suspensión y Reanudación</h3>
+    <div class="risk-section">
+      <p><strong>Suspensión:</strong> Se interrumpen las pruebas si:</p>
+      <ul>
+        <li>la tasa de error en pruebas de estrés/concurrencia supera el 25 %.</li>
+        <li>surgen defectos críticos que bloqueen flujos esenciales.</li>
+        <li>el entorno QA no es estable.</li>
+      </ul>
+      
+      <p><strong>Reanudación:</strong> Se retoman las pruebas cuando:</p>
+      <ul>
+        <li>se corrigen los defectos bloqueantes o se restablece el ambiente.</li>
+        <li>se valida la estabilidad del entorno y el líder QA autoriza la reanudación.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>8. Entregables de Prueba</h2>
+    <div class="highlight-box">
+      <ul>
+        <li>Planes de prueba por sprint o release.</li>
+        <li>Suites y casos de prueba.</li>
+        <li>Informes de avance y de cierre.</li>
+        <li>Informes de defectos.</li>
+        <li>Matriz de trazabilidad Requisito/Historia → Caso de prueba → Resultado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>9. Métricas y Seguimiento</h2>
+    <table class="mtp-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Valor esperado / Objetivo</th>
+      </tr>
+      <tr>
+        <td>Casos planificados / ejecutados</td>
+        <td>_________________________</td>
+      </tr>
+      <tr>
+        <td>Casos pasados / fallidos</td>
+        <td>_________________________</td>
+      </tr>
+      <tr>
+        <td>Defectos abiertos / cerrados</td>
+        <td>_________________________</td>
+      </tr>
+      <tr>
+        <td>Cobertura de requisitos (%)</td>
+        <td>_________________________</td>
+      </tr>
+      <tr>
+        <td>Cobertura de código (%) (opcional)</td>
+        <td>_________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>10. Trazabilidad</h2>
+    <div class="criteria-list">
+      <ul>
+        <li>Mapa de requerimientos a casos de prueba y resultados.</li>
+        <li>Documentos de diseño, requisitos, mockups y normas aplicadas.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mtp-section">
+    <h2>11. Control de Cambios</h2>
+    <table class="mtp-table">
+      <tr>
+        <th>Versión</th>
+        <th>Fecha</th>
+        <th>Autor</th>
+        <th>Descripción del cambio</th>
+      </tr>
+      <tr>
+        <td>1.0</td>
+        <td>_____________</td>
+        <td>_____________</td>
+        <td>Versión inicial</td>
+      </tr>
+      <tr>
+        <td>_______</td>
+        <td>_____________</td>
+        <td>_____________</td>
+        <td>_________________________</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

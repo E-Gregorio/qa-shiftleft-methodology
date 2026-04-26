@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía Gestión de Riesgos ISTQB-ISO29119 — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .guide-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #2563EB; margin-top: 25px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .risk-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 20px 0; }
+  .matrix-cell { padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: bold; }
+  .matrix-header { background: #2563EB; color: white; }
+  .risk-low { background: #c8e6c9; color: #2e7d32; }
+  .risk-medium { background: #fff3e0; color: #f57c00; }
+  .risk-high { background: #ffcdd2; color: #c62828; }
+  .scale-box { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .template-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: monospace; border: 1px solid #ddd; }
+  .example-box { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #4caf50; }
+  .process-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 20px 0; }
+  .flow-step { background: #f8f9fa; padding: 15px; text-align: center; border-radius: 8px; border: 2px solid #2563EB; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+  
+  <div class="guide-header">
+    <div>GUÍA GESTIÓN DE RIESGOS ISTQB-ISO29119</div>
+  </div>
+  
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Framework basado en ISTQB v4 (Foundation 2023) / ISO/IEC/IEEE 29119-3
+    </div>
+    <div class="info-box">
+      Esta guía establece el <strong>marco metodológico</strong> para identificar, evaluar, priorizar y gestionar riesgos en testing, alineado con los estándares internacionales <strong>ISTQB</strong> e <strong>ISO/IEC/IEEE 29119</strong>.
+    </div>
+  </div>
+
+  <div class="guide-section">
+    <h2>🎯 Objetivos y alcance</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Aspecto</th>
+        <th style="width: 80%;">Descripción</th>
+      </tr>
+      <tr>
+        <td class="field-label">Objetivo principal</td>
+        <td>Implementar un enfoque <strong>risk-based testing</strong> que optimice recursos y maximice la cobertura de riesgos críticos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Alcance</td>
+        <td>Aplicable a <strong>todos los proyectos</strong> desde la fase de análisis hasta post-implementación</td>
+      </tr>
+      <tr>
+        <td class="field-label">Marco regulatorio</td>
+        <td>Basado en <strong>ISTQB v4</strong>, <strong>ISO/IEC/IEEE 29119-3</strong> y <strong>IEEE 1044</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Beneficios esperados</td>
+        <td>Reducción del 30% en defectos críticos, optimización del esfuerzo de testing, mayor predictibilidad</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>⚖️ Escalas de probabilidad e impacto</h2>
+    
+    <div class="scale-box">
+      <h3>📊 Escala de Probabilidad (P)</h3>
+      <table class="guide-table">
+        <tr>
+          <th style="width: 10%;">Nivel</th>
+          <th style="width: 20%;">Descripción</th>
+          <th style="width: 25%;">Criterios técnicos</th>
+          <th style="width: 45%;">Ejemplos</th>
+        </tr>
+        <tr>
+          <td class="field-label">1<br><span style="font-weight: normal;">(Baja)</span></td>
+          <td>Muy poco probable que ocurra</td>
+          <td>Funcionalidad simple, tecnología madura, equipo experimentado</td>
+          <td>Cambio de texto, ajustes CSS, configuración existente</td>
+        </tr>
+        <tr>
+          <td class="field-label">2<br><span style="font-weight: normal;">(Media)</span></td>
+          <td>Posible que ocurra</td>
+          <td>Complejidad moderada, algunas integraciones, cambios en lógica existente</td>
+          <td>Nuevas validaciones, consultas DB complejas, integraciones conocidas</td>
+        </tr>
+        <tr>
+          <td class="field-label">3<br><span style="font-weight: normal;">(Alta)</span></td>
+          <td>Muy probable que ocurra</td>
+          <td>Alta complejidad, tecnología nueva, muchas dependencias</td>
+          <td>Nuevos microservicios, migraciones, integraciones críticas</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="scale-box">
+      <h3>💥 Escala de Impacto (I)</h3>
+      <table class="guide-table">
+        <tr>
+          <th style="width: 10%;">Nivel</th>
+          <th style="width: 20%;">Descripción</th>
+          <th style="width: 25%;">Criterios de negocio</th>
+          <th style="width: 45%;">Ejemplos</th>
+        </tr>
+        <tr>
+          <td class="field-label">1<br><span style="font-weight: normal;">(Bajo)</span></td>
+          <td>Impacto mínimo</td>
+          <td>Afecta funcionalidad no crítica, workaround simple</td>
+          <td>Error en reportes secundarios, problemas visuales menores</td>
+        </tr>
+        <tr>
+          <td class="field-label">2<br><span style="font-weight: normal;">(Medio)</span></td>
+          <td>Impacto moderado</td>
+          <td>Afecta funcionalidad importante, workaround complejo</td>
+          <td>Falla en proceso de negocio secundario, errores de cálculo</td>
+        </tr>
+        <tr>
+          <td class="field-label">3<br><span style="font-weight: normal;">(Alto)</span></td>
+          <td>Impacto crítico</td>
+          <td>Afecta procesos críticos, pérdida de datos, problemas legales</td>
+          <td>Sistema de pagos, seguridad comprometida, pérdida de transacciones</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>🎯 Matriz de riesgos</h2>
+    
+    <div class="info-box">
+      <strong>Cálculo:</strong> Riesgo (R) = Probabilidad (P) × Impacto (I)<br>
+      <strong>Rango:</strong> R = 1 (mínimo) a 9 (máximo)
+    </div>
+
+    <div class="risk-matrix">
+      <div class="matrix-cell matrix-header">P\I</div>
+      <div class="matrix-cell matrix-header">1 (Bajo)</div>
+      <div class="matrix-cell matrix-header">2 (Medio)</div>
+      <div class="matrix-cell matrix-header">3 (Alto)</div>
+      
+      <div class="matrix-cell matrix-header">1 (Baja)</div>
+      <div class="matrix-cell risk-low">1</div>
+      <div class="matrix-cell risk-low">2</div>
+      <div class="matrix-cell risk-low">3</div>
+      
+      <div class="matrix-cell matrix-header">2 (Media)</div>
+      <div class="matrix-cell risk-low">2</div>
+      <div class="matrix-cell risk-medium">4</div>
+      <div class="matrix-cell risk-medium">6</div>
+      
+      <div class="matrix-cell matrix-header">3 (Alta)</div>
+      <div class="matrix-cell risk-low">3</div>
+      <div class="matrix-cell risk-medium">6</div>
+      <div class="matrix-cell risk-high">9</div>
+    </div>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Nivel de Riesgo</th>
+        <th style="width: 25%;">Puntuación</th>
+        <th style="width: 55%;">Acciones requeridas</th>
+      </tr>
+      <tr class="risk-low">
+        <td class="field-label">🟢 BAJO</td>
+        <td>R = 1, 2, 3</td>
+        <td>Pruebas básicas, documentación estándar, revisión periódica</td>
+      </tr>
+      <tr class="risk-medium">
+        <td class="field-label">🟡 MEDIO</td>
+        <td>R = 4, 6</td>
+        <td>Pruebas adicionales, monitoreo activo, plan de contingencia</td>
+      </tr>
+      <tr class="risk-high">
+        <td class="field-label">🔴 ALTO</td>
+        <td>R = 9</td>
+        <td>Pruebas exhaustivas, automatización obligatoria, escalamiento inmediato</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>🔄 Proceso de gestión de riesgos</h2>
+    
+    <div class="process-flow">
+      <div class="flow-step">
+        <h4>1️⃣ IDENTIFICAR</h4>
+        <p>Detectar riesgos potenciales en reuniones de equipo y análisis técnico</p>
+      </div>
+      <div class="flow-step">
+        <h4>2️⃣ ANALIZAR</h4>
+        <p>Evaluar P e I usando escalas definidas</p>
+      </div>
+      <div class="flow-step">
+        <h4>3️⃣ EVALUAR</h4>
+        <p>Calcular R = P × I y determinar prioridad</p>
+      </div>
+      <div class="flow-step">
+        <h4>4️⃣ TRATAR</h4>
+        <p>Definir estrategias: Mitigar, Transferir, Aceptar, Evitar</p>
+      </div>
+      <div class="flow-step">
+        <h4>5️⃣ MONITOREAR</h4>
+        <p>Seguimiento continuo y actualización en cada sprint</p>
+      </div>
+    </div>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 15%;">Fase</th>
+        <th style="width: 25%;">Actividades clave</th>
+        <th style="width: 30%;">Herramientas/Técnicas</th>
+        <th style="width: 30%;">Entregables</th>
+      </tr>
+      <tr>
+        <td class="field-label">Identificación</td>
+        <td>Brainstorming, checklist, análisis histórico</td>
+        <td>Workshops, FMEA, lessons learned</td>
+        <td>Registro inicial de riesgos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Análisis</td>
+        <td>Estimación P e I, justificación</td>
+        <td>Escalas definidas, expert judgment</td>
+        <td>Riesgos valorados</td>
+      </tr>
+      <tr>
+        <td class="field-label">Evaluación</td>
+        <td>Cálculo de R, priorización</td>
+        <td>Matriz de riesgos, ranking</td>
+        <td>Lista priorizada</td>
+      </tr>
+      <tr>
+        <td class="field-label">Tratamiento</td>
+        <td>Definir estrategia y acciones</td>
+        <td>4 estrategias ISTQB</td>
+        <td>Plan de tratamiento</td>
+      </tr>
+      <tr>
+        <td class="field-label">Monitoreo</td>
+        <td>Seguimiento, actualización</td>
+        <td>Dashboards, revisiones sprint</td>
+        <td>Reportes de estado</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>🛡️ Estrategias de tratamiento</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Estrategia</th>
+        <th style="width: 30%;">Cuándo aplicar</th>
+        <th style="width: 50%;">Ejemplos de acciones</th>
+      </tr>
+      <tr>
+        <td class="field-label">🔧 MITIGAR</td>
+        <td>Riesgos medio-altos que podemos reducir</td>
+        <td>Pruebas adicionales, code review, pair programming, prototipos</td>
+      </tr>
+      <tr>
+        <td class="field-label">📤 TRANSFERIR</td>
+        <td>Riesgos fuera de nuestro control</td>
+        <td>Seguros, SLAs con proveedores, externalización especializada</td>
+      </tr>
+      <tr>
+        <td class="field-label">✅ ACEPTAR</td>
+        <td>Riesgos bajos o costo de mitigación muy alto</td>
+        <td>Documentar, monitorear, plan de contingencia mínimo</td>
+      </tr>
+      <tr>
+        <td class="field-label">🚫 EVITAR</td>
+        <td>Riesgos inaceptables</td>
+        <td>Cambiar enfoque, eliminar funcionalidad, tecnología alternativa</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>💡 Ejemplos prácticos</h2>
+    
+    <div class="example-box">
+      <h3>📱 Ejemplo 1: Integración con nueva API de pagos</h3>
+      
+      <table class="guide-table">
+        <tr>
+          <th style="width: 30%;">Aspecto</th>
+          <th style="width: 70%;">Detalle</th>
+        </tr>
+        <tr>
+          <td class="field-label">Descripción del riesgo</td>
+          <td>La nueva API de pagos puede fallar o devolver errores inesperados</td>
+        </tr>
+        <tr>
+          <td class="field-label">Probabilidad (P)</td>
+          <td>3 - Nueva tecnología, poca documentación, múltiples casos edge</td>
+        </tr>
+        <tr>
+          <td class="field-label">Impacto (I)</td>
+          <td>3 - Proceso crítico de negocio, pérdida de ingresos</td>
+        </tr>
+        <tr>
+          <td class="field-label">Riesgo (R = P × I)</td>
+          <td>9 - CRÍTICO</td>
+        </tr>
+        <tr>
+          <td class="field-label">Estrategia</td>
+          <td>MITIGAR</td>
+        </tr>
+        <tr>
+          <td class="field-label">Acciones específicas</td>
+          <td>• Suite completa de tests automatizados<br>• Ambiente de sandbox dedicado<br>• Monitoreo en tiempo real<br>• Rollback automático si falla</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="example-box">
+      <h3>🎨 Ejemplo 2: Cambios de UI en página de contacto</h3>
+      
+      <table class="guide-table">
+        <tr>
+          <th style="width: 30%;">Aspecto</th>
+          <th style="width: 70%;">Detalle</th>
+        </tr>
+        <tr>
+          <td class="field-label">Descripción del riesgo</td>
+          <td>Los cambios visuales pueden romper la usabilidad o responsive design</td>
+        </tr>
+        <tr>
+          <td class="field-label">Probabilidad (P)</td>
+          <td>1 - Cambios simples, tecnología conocida, equipo experimentado</td>
+        </tr>
+        <tr>
+          <td class="field-label">Impacto (I)</td>
+          <td>1 - Funcionalidad no crítica, fácil de revertir</td>
+        </tr>
+        <tr>
+          <td class="field-label">Riesgo (R = P × I)</td>
+          <td>1 - BAJO</td>
+        </tr>
+        <tr>
+          <td class="field-label">Estrategia</td>
+          <td>ACEPTAR</td>
+        </tr>
+        <tr>
+          <td class="field-label">Acciones específicas</td>
+          <td>• Pruebas visuales básicas<br>• Revisión de responsive en dispositivos principales<br>• Monitoreo post-deploy</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📋 Plantilla de registro de riesgo</h2>
+    
+    <div class="template-box">
+## REGISTRO DE RIESGO
+
+**ID:** RISK-[PROYECTO]-[NÚMERO]
+**Fecha:** [DD/MM/YYYY]
+**Estado:** [Identificado|Analizado|En tratamiento|Cerrado]
+
+### 📝 Descripción
+**Riesgo:** [Descripción clara y específica del riesgo]
+**Área afectada:** [Frontend|Backend|Infraestructura|Datos|Seguridad]
+**Componente:** [Módulo o funcionalidad específica]
+
+### ⚖️ Evaluación
+**Probabilidad (P):** [ ] 1-Baja [ ] 2-Media [ ] 3-Alta
+**Justificación P:** [Razones técnicas y contextuales]
+
+**Impacto (I):** [ ] 1-Bajo [ ] 2-Medio [ ] 3-Alto  
+**Justificación I:** [Consecuencias de negocio y operativas]
+
+**Riesgo (R = P × I):** [Resultado del cálculo]
+**Clasificación:** [ ] 🟢 Bajo (1-3) [ ] 🟡 Medio (4,6) [ ] 🔴 Alto (9)
+
+### 🛡️ Tratamiento
+**Estrategia:** [ ] Mitigar [ ] Transferir [ ] Aceptar [ ] Evitar
+**Responsable:** [Nombre del responsable]
+**Fecha límite:** [DD/MM/YYYY]
+
+**Acciones específicas:**
+- [ ] [Acción 1]
+- [ ] [Acción 2]
+- [ ] [Acción 3]
+
+### 📊 Seguimiento
+**Última revisión:** [DD/MM/YYYY]
+**Próxima revisión:** [DD/MM/YYYY]
+**Comentarios:** [Observaciones y actualizaciones]
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📈 Métricas y seguimiento</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Métrica</th>
+        <th style="width: 35%;">Fórmula</th>
+        <th style="width: 15%;">Target</th>
+        <th style="width: 25%;">Frecuencia</th>
+      </tr>
+      <tr>
+        <td class="field-label">Cobertura de Riesgos</td>
+        <td>Riesgos con tratamiento / Total riesgos identificados</td>
+        <td>≥ 95%</td>
+        <td>Semanal</td>
+      </tr>
+      <tr>
+        <td class="field-label">Riesgos Críticos Abiertos</td>
+        <td>Cantidad de riesgos R=9 sin cerrar</td>
+        <td>= 0</td>
+        <td>Diaria</td>
+      </tr>
+      <tr>
+        <td class="field-label">Tiempo Medio de Resolución</td>
+        <td>Promedio días entre identificación y cierre</td>
+        <td>≤ 5 días</td>
+        <td>Sprint</td>
+      </tr>
+      <tr>
+        <td class="field-label">Efectividad de Mitigación</td>
+        <td>Riesgos materializados / Riesgos totales</td>
+        <td>≤ 5%</td>
+        <td>Sprint</td>
+      </tr>
+      <tr>
+        <td class="field-label">Riesgos por Sprint</td>
+        <td>Nuevos riesgos identificados por sprint</td>
+        <td>Trend ↓</td>
+        <td>Sprint</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>👥 Roles y responsabilidades</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Rol</th>
+        <th style="width: 80%;">Responsabilidades en gestión de riesgos</th>
+      </tr>
+      <tr>
+        <td class="field-label">QA Lead</td>
+        <td>Facilitar identificación, consolidar matriz, reportar métricas, escalar riesgos críticos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Tech Lead</td>
+        <td>Evaluar riesgos técnicos, definir arquitectura de mitigación, revisar tratamientos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Product Owner</td>
+        <td>Priorizar riesgos de negocio, validar impactos, aprobar estrategias de tratamiento</td>
+      </tr>
+      <tr>
+        <td class="field-label">Desarrolladores</td>
+        <td>Identificar riesgos técnicos, implementar mitigaciones, actualizar estado</td>
+      </tr>
+      <tr>
+        <td class="field-label">Testers</td>
+        <td>Identificar riesgos de calidad, diseñar casos de prueba, validar mitigaciones</td>
+      </tr>
+      <tr>
+        <td class="field-label">Scrum Master</td>
+        <td>Facilitar ceremonias de riesgo, remover impedimentos, gestionar comunicación</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>🔄 Integración con metodologías ágiles</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Ceremonia Scrum</th>
+        <th style="width: 30%;">Actividad de riesgos</th>
+        <th style="width: 50%;">Entregables</th>
+      </tr>
+      <tr>
+        <td class="field-label">Planning</td>
+        <td>Identificar y evaluar riesgos de las US del sprint</td>
+        <td>Registro de riesgos por US, cálculo VCR</td>
+      </tr>
+      <tr>
+        <td class="field-label">Daily</td>
+        <td>Actualizar estado de riesgos críticos</td>
+        <td>Alertas y escalamientos si es necesario</td>
+      </tr>
+      <tr>
+        <td class="field-label">Review</td>
+        <td>Presentar mitigaciones implementadas</td>
+        <td>Demo de controles y validaciones</td>
+      </tr>
+      <tr>
+        <td class="field-label">Retrospective</td>
+        <td>Analizar efectividad de gestión de riesgos</td>
+        <td>Lecciones aprendidas, mejoras al proceso</td>
+      </tr>
+      <tr>
+        <td class="field-label">Refinement</td>
+        <td>Identificar riesgos tempranos en backlog</td>
+        <td>Evaluación preliminar de riesgos futuros</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>🎯 Framework Integrado de Gestión QA</h3>
+    <p>Esta <strong>Guía de Gestión de Riesgos</strong> se integra perfectamente con la <strong>Estimación VCR</strong> y la <strong>Estrategia de Pruebas</strong>, formando un marco completo que asegura la calidad mediante <strong>risk-based testing</strong>, automatización inteligente y gestión proactiva de riesgos según estándares <strong>ISTQB</strong> e <strong>ISO/IEC/IEEE 29119</strong>.</p>
+  </div>
+
+</div>
+</body>
+</html>

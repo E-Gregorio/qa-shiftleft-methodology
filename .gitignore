@@ -1,0 +1,60 @@
+# QA Shift-Left Methodology - .gitignore
+
+## OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+## Temp / backup / logs
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.log
+debug.log
+error.log
+
+## Local config / secrets
+config.local.*
+settings.local.*
+.env
+.env.local
+
+## Cache
+.cache/
+*.cache
+
+## Test artifacts
+test-results/
+coverage/
+playwright-report/
+*.test
+
+## Build / site (for MkDocs / Docusaurus)
+site/
+public/
+_site/
+node_modules/
+
+## Python (if MkDocs is added)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+## Compressed
+*.zip
+*.rar
+*.tar.gz
+
+# Keep empty dirs
+!.gitkeep

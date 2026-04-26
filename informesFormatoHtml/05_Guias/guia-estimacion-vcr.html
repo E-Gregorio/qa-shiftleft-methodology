@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía de Estimación VCR y Story Points — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .guide-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #2563EB; margin-top: 25px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .formula-box { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 2px solid #2563EB; margin: 20px 0; text-align: center; }
+  .example-box { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #4caf50; }
+  .code-block { background: #f4f4f4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 15px 0; border: 1px solid #ddd; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+  
+  <div class="guide-header">
+    <div>GUÍA DE ESTIMACIÓN VCR Y STORY POINTS</div>
+  </div>
+  
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      Esta guía explica <strong>qué significa cada métrica</strong>, <strong>cómo calcularla</strong> y <strong>cuándo</strong> hacer la estimación, siguiendo ISTQB y las normas ISO/IEC/IEEE 29119 / 29148.
+    </div>
+  </div>
+
+  <div class="guide-section">
+    <h2>📅 Cuándo se realiza la estimación</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Aspecto</th>
+        <th style="width: 80%;">Descripción</th>
+      </tr>
+      <tr>
+        <td class="field-label">Momento</td>
+        <td>En la <strong>ceremonia Planning Poker</strong> (primera ceremonia de cada sprint)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Participantes</td>
+        <td>Todo el equipo (QA, Desarrollo, PO, SM)</td>
+      </tr>
+      <tr>
+        <td class="field-label">Ámbito</td>
+        <td>Solo las <strong>User Stories (US)</strong> que están <strong>refinadas y en el backlog del sprint</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Objetivo</td>
+        <td>Consensuar el esfuerzo (Story Points) y el riesgo (VCR) antes de iniciar el desarrollo</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📊 Métricas y definiciones</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">Métrica</th>
+        <th style="width: 40%;">Qué representa</th>
+        <th style="width: 15%;">Escala</th>
+        <th style="width: 25%;">Detalle de uso</th>
+      </tr>
+      <tr>
+        <td class="field-label">Story Points (SP)</td>
+        <td>Esfuerzo relativo (complejidad + volumen + incertidumbre)</td>
+        <td>1, 2, 3, 5, 8, 13</td>
+        <td>Sirve para planificar la <strong>capacidad de cada sprint</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label">Valor (V)</td>
+        <td>Beneficio de negocio o impacto para el cliente</td>
+        <td>1–3</td>
+        <td>Alta prioridad si V = 3</td>
+      </tr>
+      <tr>
+        <td class="field-label">Costo (C)</td>
+        <td>Costo de ejecutar las pruebas manuales en cada ciclo</td>
+        <td>1–3</td>
+        <td>Incluye esfuerzo de datos, ambientes, repetición</td>
+      </tr>
+      <tr>
+        <td class="field-label">Probabilidad (P)</td>
+        <td>Probabilidad de que la US falle en producción</td>
+        <td>1–3</td>
+        <td>Considera complejidad técnica, integraciones nuevas</td>
+      </tr>
+      <tr>
+        <td class="field-label">Impacto (I)</td>
+        <td>Gravedad si ocurre la falla</td>
+        <td>1–3</td>
+        <td>Evalúa riesgo legal, reputacional, de negocio</td>
+      </tr>
+      <tr>
+        <td class="field-label">Riesgo (R)</td>
+        <td>Nivel de riesgo inherente</td>
+        <td><strong>R = P × I</strong> (1–9)</td>
+        <td>Usado en la fórmula VCR para priorizar automatización</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📏 Tabla de Story Points (SP)</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 10%;">Story Point</th>
+        <th style="width: 15%;">Equivalente (hombre-horas)</th>
+        <th style="width: 20%;">Criterio orientativo</th>
+        <th style="width: 55%;">Usar cuando…</th>
+      </tr>
+      <tr>
+        <td class="field-label">1</td>
+        <td>≈4 h</td>
+        <td><strong>Tarea muy pequeña</strong></td>
+        <td>Cambios visuales simples, ajuste de texto/estilo, sin validaciones ni datos</td>
+      </tr>
+      <tr>
+        <td class="field-label">2</td>
+        <td>≈8 h</td>
+        <td><strong>Tarea pequeña/mediana</strong></td>
+        <td>Mostrar dato simple, consumir un microservicio ya existente, validaciones mínimas</td>
+      </tr>
+      <tr>
+        <td class="field-label">3</td>
+        <td>≈16 h</td>
+        <td><strong>Tarea mediana</strong></td>
+        <td>Formulario con validación básica y guardado de datos, lógica de negocio simple, MS ya operativo</td>
+      </tr>
+      <tr>
+        <td class="field-label">5</td>
+        <td>≈32 h</td>
+        <td><strong>Tarea grande</strong></td>
+        <td>CRUD de media complejidad, validaciones múltiples, lógica de negocio moderada, puede requerir mocks si falta backend</td>
+      </tr>
+      <tr>
+        <td class="field-label">8</td>
+        <td>≈64 h</td>
+        <td><strong>Tarea muy grande</strong></td>
+        <td>CRUD complejo, integraciones con varios servicios, validaciones cruzadas, lógica de negocio robusta</td>
+      </tr>
+      <tr>
+        <td class="field-label">13</td>
+        <td>>96 h (3 semanas+)</td>
+        <td><strong>Épica o historia demasiado grande</strong></td>
+        <td>Migraciones de gran alcance, lógica compleja, servicios nuevos, requiere análisis previo y posiblemente dividir en varias US</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>🔍 Nota importante:</strong> Estas equivalencias son orientativas: <strong>no son horas exactas</strong>, sino una medida relativa para comparar esfuerzos.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>🧮 Cálculo de VCR</h2>
+    
+    <div class="formula-box">
+      <h3>Fórmulas:</h3>
+      <div class="code-block">
+R = P × I<br>
+VCR = V + C + R
+      </div>
+      <p><strong>R:</strong> riesgo numérico directo, producto de Probabilidad × Impacto</p>
+      <p><strong>VCR:</strong> suma de Valor + Costo + Riesgo</p>
+    </div>
+    
+    <div class="info-box">
+      <h3>📊 Rangos posibles:</h3>
+      <ul>
+        <li><strong>V = 1–3</strong></li>
+        <li><strong>C = 1–3</strong></li>
+        <li><strong>R = 1–9</strong></li>
+        <li><strong>VCR total = 3 a 15</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>⚖️ Regla de decisión</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 20%;">VCR total</th>
+        <th style="width: 80%;">Estrategia de prueba</th>
+      </tr>
+      <tr>
+        <td class="field-label" style="background: #ffebee;">VCR ≥ 9</td>
+        <td style="background: #ffebee;"><strong>Deuda técnica</strong> → Se automatiza y se incorpora a la suite de <strong>regresión</strong></td>
+      </tr>
+      <tr>
+        <td class="field-label" style="background: #e8f5e8;">VCR < 9</td>
+        <td style="background: #e8f5e8;"><strong>Pruebas manuales</strong> (se ejecuta en ciclos manuales y se revisa en futuros sprints si cambia el riesgo)</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>💡 Ejemplo de cálculo</h2>
+    
+    <div class="example-box">
+      <h3>Historia de usuario: "Como usuario quiero hacer login para acceder al sistema"</h3>
+      
+      <table class="guide-table">
+        <tr>
+          <th style="width: 30%;">Métrica</th>
+          <th style="width: 70%;">Valor</th>
+        </tr>
+        <tr>
+          <td class="field-label">V (Valor)</td>
+          <td>3 (Crítico para el negocio - sin login no hay acceso)</td>
+        </tr>
+        <tr>
+          <td class="field-label">C (Costo)</td>
+          <td>2 (Configuración media - requiere usuarios de prueba y reseteo)</td>
+        </tr>
+        <tr>
+          <td class="field-label">P (Probabilidad)</td>
+          <td>3 (Integración con sistema de autenticación, cambios recientes)</td>
+        </tr>
+        <tr>
+          <td class="field-label">I (Impacto)</td>
+          <td>2 (Bloquea acceso pero hay workarounds temporales)</td>
+        </tr>
+        <tr>
+          <td class="field-label"><strong>R (P × I)</strong></td>
+          <td><strong>6</strong> (3 × 2 = 6)</td>
+        </tr>
+        <tr>
+          <td class="field-label"><strong>VCR (V + C + R)</strong></td>
+          <td><strong>11</strong> (3 + 2 + 6 = 11)</td>
+        </tr>
+      </table>
+      
+      <div class="formula-box">
+        <h4>🎯 Resultado:</h4>
+        <p><strong>11 ≥ 9</strong> → La historia <span style="color: #d32f2f; font-weight: bold;">SE AUTOMATIZA</span> y pasa a <strong>REGRESIÓN</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📝 Plantilla para completar en cada US</h2>
+    
+    <div class="code-block">
+### Estimación
+- Story Points (SP): __
+- Valor (V 1–3): __
+- Costo (C 1–3): __
+- Probabilidad (P 1–3): __
+- Impacto (I 1–3): __
+- Riesgo (R = P × I): __ × __ = __
+- **Total VCR = V + C + R = __ + __ + __ = __**
+- **Decisión**: si VCR ≥ 9 → Deuda técnica (automatizar y va a regresión); 
+              si VCR < 9 → Pruebas manuales.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>✅ Buenas prácticas</h2>
+    
+    <table class="guide-table">
+      <tr>
+        <th style="width: 30%;">Práctica</th>
+        <th style="width: 70%;">Descripción</th>
+      </tr>
+      <tr>
+        <td class="field-label">1. Definir criterios al inicio del proyecto</td>
+        <td>Asegura que todos en el equipo interpreten de igual forma "bajo", "medio" y "alto"</td>
+      </tr>
+      <tr>
+        <td class="field-label">2. Usar Planning Poker</td>
+        <td>Cada miembro asigna su puntaje de SP, V, C, P e I; luego se debate y se llega a un consenso</td>
+      </tr>
+      <tr>
+        <td class="field-label">3. Registrar en la US</td>
+        <td>Documenta todos los valores y el cálculo en la historia de usuario para auditoría y reportes</td>
+      </tr>
+      <tr>
+        <td class="field-label">4. Revisar en cada sprint</td>
+        <td>Si cambian dependencias o riesgos, se actualiza el cálculo VCR</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>🎯 Marco Metodológico Completo</h3>
+    <p>Esta <strong>Guía de Estimación VCR</strong> es parte integral del QA Shift-Left Methodology, alineado con <strong>ISTQB v4</strong>, <strong>ISO/IEC/IEEE 29119 / 29148</strong> e <strong>ISO/IEC/IEEE 29119</strong> para garantizar estimaciones consistentes y decisiones de automatización basadas en valor, costo y riesgo objetivo.</p>
+  </div>
+
+</div>
+</body>
+</html>

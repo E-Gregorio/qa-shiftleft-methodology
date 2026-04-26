@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Test Plan por Sprint — Plantilla Completa</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .tp-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .tp-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .tp-logo { width: 60px; height: 60px; background: white; border-radius: 50%; margin-right: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #2563EB; font-size: 18px; }
+  .tp-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .tp-section { margin: 30px 0; }
+  .tp-section h2 { color: #2c3e50; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .tp-section h3 { color: #34495e; margin-top: 25px; }
+  .tp-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .tp-table td, .tp-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .tp-table th { background: #2563EB; color: white; font-weight: bold; }
+  .tp-table tr:nth-child(even) { background: #f8f9fa; }
+  .highlight-box { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #4CAF50; }
+  .scope-included { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #2196f3; }
+  .scope-excluded { background: #ffebee; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #f44336; }
+  .criteria-list { background: #f1f8e9; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #4caf50; }
+  .risk-section { background: #fff3e0; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #ff9800; }
+  ul { margin: 10px 0; }
+  li { margin-bottom: 5px; }
+  .field-label { font-weight: bold; color: #1B5E20; }
+  .divider { border-top: 2px solid #ecf0f1; margin: 30px 0; }
+</style>
+</head>
+<body>
+<div class="tp-container">
+  
+  <div class="tp-header">
+    <div>TEST PLAN POR SPRINT</div>
+  </div>
+  
+  <div class="tp-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="highlight-box">
+      <strong>Norma de referencia:</strong> ISO/IEC/IEEE 29119-3 — Test Planning<br>
+      <strong>Complemento:</strong> ISO/IEC/IEEE 29119-3:2021 — Test Documentation (sucesor de ISO/IEC/IEEE 29119-3)
+    </div>
+    
+    <table class="tp-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Módulo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Sprint / Iteración / Release:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión de la aplicación:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable QA:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de inicio:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de fin:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="tp-section">
+    <h2>1. Propósito y Referencias Normativas</h2>
+    <div class="highlight-box">
+      <p>Este plan se redacta conforme a <strong>ISO/IEC/IEEE 29119-3 (Test Plan)</strong> y <strong>ISO/IEC/IEEE 29119-3</strong>.</p>
+      
+      <p>Define el alcance, enfoque, recursos, calendario, criterios de entrada, salida, 
+      suspensión y reanudación para el ciclo o sprint actual, en alineación con el <strong>Master Test Plan</strong>.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>2. Alcance del Sprint</h2>
+    
+    <h3>2.1 Incluido</h3>
+    <div class="scope-included">
+      <ul>
+        <li>Historias de usuario / requisitos en el sprint.</li>
+        <li>Funcionalidades, microservicios, APIs, interfaces a validar.</li>
+        <li>Tipos de prueba incluidas (funcionales, regresión, rendimiento, seguridad, etc.).</li>
+      </ul>
+    </div>
+    
+    <h3>2.2 Excluido</h3>
+    <div class="scope-excluded">
+      <ul>
+        <li>Elementos fuera de alcance en este ciclo y justificación.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>3. Estrategia y Enfoque de Prueba</h2>
+    <div class="highlight-box">
+      <ul>
+        <li><strong>Niveles de prueba:</strong> componente, integración, sistema, UAT.</li>
+        <li><strong>Tipos de prueba:</strong> funcional, regresión, rendimiento, seguridad, etc.</li>
+        <li><strong>Técnicas de prueba:</strong> partición de equivalencia, análisis de valor límite, tablas de decisión, pruebas exploratorias.</li>
+        <li><strong>Automatización:</strong> alcance, frameworks y herramientas.</li>
+        <li><strong>Datos de prueba:</strong> diseño, generación, mantenimiento.</li>
+        <li><strong>Entorno de prueba:</strong> ambientes, configuraciones, accesos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>4. Recursos y Cronograma</h2>
+    
+    <h3>4.1 Recursos</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Equipo QA asignado (roles y responsables).</li>
+        <li>Infraestructura y herramientas.</li>
+      </ul>
+    </div>
+    
+    <h3>4.2 Cronograma</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Fechas clave del sprint para diseño, ejecución y cierre.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>5. Criterios de Entrada, Salida y Suspensión/Reanudación</h2>
+    
+    <h3>5.1 Criterios de Entrada</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Historias / requisitos listos y aprobados.</li>
+        <li>Entorno y datos de prueba disponibles.</li>
+        <li>Código integrado y compilado.</li>
+      </ul>
+    </div>
+    
+    <h3>5.2 Criterios de Salida</h3>
+    <div class="criteria-list">
+      <ul>
+        <li>Todos los casos planificados ejecutados.</li>
+        <li>Defectos críticos corregidos y verificados.</li>
+        <li>Criterios de aceptación cumplidos.</li>
+      </ul>
+    </div>
+    
+    <h3>5.3 Criterios de Suspensión y Reanudación</h3>
+    <div class="risk-section">
+      <p><strong>Suspensión:</strong></p>
+      <ul>
+        <li>En pruebas de estrés la tasa de error supera el 25%.</li>
+        <li>Se detectan defectos bloqueantes que impidan la ejecución.</li>
+        <li>Fallas en el entorno de QA.</li>
+      </ul>
+      
+      <p><strong>Reanudación:</strong></p>
+      <ul>
+        <li>Una vez corregidos los defectos bloqueantes y validada la estabilidad del ambiente.</li>
+        <li>Con autorización del Líder QA.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>6. Riesgos y Mitigación</h2>
+    <table class="tp-table">
+      <tr>
+        <th>Riesgo</th>
+        <th>Probabilidad</th>
+        <th>Impacto</th>
+        <th>Plan de mitigación</th>
+        <th>Plan de contingencia</th>
+      </tr>
+      <tr>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+      </tr>
+      <tr>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+        <td>_________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>7. Métricas y Seguimiento</h2>
+    <table class="tp-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Planificado</th>
+        <th>Ejecutado</th>
+      </tr>
+      <tr>
+        <td>Casos de prueba planificados</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba ejecutados</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba pasados</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Casos de prueba fallidos</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Casos bloqueados / no ejecutados</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Defectos abiertos / cerrados</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+      <tr>
+        <td>Cobertura de requisitos (%)</td>
+        <td>_____________</td>
+        <td>_____________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>8. Entregables del Sprint</h2>
+    <div class="highlight-box">
+      <ul>
+        <li>Casos de prueba diseñados y validados.</li>
+        <li>Evidencias de ejecución.</li>
+        <li>Informe de avance del sprint.</li>
+        <li>Informe de cierre de prueba.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>9. Trazabilidad</h2>
+    <div class="criteria-list">
+      <ul>
+        <li>Matriz de trazabilidad: Requisito / Historia → Caso de prueba → Resultado.</li>
+        <li>Defectos vinculados.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tp-section">
+    <h2>10. Control de Cambios</h2>
+    <table class="tp-table">
+      <tr>
+        <th>Versión</th>
+        <th>Fecha</th>
+        <th>Autor</th>
+        <th>Descripción del cambio</th>
+      </tr>
+      <tr>
+        <td>1.0</td>
+        <td>_____________</td>
+        <td>_____________</td>
+        <td>Versión inicial</td>
+      </tr>
+      <tr>
+        <td>_______</td>
+        <td>_____________</td>
+        <td>_____________</td>
+        <td>_________________________</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

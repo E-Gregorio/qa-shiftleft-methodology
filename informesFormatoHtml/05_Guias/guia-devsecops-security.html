@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía DevSecOps y Testing de Seguridad — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; color: #1a1a1a; }
+  .guide-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; padding: 25px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-header .subtitle { font-size: 14px; font-weight: normal; opacity: 0.9; margin-top: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #1D4ED8; margin-top: 25px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #DBEAFE; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .warn-box { background: #FFF3E0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #F97316; }
+  .danger-box { background: #FEE2E2; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #EF4444; }
+  .ok-box { background: #D1FAE5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #10B981; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .code-box { background: #0F172A; color: #E2E8F0; padding: 18px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; line-height: 1.5; }
+  .code-box .k { color: #60A5FA; }
+  .code-box .s { color: #FCD34D; }
+  .code-box .c { color: #94A3B8; font-style: italic; }
+  .template-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Consolas', monospace; font-size: 13px; border: 1px solid #ddd; white-space: pre-wrap; }
+  .standard-pill { display: inline-block; background: #2563EB; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .standard-pill.green { background: #10B981; }
+  .standard-pill.red { background: #EF4444; }
+  .standard-pill.amber { background: #F59E0B; }
+  .nav-back { display: inline-block; margin-bottom: 20px; padding: 8px 16px; background: #2563EB; color: white; text-decoration: none; border-radius: 4px; }
+  .nav-back:hover { background: #1D4ED8; }
+  .toc { background: #f8f9fa; padding: 18px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #F59E0B; }
+  .toc ul { columns: 2; list-style-type: none; padding-left: 0; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: #2563EB; text-decoration: none; }
+  .pipeline-stage { display: inline-block; background: #DBEAFE; border: 2px solid #2563EB; padding: 12px 16px; border-radius: 8px; margin: 6px; min-width: 140px; vertical-align: top; }
+  .pipeline-stage h4 { margin: 0; color: #1E40AF; font-size: 14px; }
+  .pipeline-stage ul { margin: 8px 0 0 0; padding-left: 18px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+
+  <a href="index.html" class="nav-back">← Volver al portal de guías</a>
+
+  <div class="guide-header">
+    <div>🛡️ GUÍA DEVSECOPS Y TESTING DE SEGURIDAD</div>
+    <div class="subtitle">SAST · DAST · SCA · Secrets · IaC · Pentesting — Shift-left de seguridad alineado a OWASP y ISO/IEC 27001:2022</div>
+  </div>
+
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong>
+    </div>
+    <div style="text-align: center; margin-bottom: 12px;">
+      <span class="standard-pill green">OWASP Top 10 (2021)</span>
+      <span class="standard-pill green">OWASP ASVS 4.0.3</span>
+      <span class="standard-pill green">ISO/IEC 27001:2022</span>
+      <span class="standard-pill green">NIST CSF 2.0</span>
+      <span class="standard-pill amber">CIS Controls v8</span>
+      <span class="standard-pill red">CWE / CVE</span>
+    </div>
+    <div class="info-box">
+      Esta guía cubre <strong>cómo integrar testing de seguridad en cada etapa</strong> del ciclo de desarrollo (DevSecOps): desde análisis estático en el commit hasta pentesting antes del release. La premisa: <strong>encontrar y corregir vulnerabilidades cuando son baratas</strong>, no después de un incidente.
+    </div>
+  </div>
+
+  <div class="toc">
+    <strong>📋 Contenido</strong>
+    <ul>
+      <li><a href="#devsecops">1. DevSecOps: el shift-left de seguridad</a></li>
+      <li><a href="#owasp-top10">2. OWASP Top 10 (2021)</a></li>
+      <li><a href="#asvs">3. OWASP ASVS — niveles 1, 2, 3</a></li>
+      <li><a href="#sast">4. SAST — análisis estático de código</a></li>
+      <li><a href="#dast">5. DAST — análisis dinámico</a></li>
+      <li><a href="#sca">6. SCA — supply chain & dependencias</a></li>
+      <li><a href="#secrets">7. Secrets scanning</a></li>
+      <li><a href="#containers">8. Container & IaC scanning</a></li>
+      <li><a href="#threat-modeling">9. Threat modeling (STRIDE)</a></li>
+      <li><a href="#pentest">10. Pentesting y red teaming</a></li>
+      <li><a href="#pipeline">11. Pipeline DevSecOps end-to-end</a></li>
+      <li><a href="#metricas">12. Métricas e indicadores</a></li>
+      <li><a href="#anti-patterns">13. Anti-patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="devsecops">
+    <h2>1. DevSecOps: el shift-left de seguridad</h2>
+    <p>DevSecOps integra seguridad como <strong>responsabilidad compartida</strong> en cada etapa: dev, build, test, deploy, run. La idea contraria al modelo viejo, donde InfoSec auditaba al final y bloqueaba el release.</p>
+
+    <div style="text-align: center; margin: 20px 0;">
+      <div class="pipeline-stage">
+        <h4>1️⃣ Plan</h4>
+        <ul><li>Threat modeling</li><li>Security stories</li><li>Definir ASVS level</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>2️⃣ Code</h4>
+        <ul><li>IDE plugins (Snyk, Semgrep)</li><li>Pre-commit hooks</li><li>Secrets blocking</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>3️⃣ Build (CI)</h4>
+        <ul><li>SAST</li><li>SCA</li><li>Secrets scan</li><li>Container scan</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>4️⃣ Test</h4>
+        <ul><li>DAST en staging</li><li>API security</li><li>Auth tests</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>5️⃣ Deploy</h4>
+        <ul><li>IaC scan</li><li>Pre-prod gates</li><li>Sign images</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>6️⃣ Run</h4>
+        <ul><li>WAF / RASP</li><li>SIEM, IDS</li><li>Bug bounty</li></ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📌 Pirámide de costo:</strong> arreglar una vulnerabilidad en <em>code</em> = $1; en <em>QA</em> = $10; en <em>prod</em> sin incidente = $100; en <em>prod</em> después de un breach = $1.000-100.000+ (regulación, daño reputacional, multas GDPR/LGPD).
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="owasp-top10">
+    <h2>2. OWASP Top 10 (2021)</h2>
+    <p>Los 10 riesgos más críticos en aplicaciones web. <strong>Imprescindibles</strong> de cubrir en cualquier suite de seguridad.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 20%;">Riesgo</th>
+        <th style="width: 35%;">Descripción</th>
+        <th style="width: 40%;">Cómo probarlo</th>
+      </tr>
+      <tr>
+        <td><strong>A01</strong></td>
+        <td class="field-label">Broken Access Control</td>
+        <td>Usuarios pueden acceder a recursos que no les corresponden (IDOR, vertical/horizontal privilege escalation)</td>
+        <td>Tests funcionales con usuarios de distintos roles + IDs ajenos. Burp Suite + extension AuthMatrix.</td>
+      </tr>
+      <tr>
+        <td><strong>A02</strong></td>
+        <td class="field-label">Cryptographic Failures</td>
+        <td>Datos sensibles sin cifrar, TLS débil, hashes inseguros (MD5, SHA1), claves hardcoded</td>
+        <td>SAST detecta crypto débil. testssl.sh para TLS. Lint para secrets.</td>
+      </tr>
+      <tr>
+        <td><strong>A03</strong></td>
+        <td class="field-label">Injection</td>
+        <td>SQL, NoSQL, OS, LDAP injection — input sin sanitizar llega a un intérprete</td>
+        <td>SAST (semgrep, sonarqube) + DAST (ZAP). Tests con payloads OWASP.</td>
+      </tr>
+      <tr>
+        <td><strong>A04</strong></td>
+        <td class="field-label">Insecure Design</td>
+        <td>Fallas de diseño que el código correcto no puede arreglar</td>
+        <td>Threat modeling antes de codear. Reviews de arquitectura.</td>
+      </tr>
+      <tr>
+        <td><strong>A05</strong></td>
+        <td class="field-label">Security Misconfiguration</td>
+        <td>Credenciales por defecto, headers de seguridad ausentes, debug=true en prod</td>
+        <td>DAST + scanners de configuración (Gixy para Nginx, kube-bench para K8s)</td>
+      </tr>
+      <tr>
+        <td><strong>A06</strong></td>
+        <td class="field-label">Vulnerable & Outdated Components</td>
+        <td>Librerías con CVEs conocidos (log4shell, struts2)</td>
+        <td>SCA: Trivy, Snyk, Dependabot, OWASP Dependency-Check</td>
+      </tr>
+      <tr>
+        <td><strong>A07</strong></td>
+        <td class="field-label">Identification & Authentication Failures</td>
+        <td>Auth débil: passwords por defecto, sin MFA, session tokens predecibles</td>
+        <td>Tests de fuerza bruta (ratelimit), tests de session fixation, ASVS V2/V3</td>
+      </tr>
+      <tr>
+        <td><strong>A08</strong></td>
+        <td class="field-label">Software & Data Integrity Failures</td>
+        <td>Updates sin firma, deserialización insegura, supply chain</td>
+        <td>SBOM (CycloneDX/SPDX), Sigstore para firma, SCA</td>
+      </tr>
+      <tr>
+        <td><strong>A09</strong></td>
+        <td class="field-label">Security Logging & Monitoring Failures</td>
+        <td>No se loguean eventos críticos, ataques pasan desapercibidos</td>
+        <td>Threat modeling de eventos a loguear. SIEM con detection rules.</td>
+      </tr>
+      <tr>
+        <td><strong>A10</strong></td>
+        <td class="field-label">Server-Side Request Forgery (SSRF)</td>
+        <td>Servidor hace requests a URLs controladas por atacante (acceso a metadata cloud, internas)</td>
+        <td>DAST con payloads SSRF + tests específicos. Cuidado con IMDS de AWS.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="asvs">
+    <h2>3. OWASP ASVS — niveles 1, 2, 3</h2>
+    <p>El <strong>Application Security Verification Standard</strong> (ASVS 4.0.3) es la referencia más completa para verificación de seguridad. Define <strong>14 capítulos</strong> con &gt; 280 controles, agrupados en 3 niveles:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 15%;">Nivel</th>
+        <th style="width: 30%;">Para qué tipo de aplicación</th>
+        <th style="width: 30%;">Cobertura</th>
+        <th style="width: 25%;">Esfuerzo típico</th>
+      </tr>
+      <tr>
+        <td class="field-label">L1 — Opportunistic</td>
+        <td>Aplicaciones con baja criticidad, riesgo bajo de ataque dirigido</td>
+        <td>~70 controles automatizables</td>
+        <td>Mostly automatizable en pipeline</td>
+      </tr>
+      <tr>
+        <td class="field-label">L2 — Standard</td>
+        <td>La mayoría de aplicaciones con datos de usuarios o de negocio</td>
+        <td>~180 controles</td>
+        <td>Automation + manual verification</td>
+      </tr>
+      <tr>
+        <td class="field-label">L3 — Advanced</td>
+        <td>Aplicaciones críticas: financieras, salud, militar, infraestructura</td>
+        <td>&gt; 280 controles</td>
+        <td>Manual extensivo + pentest formal</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Recomendación práctica:</strong> declarar formalmente el nivel ASVS objetivo en la fase de plan. <strong>Casi todo proyecto B2C/B2B serio debería apuntar a L2.</strong> Mantener un checklist del nivel elegido como evidencia de compliance.
+    </div>
+
+    <h3>3.1 Capítulos ASVS (resumen)</h3>
+    <ul>
+      <li><strong>V1 Architecture</strong> — diseño y modelado</li>
+      <li><strong>V2 Authentication</strong> — passwords, MFA, sesiones</li>
+      <li><strong>V3 Session Management</strong> — tokens, cookies, expiración</li>
+      <li><strong>V4 Access Control</strong> — autorización RBAC/ABAC</li>
+      <li><strong>V5 Validation, Sanitization & Encoding</strong> — input/output</li>
+      <li><strong>V6 Stored Cryptography</strong> — hashing, encryption at rest</li>
+      <li><strong>V7 Error Handling & Logging</strong> — qué loguear, qué no</li>
+      <li><strong>V8 Data Protection</strong> — privacy, retention, GDPR/LGPD</li>
+      <li><strong>V9 Communication</strong> — TLS, HSTS, certificados</li>
+      <li><strong>V10 Malicious Code</strong> — supply chain, deserialization</li>
+      <li><strong>V11 Business Logic</strong> — race conditions, abuse prevention</li>
+      <li><strong>V12 Files & Resources</strong> — uploads, downloads, paths</li>
+      <li><strong>V13 API & Web Services</strong> — REST, GraphQL, SOAP</li>
+      <li><strong>V14 Configuration</strong> — secrets, secure defaults</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="sast">
+    <h2>4. SAST — Análisis estático de código</h2>
+    <p>Analiza el código fuente <strong>sin ejecutarlo</strong>. Detecta patrones inseguros, mal uso de APIs criptográficas, taint flow desde input no confiable a sinks peligrosos.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Herramienta</th>
+        <th>Tipo</th>
+        <th>Fortalezas</th>
+        <th>Notas</th>
+      </tr>
+      <tr><td class="field-label">Semgrep</td><td>OSS / SaaS</td><td>Reglas custom muy fáciles, rápido, multi-lenguaje</td><td>Muy recomendado para shift-left</td></tr>
+      <tr><td class="field-label">SonarQube / SonarCloud</td><td>OSS / SaaS</td><td>Analiza también calidad y bugs, no solo seguridad</td><td>Standard en muchas empresas</td></tr>
+      <tr><td class="field-label">Snyk Code</td><td>SaaS</td><td>Buena UX, integración GitHub, regla AI-driven</td><td>Comercial</td></tr>
+      <tr><td class="field-label">Bandit (Python)</td><td>OSS</td><td>Específico Python, rápido</td><td>Lenguaje específico</td></tr>
+      <tr><td class="field-label">CodeQL (GitHub)</td><td>OSS / SaaS</td><td>Queries muy potentes (semantic analysis)</td><td>Curva de aprendizaje, gratis en repos públicos</td></tr>
+      <tr><td class="field-label">Checkmarx, Veracode</td><td>SaaS enterprise</td><td>Compliance reports, soporte enterprise</td><td>Caros, lentos</td></tr>
+    </table>
+
+    <div class="code-box"><span class="c"># Semgrep — ejemplo de regla custom para detectar uso de pickle inseguro en Python</span>
+<span class="k">rules:</span>
+  - <span class="k">id:</span> insecure-pickle-load
+    <span class="k">pattern:</span> pickle.load(...)
+    <span class="k">message:</span> <span class="s">"pickle.load es vulnerable a code execution. Usar json o un parser seguro."</span>
+    <span class="k">severity:</span> ERROR
+    <span class="k">languages:</span> [python]
+    <span class="k">metadata:</span>
+      <span class="k">cwe:</span> CWE-502
+      <span class="k">owasp:</span> A08:2021 — Software and Data Integrity Failures</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="dast">
+    <h2>5. DAST — Análisis dinámico</h2>
+    <p>Prueba la aplicación corriendo, simulando ataques desde fuera. Detecta vulnerabilidades en runtime — XSS, SQLi, SSRF, path traversal, misconfig de headers.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Herramienta</th>
+        <th>Tipo</th>
+        <th>Uso recomendado</th>
+      </tr>
+      <tr><td class="field-label">OWASP ZAP</td><td>OSS</td><td>Automatable en CI (baseline / full scan), bueno para apps web tradicionales</td></tr>
+      <tr><td class="field-label">Burp Suite Pro</td><td>Comercial</td><td>Standard en pentesting manual, mejor en aplicaciones complejas</td></tr>
+      <tr><td class="field-label">Nuclei</td><td>OSS</td><td>Fast template-based, miles de checks de la comunidad</td></tr>
+      <tr><td class="field-label">Nikto</td><td>OSS</td><td>Web server scanner clásico, complementario</td></tr>
+      <tr><td class="field-label">sqlmap</td><td>OSS</td><td>Específico para SQLi, muy potente</td></tr>
+    </table>
+
+    <div class="code-box"><span class="c"># DAST básico con OWASP ZAP en GitHub Actions</span>
+<span class="k">- name:</span> ZAP Baseline Scan
+  uses: zaproxy/action-baseline@v0.12.0
+  with:
+    target: <span class="s">'https://staging.example.com'</span>
+    rules_file_name: <span class="s">'.zap/rules.tsv'</span>
+    cmd_options: <span class="s">'-a'</span>            <span class="c"># active scan (más profundo, más ruidoso)</span>
+    fail_action: <span class="k">true</span>           <span class="c"># falla el job si encuentra HIGH</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="sca">
+    <h2>6. SCA — Software Composition Analysis</h2>
+    <p>Detecta vulnerabilidades en <strong>dependencias de terceros</strong>. Crítico — el 80% del código de una app moderna es de terceros.</p>
+
+    <table class="guide-table">
+      <tr><th>Herramienta</th><th>Tipo</th><th>Fortalezas</th></tr>
+      <tr><td class="field-label">Trivy</td><td>OSS (Aqua)</td><td>Multi-uso: dependencias, contenedores, IaC. Muy rápido.</td></tr>
+      <tr><td class="field-label">Snyk</td><td>SaaS / OSS</td><td>Excelente DB de vulnerabilidades, fixes automatizables</td></tr>
+      <tr><td class="field-label">GitHub Dependabot</td><td>SaaS (gratis)</td><td>Built-in en GitHub, PRs automáticos</td></tr>
+      <tr><td class="field-label">OWASP Dependency-Check</td><td>OSS</td><td>Standard veterano, muchas integraciones</td></tr>
+      <tr><td class="field-label">Grype</td><td>OSS (Anchore)</td><td>Específico para imágenes y dirs, rápido</td></tr>
+      <tr><td class="field-label">Renovate</td><td>OSS</td><td>Bot de updates más potente que Dependabot, configurable</td></tr>
+    </table>
+
+    <h3>6.1 SBOM — Software Bill of Materials</h3>
+    <div class="info-box">
+      <p>Un <strong>SBOM</strong> es la lista exhaustiva de todos los componentes (libs, runtime, OS packages) de tu aplicación. Es <strong>obligatorio</strong> en muchos sectores (finanza, gobierno, salud) y exigido por la <strong>Executive Order 14028 (US, 2021)</strong> para software vendido al gobierno.</p>
+      <ul>
+        <li>Formatos estándar: <strong>CycloneDX</strong> (OWASP) y <strong>SPDX</strong> (Linux Foundation).</li>
+        <li>Generación: <code>syft</code>, <code>cyclonedx-cli</code>, builders nativos de Maven/npm/etc.</li>
+        <li>Distribución: adjuntar al release como artefacto firmado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="secrets">
+    <h2>7. Secrets scanning</h2>
+    <p>Una API key en git es <strong>game over</strong>: queda en la historia para siempre, y los bots de GitHub la encuentran en minutos.</p>
+
+    <table class="guide-table">
+      <tr><th>Herramienta</th><th>Cuándo</th></tr>
+      <tr><td class="field-label">Gitleaks</td><td>Pre-commit hook + CI scan completo</td></tr>
+      <tr><td class="field-label">TruffleHog</td><td>Detección con verificación (intenta autenticarse para validar el secreto)</td></tr>
+      <tr><td class="field-label">GitHub Secret Scanning</td><td>Built-in, free en repos públicos, alerta a partners cuando un token se filtra</td></tr>
+      <tr><td class="field-label">detect-secrets (Yelp)</td><td>Baseline file → detecta secretos NUEVOS</td></tr>
+    </table>
+
+    <div class="danger-box">
+      <strong>🚨 Si filtraste un secreto, NO basta con borrarlo del código.</strong> Sigue en la historia git. Hay que: (1) <strong>rotar el secreto</strong> en el sistema fuente, (2) opcionalmente reescribir la historia con git-filter-repo o BFG (operación destructiva), (3) confirmar con el equipo de seguridad. Asumir compromiso.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="containers">
+    <h2>8. Container & IaC scanning</h2>
+
+    <h3>8.1 Container scanning</h3>
+    <table class="guide-table">
+      <tr><th>Herramienta</th><th>Detecta</th></tr>
+      <tr><td class="field-label">Trivy</td><td>CVEs en OS packages + libs + misconfig + secrets en imagen</td></tr>
+      <tr><td class="field-label">Grype</td><td>CVEs en imágenes y filesystems</td></tr>
+      <tr><td class="field-label">Docker Scout</td><td>Built-in en Docker Desktop / Hub</td></tr>
+      <tr><td class="field-label">Snyk Container</td><td>Comercial, fix automation</td></tr>
+    </table>
+
+    <div class="ok-box">
+      <strong>✅ Hardening básico:</strong> base images mínimas (distroless, alpine), USER no-root, healthchecks, multi-stage builds, no instalar herramientas de debug en imagen final.
+    </div>
+
+    <h3>8.2 IaC scanning (Terraform, Kubernetes, CloudFormation)</h3>
+    <table class="guide-table">
+      <tr><th>Herramienta</th><th>Stack</th></tr>
+      <tr><td class="field-label">Checkov (Bridgecrew)</td><td>Multi: Terraform, K8s, CloudFormation, Helm, ARM</td></tr>
+      <tr><td class="field-label">tfsec / Trivy Config</td><td>Específico Terraform</td></tr>
+      <tr><td class="field-label">kube-bench</td><td>CIS Benchmark de Kubernetes</td></tr>
+      <tr><td class="field-label">kubesec</td><td>Manifests Kubernetes</td></tr>
+      <tr><td class="field-label">cfn-lint, cfn-nag</td><td>CloudFormation</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="threat-modeling">
+    <h2>9. Threat modeling con STRIDE</h2>
+    <p>STRIDE (Microsoft) es el modelo más usado para identificar amenazas durante el diseño:</p>
+
+    <table class="guide-table">
+      <tr><th>Letra</th><th>Amenaza</th><th>Propiedad violada</th><th>Mitigación típica</th></tr>
+      <tr><td class="field-label">S</td><td>Spoofing</td><td>Authentication</td><td>MFA, certificados, OAuth</td></tr>
+      <tr><td class="field-label">T</td><td>Tampering</td><td>Integrity</td><td>Hashing, firmas, integrity checks</td></tr>
+      <tr><td class="field-label">R</td><td>Repudiation</td><td>Non-repudiation</td><td>Audit logs firmados, timestamping</td></tr>
+      <tr><td class="field-label">I</td><td>Information Disclosure</td><td>Confidentiality</td><td>Encryption, access control, PII anonymization</td></tr>
+      <tr><td class="field-label">D</td><td>Denial of Service</td><td>Availability</td><td>Rate limiting, autoscaling, DDoS protection</td></tr>
+      <tr><td class="field-label">E</td><td>Elevation of Privilege</td><td>Authorization</td><td>Principle of least privilege, RBAC, sandboxing</td></tr>
+    </table>
+
+    <h3>9.1 Plantilla de threat modeling</h3>
+    <div class="template-box"># Threat Model — &lt;feature&gt;
+
+## Diagrama de flujo de datos
+- Actores: Usuario, Servicio Auth, API, DB, S3
+- Trust boundaries: Internet ↔ DMZ ↔ App tier ↔ Data tier
+
+## Amenazas identificadas (STRIDE)
+| ID | Categoría | Activo | Amenaza | Likelihood | Impact | Mitigación |
+|----|-----------|--------|---------|------------|--------|------------|
+| T1 | S | Login API | Credential stuffing | High | Critical | Rate limit + MFA |
+| T2 | T | API tokens | Modificación en tránsito | Medium | High | TLS 1.3 + JWT signed |
+| T3 | I | DB | SQL injection | Medium | Critical | Prepared statements + WAF |
+| T4 | D | Public API | Volumetric DDoS | Low | High | CloudFlare / AWS Shield |
+| T5 | E | Admin endpoint | Bypass de auth via IDOR | Medium | Critical | RBAC + tests |
+
+## Controles compensatorios
+- WAF en frontend (rules OWASP CRS)
+- Logging estructurado de eventos de seguridad
+- Pentest semestral
+
+## Tests derivados (a agregar al test plan)
+- TC-SEC-001: rate limiting en /login (20 req/min)
+- TC-SEC-002: MFA obligatorio para roles admin
+- TC-SEC-003: SQL injection probes en /search</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="pentest">
+    <h2>10. Pentesting y red teaming</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th style="width: 25%;">Tipo</th>
+        <th style="width: 35%;">Objetivo</th>
+        <th style="width: 40%;">Cuándo</th>
+      </tr>
+      <tr>
+        <td class="field-label">Black-box pentest</td>
+        <td>Atacante externo sin conocimiento del sistema</td>
+        <td>Pre-release, anual mínimo</td>
+      </tr>
+      <tr>
+        <td class="field-label">Grey-box pentest</td>
+        <td>Atacante con credenciales de usuario normal</td>
+        <td>Test típico para apps SaaS</td>
+      </tr>
+      <tr>
+        <td class="field-label">White-box pentest</td>
+        <td>Tester con acceso a código y arquitectura</td>
+        <td>Auditoría profunda, sistemas críticos</td>
+      </tr>
+      <tr>
+        <td class="field-label">Red teaming</td>
+        <td>Ejercicio adversarial completo (incluye phishing, físico)</td>
+        <td>Empresas grandes, SOC maduros</td>
+      </tr>
+      <tr>
+        <td class="field-label">Bug bounty</td>
+        <td>Programa público (HackerOne, Bugcrowd) o privado</td>
+        <td>Producción estable + presupuesto recurrent</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 Cadencia recomendada:</strong> SAST/DAST/SCA en cada PR (automático), pentest manual semestral o ante cambios mayores, bug bounty continuo si hay budget.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="pipeline">
+    <h2>11. Pipeline DevSecOps end-to-end</h2>
+
+    <div class="code-box"><span class="c"># .github/workflows/devsecops.yml — pipeline integral</span>
+<span class="k">name:</span> DevSecOps Pipeline
+<span class="k">on:</span> [push, pull_request]
+
+<span class="k">jobs:</span>
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: <span class="s">0</span> }
+      - <span class="k">name:</span> Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - <span class="k">name:</span> Semgrep SAST
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: <span class="s">"p/owasp-top-ten p/cwe-top-25 p/security-audit"</span>
+
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - <span class="k">name:</span> Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: <span class="s">'fs'</span>
+          severity: <span class="s">'CRITICAL,HIGH'</span>
+          exit-code: <span class="s">'1'</span>
+
+  iac:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - <span class="k">name:</span> Checkov IaC
+        uses: bridgecrewio/checkov-action@master
+        with:
+          quiet: <span class="k">true</span>
+          framework: <span class="s">terraform,kubernetes,helm</span>
+
+  container:
+    runs-on: ubuntu-latest
+    needs: [sast, sca]
+    steps:
+      - uses: actions/checkout@v4
+      - <span class="k">name:</span> Build image
+        run: docker build -t app:${{ github.sha }} .
+      - <span class="k">name:</span> Trivy container scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: <span class="s">'app:${{ github.sha }}'</span>
+          severity: <span class="s">'CRITICAL,HIGH'</span>
+          exit-code: <span class="s">'1'</span>
+      - <span class="k">name:</span> Generate SBOM
+        run: syft app:${{ github.sha }} -o cyclonedx-json &gt; sbom.json
+      - <span class="k">name:</span> Sign image (cosign)
+        run: cosign sign --yes app:${{ github.sha }}
+
+  dast:
+    runs-on: ubuntu-latest
+    <span class="k">if:</span> github.ref == <span class="s">'refs/heads/main'</span>
+    needs: container
+    steps:
+      - <span class="k">name:</span> Deploy to staging
+        run: ./deploy-staging.sh
+      - <span class="k">name:</span> ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: <span class="s">'https://staging.example.com'</span>
+          fail_action: <span class="k">true</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="metricas">
+    <h2>12. Métricas e indicadores</h2>
+
+    <table class="guide-table">
+      <tr><th>Métrica</th><th>Definición</th><th>Target</th></tr>
+      <tr><td class="field-label">MTTR vulnerabilidades CRITICAL</td><td>Tiempo medio para parchear</td><td>&lt; 7 días</td></tr>
+      <tr><td class="field-label">MTTR vulnerabilidades HIGH</td><td>Tiempo medio para parchear</td><td>&lt; 30 días</td></tr>
+      <tr><td class="field-label">Defect escape rate (security)</td><td>Vulns encontradas en prod / total</td><td>&lt; 5%</td></tr>
+      <tr><td class="field-label">SAST coverage</td><td>% de repos con SAST en CI</td><td>100%</td></tr>
+      <tr><td class="field-label">Dependencies up-to-date</td><td>% de deps en versión &gt; n-2</td><td>≥ 90%</td></tr>
+      <tr><td class="field-label">Secrets detected/sprint</td><td>Tendencia (debe ↓ con tiempo)</td><td>0 en main</td></tr>
+      <tr><td class="field-label">% de PRs con threat model actualizado</td><td>Para features con cambios de superficie</td><td>≥ 80%</td></tr>
+      <tr><td class="field-label">ASVS coverage</td><td>% de controles del nivel verificados</td><td>≥ 95% L2</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section" id="anti-patterns">
+    <h2>13. Anti-patterns</h2>
+    <div class="danger-box">
+      <ul>
+        <li><strong>"Pentest anual basta".</strong> Sin SAST/DAST/SCA continuo, el delta entre pentests acumula deuda.</li>
+        <li><strong>Romper el build con MEDIUM/LOW desde el día 1.</strong> El equipo desactivará el check. Empezar solo con CRITICAL/HIGH y bajar el umbral con el tiempo.</li>
+        <li><strong>Reportar 1000 vulnerabilidades sin priorizar.</strong> Sin contextualizar (exploitability + reach), el equipo no sabe por dónde empezar y pierde confianza en la herramienta.</li>
+        <li><strong>Ejecutar DAST contra producción.</strong> Tests activos pueden corromper datos. Staging idéntico a prod.</li>
+        <li><strong>"Es solo un MVP, después aseguramos".</strong> Las decisiones de arquitectura inseguras se quedan. Threat modeling desde el día 1.</li>
+        <li><strong>No tener inventario de assets.</strong> No podés proteger lo que no conocés. SBOM + asset register actualizado.</li>
+        <li><strong>Ignorar dependencias transitivas.</strong> El 70% de vulns vienen de deps de deps. SCA con análisis transitivo.</li>
+        <li><strong>Confiar solo en escaneo automatizado.</strong> Las fallas de lógica de negocio (race conditions, IDOR no triviales) requieren testing manual.</li>
+        <li><strong>Pull request "Update dependency X" sin testing.</strong> Updates pueden romper. Suite de tests verde antes de mergear.</li>
+        <li><strong>No tener plan de respuesta a incidentes.</strong> El día que pasa algo, el caos se cobra solo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="guide-section">
+    <h2>📚 Referencias</h2>
+    <ul>
+      <li>OWASP Top 10 (2021) — <code>owasp.org/Top10</code></li>
+      <li>OWASP ASVS 4.0.3 — <code>owasp.org/www-project-application-security-verification-standard</code></li>
+      <li>OWASP Cheat Sheet Series — <code>cheatsheetseries.owasp.org</code></li>
+      <li>NIST SP 800-218 — Secure Software Development Framework (SSDF)</li>
+      <li>NIST Cybersecurity Framework 2.0 (2024)</li>
+      <li>ISO/IEC 27001:2022 — Information Security Management Systems</li>
+      <li>ISO/IEC 27034 — Application Security</li>
+      <li>CIS Controls v8</li>
+      <li>CWE/SANS Top 25 Most Dangerous Software Weaknesses</li>
+      <li>Microsoft Threat Modeling — STRIDE</li>
+      <li>EU NIS2 Directive (2024) — para infraestructura crítica</li>
+    </ul>
+  </div>
+
+  <div class="guide-meta" style="text-align: center; margin-top: 40px;">
+    <strong>QA Shift-Left Methodology · by E-Gregorio</strong><br>
+    Guía DevSecOps — alineada a OWASP Top 10 (2021), OWASP ASVS 4.0.3, ISO/IEC 27001:2022 y NIST CSF 2.0
+  </div>
+
+</div>
+</body>
+</html>

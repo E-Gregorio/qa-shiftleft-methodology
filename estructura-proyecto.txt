@@ -1,0 +1,101 @@
+# QA Shift-Left Methodology · Estructura del proyecto
+
+## 🏗️ Estructura principal
+
+```
+qa-shiftleft-methodology/
+├── informesFormatoHtml/                # 🎯 FRAMEWORK PRINCIPAL (HTML)
+│   ├── setup_QA_ShiftleftTesting.html  # Presentación principal
+│   ├── 03_Planes/                      # Plantillas de planificación
+│   │   ├── plantillaMasterTestPlan.html
+│   │   ├── plantillaTestPlan.html
+│   │   └── plantillaUS_ISQTB.html
+│   ├── 04_Informes/                    # Informes y seguimiento
+│   │   ├── calendario-pruebas.html
+│   │   ├── checklist-revision.html
+│   │   ├── informe-avance-prueba.html
+│   │   ├── informe-cierre-prueba.html
+│   │   ├── metricas-calidad.html
+│   │   ├── reporte-defecto-individual.html
+│   │   └── reporte-defectos.html
+│   └── 05_Guias/                       # Guías estratégicas
+│       ├── index.html                  # Portal de guías
+│       ├── guia-estimacion-vcr.html
+│       ├── guia-estrategia-pruebas.html
+│       ├── guia-gestion-riesgos.html
+│       ├── guia-testing-ia-llm.html        ⭐ NUEVO (2026)
+│       ├── guia-testing-performance.html   ⭐ NUEVO (2026)
+│       ├── guia-devsecops-security.html    ⭐ NUEVO (2026)
+│       └── marco-normativo-estandares.html
+├── informesISQTB/                      # Fuentes en Markdown
+│   ├── 01-Control/
+│   ├── 03_Planes/
+│   ├── 04_Informes/
+│   ├── 05_Guias/
+│   └── 06_Ejemplo/
+├── Command_Center_Shift-Left-Testing/  # Plataforma de comando QA (Playwright + AI)
+├── .github/
+│   ├── workflows/pages.yml             # Auto-deploy a GitHub Pages
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── LICENSE                             # MIT
+├── README.md
+├── CONTRIBUTING.md
+└── estructura-proyecto.txt             # Este archivo
+```
+
+## 🎯 Archivos principales
+
+### 🚀 Punto de entrada
+- `informesFormatoHtml/setup_QA_ShiftleftTesting.html` — Presentación principal del framework
+
+### 📚 Portal de guías
+- `informesFormatoHtml/05_Guias/index.html` — Centro de acceso a todas las guías estratégicas
+
+### 🧭 Guías estratégicas
+1. `guia-estimacion-vcr.html` — Metodología VCR (Valor-Costo-Riesgo)
+2. `guia-estrategia-pruebas.html` — Marco común de testing
+3. `guia-gestion-riesgos.html` — Gestión de riesgos ISTQB / ISO 29119
+4. `guia-testing-ia-llm.html` — Testing de aplicaciones IA/LLM (OWASP, NIST, MLPerf)
+5. `guia-testing-performance.html` — Performance moderno (k6, Lighthouse, ISO 25010)
+6. `guia-devsecops-security.html` — DevSecOps (SAST/DAST/SCA, OWASP ASVS)
+7. `marco-normativo-estandares.html` — Marco normativo de referencia
+
+## 🎨 Paleta del framework
+
+- Primary: #2563EB
+- Primary dark: #1D4ED8
+- Light bg: #DBEAFE
+- Accent (gold): #F59E0B
+- Slate-900: #0F172A
+
+## 📐 Estándares cubiertos (vigentes)
+
+- ISTQB Foundation Level v4 (2023)
+- ISO/IEC/IEEE 29119-1/2/3/4 (Test Process & Documentation)
+- ISO/IEC/IEEE 29119-11:2020 (Testing of AI-based systems)
+- ISO/IEC/IEEE 29148:2018 (Requirements engineering)
+- ISO/IEC 25010:2023 (Product quality model)
+- ISO/IEC 25059:2023 (Quality model for AI systems)
+- ISO/IEC 27001:2022 (Information security)
+- WCAG 2.2 (Accessibility)
+- OWASP Top 10 (2021), OWASP ASVS 4.0.3, OWASP LLM Top 10 (2025)
+- NIST AI RMF 1.0
+- MLPerf Inference / Training
+
+## 🔗 Flujo de navegación
+
+```
+setup_QA_ShiftleftTesting.html (Presentación principal)
+  ├── Slide 3: 05_Guias/index.html (Portal de guías)
+  │     ├── guia-estimacion-vcr.html
+  │     ├── guia-estrategia-pruebas.html
+  │     ├── guia-gestion-riesgos.html
+  │     ├── guia-testing-ia-llm.html       ⭐ NUEVO
+  │     ├── guia-testing-performance.html  ⭐ NUEVO
+  │     ├── guia-devsecops-security.html   ⭐ NUEVO
+  │     └── marco-normativo-estandares.html
+  └── Slides 4-12: enlaces directos a plantillas
+        ├── 03_Planes/ (Planificación)
+        └── 04_Informes/ (Seguimiento y métricas)
+```

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Métricas de Calidad — Quality Metrics</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .met-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .met-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .met-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .met-section { margin: 30px 0; }
+  .met-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .met-section h3 { color: #2563EB; margin-top: 25px; }
+  .met-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .met-table td, .met-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .met-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .met-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .metric-card { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #2563EB; margin: 15px 0; }
+  .metric-value { font-size: 24px; font-weight: bold; color: #2563EB; text-align: center; margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="met-container">
+  
+  <div class="met-header">
+    <div>MÉTRICAS DE CALIDAD</div>
+  </div>
+  
+  <div class="met-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISTQB v4 Capítulo 5, ISO/IEC/IEEE 29119-4 (Test Measurement), IEEE 1061
+    </div>
+    
+    <table class="met-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Sistema:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Período de medición:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión / Release:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Responsable QA:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha del reporte:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="met-section">
+    <h2>1️⃣ Métricas de Ejecución de Pruebas</h2>
+    
+    <div class="metric-card">
+      <h3>📊 Resumen de Casos de Prueba</h3>
+      <table class="met-table">
+        <tr>
+          <th style="width: 40%;">Métrica</th>
+          <th style="width: 20%;">Valor Actual</th>
+          <th style="width: 20%;">Objetivo</th>
+          <th style="width: 20%;">Estado</th>
+        </tr>
+        <tr>
+          <td>Total de casos planificados</td>
+          <td class="metric-value">_______</td>
+          <td>_______</td>
+          <td>✅ ⚠️ ❌</td>
+        </tr>
+        <tr>
+          <td>Casos ejecutados</td>
+          <td class="metric-value">_______</td>
+          <td>_______</td>
+          <td>✅ ⚠️ ❌</td>
+        </tr>
+        <tr>
+          <td>Casos pasados exitosamente</td>
+          <td class="metric-value">_______</td>
+          <td>_______</td>
+          <td>✅ ⚠️ ❌</td>
+        </tr>
+        <tr>
+          <td>Casos fallidos</td>
+          <td class="metric-value">_______</td>
+          <td>_______</td>
+          <td>✅ ⚠️ ❌</td>
+        </tr>
+        <tr>
+          <td>Casos bloqueados</td>
+          <td class="metric-value">_______</td>
+          <td>_______</td>
+          <td>✅ ⚠️ ❌</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="info-box">
+      <strong>📈 Porcentaje de ejecución:</strong> (Casos ejecutados / Casos planificados) × 100 = _______%
+      <br><strong>🎯 Tasa de éxito:</strong> (Casos pasados / Casos ejecutados) × 100 = _______%
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>2️⃣ Métricas de Defectos</h2>
+    
+    <div class="metric-card">
+      <h3>🐛 Análisis de Defectos</h3>
+      <table class="met-table">
+        <tr>
+          <th style="width: 25%;">Severidad</th>
+          <th style="width: 15%;">Encontrados</th>
+          <th style="width: 15%;">Corregidos</th>
+          <th style="width: 15%;">Abiertos</th>
+          <th style="width: 15%;">Reabiertos</th>
+          <th style="width: 15%;">% Resolución</th>
+        </tr>
+        <tr>
+          <td><strong>CRÍTICO</strong></td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____%</td>
+        </tr>
+        <tr>
+          <td><strong>ALTO</strong></td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____%</td>
+        </tr>
+        <tr>
+          <td><strong>MEDIO</strong></td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____%</td>
+        </tr>
+        <tr>
+          <td><strong>BAJO</strong></td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____</td>
+          <td class="metric-value">____%</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="info-box">
+      <strong>🔍 Densidad de defectos:</strong> Total defectos / KLOC o Total defectos / Puntos de función = _______
+      <br><strong>⏱️ Tiempo promedio de resolución:</strong> _______ días/horas
+      <br><strong>🔄 Tasa de escape:</strong> Defectos encontrados en producción / Total defectos = _______%
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>3️⃣ Métricas de Cobertura</h2>
+    
+    <table class="met-table">
+      <tr>
+        <th style="width: 40%;">Tipo de Cobertura</th>
+        <th style="width: 20%;">Valor Actual (%)</th>
+        <th style="width: 20%;">Objetivo (%)</th>
+        <th style="width: 20%;">Estado</th>
+      </tr>
+      <tr>
+        <td>Cobertura de requisitos</td>
+        <td class="metric-value">______%</td>
+        <td>______%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td>Cobertura de historias de usuario</td>
+        <td class="metric-value">______%</td>
+        <td>______%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td>Cobertura de código (si aplica)</td>
+        <td class="metric-value">______%</td>
+        <td>______%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td>Cobertura de ramas de decisión</td>
+        <td class="metric-value">______%</td>
+        <td>______%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>4️⃣ Métricas de Rendimiento y Recursos</h2>
+    
+    <div class="metric-card">
+      <h3>⚡ Eficiencia del Proceso</h3>
+      <table class="met-table">
+        <tr>
+          <th style="width: 50%;">Métrica</th>
+          <th style="width: 25%;">Valor Actual</th>
+          <th style="width: 25%;">Objetivo</th>
+        </tr>
+        <tr>
+          <td>Tiempo promedio por caso de prueba</td>
+          <td class="metric-value">____ min</td>
+          <td>____ min</td>
+        </tr>
+        <tr>
+          <td>Casos ejecutados por día</td>
+          <td class="metric-value">____</td>
+          <td>____</td>
+        </tr>
+        <tr>
+          <td>Esfuerzo total invertido (horas)</td>
+          <td class="metric-value">____</td>
+          <td>____</td>
+        </tr>
+        <tr>
+          <td>% de automatización</td>
+          <td class="metric-value">____%</td>
+          <td>____%</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="info-box">
+      <strong>💰 ROI de automatización:</strong> (Tiempo ahorrado × Costo/hora) / Inversión en automatización = _______
+      <br><strong>🎯 Productividad del equipo:</strong> Casos ejecutados / Persona-día = _______
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>5️⃣ Métricas de Calidad del Software</h2>
+    
+    <table class="met-table">
+      <tr>
+        <th style="width: 30%;">Característica de Calidad</th>
+        <th style="width: 20%;">Métrica</th>
+        <th style="width: 20%;">Valor Medido</th>
+        <th style="width: 15%;">Objetivo</th>
+        <th style="width: 15%;">Estado</th>
+      </tr>
+      <tr>
+        <td><strong>Funcionalidad</strong></td>
+        <td>% Casos funcionales pasados</td>
+        <td class="metric-value">____%</td>
+        <td>____%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td><strong>Rendimiento</strong></td>
+        <td>Tiempo de respuesta promedio</td>
+        <td class="metric-value">____ seg</td>
+        <td>____ seg</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td><strong>Usabilidad</strong></td>
+        <td>Tasa de finalización de tareas</td>
+        <td class="metric-value">____%</td>
+        <td>____%</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td><strong>Confiabilidad</strong></td>
+        <td>MTBF (Mean Time Between Failures)</td>
+        <td class="metric-value">____ hrs</td>
+        <td>____ hrs</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+      <tr>
+        <td><strong>Seguridad</strong></td>
+        <td>Vulnerabilidades detectadas</td>
+        <td class="metric-value">____</td>
+        <td>____</td>
+        <td>✅ ⚠️ ❌</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>6️⃣ Tendencias y Análisis Comparativo</h2>
+    
+    <div class="metric-card">
+      <h3>📈 Evolución Temporal</h3>
+      <table class="met-table">
+        <tr>
+          <th style="width: 25%;">Métrica</th>
+          <th style="width: 18%;">Semana 1</th>
+          <th style="width: 18%;">Semana 2</th>
+          <th style="width: 18%;">Semana 3</th>
+          <th style="width: 21%;">Tendencia</th>
+        </tr>
+        <tr>
+          <td>Casos ejecutados</td>
+          <td>______</td>
+          <td>______</td>
+          <td>______</td>
+          <td>📈 📉 ➡️</td>
+        </tr>
+        <tr>
+          <td>Defectos encontrados</td>
+          <td>______</td>
+          <td>______</td>
+          <td>______</td>
+          <td>📈 📉 ➡️</td>
+        </tr>
+        <tr>
+          <td>Tasa de éxito (%)</td>
+          <td>______</td>
+          <td>______</td>
+          <td>______</td>
+          <td>📈 📉 ➡️</td>
+        </tr>
+        <tr>
+          <td>Cobertura de requisitos (%)</td>
+          <td>______</td>
+          <td>______</td>
+          <td>______</td>
+          <td>📈 📉 ➡️</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>7️⃣ Dashboard Ejecutivo</h2>
+    
+    <div class="info-box">
+      <h3>🎯 Indicadores Clave (KPIs)</h3>
+      <table class="met-table">
+        <tr>
+          <th style="width: 40%;">KPI</th>
+          <th style="width: 20%;">Valor Actual</th>
+          <th style="width: 20%;">Meta</th>
+          <th style="width: 20%;">RAG Status</th>
+        </tr>
+        <tr>
+          <td><strong>Progreso General del Proyecto</strong></td>
+          <td class="metric-value">____%</td>
+          <td>100%</td>
+          <td>🟢 🟡 🔴</td>
+        </tr>
+        <tr>
+          <td><strong>Calidad del Release</strong></td>
+          <td class="metric-value">____%</td>
+          <td>≥95%</td>
+          <td>🟢 🟡 🔴</td>
+        </tr>
+        <tr>
+          <td><strong>Cumplimiento de Cronograma</strong></td>
+          <td class="metric-value">____%</td>
+          <td>100%</td>
+          <td>🟢 🟡 🔴</td>
+        </tr>
+        <tr>
+          <td><strong>Eficiencia del Proceso</strong></td>
+          <td class="metric-value">____%</td>
+          <td>≥90%</td>
+          <td>🟢 🟡 🔴</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>8️⃣ Recomendaciones y Acciones</h2>
+    
+    <div class="info-box">
+      <h3>🚀 Acciones Recomendadas</h3>
+      <ul>
+        <li><strong>Para mejorar cobertura:</strong> ________________________</li>
+        <li><strong>Para reducir defectos:</strong> ________________________</li>
+        <li><strong>Para optimizar recursos:</strong> ________________________</li>
+        <li><strong>Para mejorar automatización:</strong> ________________________</li>
+      </ul>
+      
+      <h3>⚠️ Riesgos Identificados</h3>
+      <ul>
+        <li>________________________</li>
+        <li>________________________</li>
+        <li>________________________</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="met-section">
+    <h2>📚 Referencias Normativas</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB Foundation Level v4.0 – Capítulo 5:</strong> Test Monitoring, Control and Test Completion.</li>
+        <li><strong>ISO/IEC/IEEE 29119-4:</strong> Test Techniques - Test Measurement.</li>
+        <li><strong>IEEE 1061:</strong> Standard for Software Quality Metrics Methodology.</li>
+        <li><strong>ISO/IEC 25023:</strong> Systems and software Quality Requirements and Evaluation (SQuaRE) - Measurement of system and software product quality.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Certificación de Métricas</h3>
+    <p>Este <strong>Reporte de Métricas de Calidad</strong> cumple con los estándares <strong>ISTQB v4</strong>, <strong>ISO/IEC/IEEE 29119-4</strong> e <strong>IEEE 1061</strong> para la medición y evaluación de la calidad en procesos de testing de software.</p>
+    <br>
+    <p><strong>Elaborado por:</strong> _________________________</p>
+    <p><strong>Revisado por:</strong> _________________________</p>
+    <p><strong>Fecha:</strong> _________________________</p>
+  </div>
+
+</div>
+</body>
+</html>

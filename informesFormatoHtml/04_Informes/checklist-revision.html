@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Checklist de Revisión — Review Checklist</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; }
+  .check-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .check-header { background: #2563EB; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .check-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .check-section { margin: 30px 0; }
+  .check-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .check-section h3 { color: #2563EB; margin-top: 25px; }
+  .check-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .check-table td, .check-table th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
+  .check-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .check-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .checklist-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #2563EB; }
+  .checkbox { display: inline-block; width: 20px; height: 20px; border: 2px solid #2563EB; margin-right: 10px; text-align: center; line-height: 16px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="check-container">
+  
+  <div class="check-header">
+    <div>CHECKLIST DE REVISIÓN</div>
+  </div>
+  
+  <div class="check-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong> — Plantilla alineada a ISTQB v4 (Foundation 2023) e ISO/IEC/IEEE 29119
+    </div>
+    <div class="info-box">
+      <strong>Normas de referencia:</strong> ISTQB v4 Capítulo 3 (Técnicas estáticas), ISO/IEC/IEEE 29119-4, IEEE 1028 (Reviews)
+    </div>
+    
+    <table class="check-table" style="margin-top: 20px;">
+      <tr><td class="field-label">Proyecto / Sistema:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Documento / Artefacto a revisar:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Versión del documento:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Tipo de revisión:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Revisor / Equipo:</td><td>_________________________</td></tr>
+      <tr><td class="field-label">Fecha de revisión:</td><td>_________________________</td></tr>
+    </table>
+  </div>
+
+  <div class="check-section">
+    <h2>1️⃣ Información General de la Revisión</h2>
+    
+    <div class="info-box">
+      <h3>📋 Tipos de Revisión (según ISTQB v4)</h3>
+      <ul>
+        <li><strong>Revisión Informal:</strong> No hay proceso formal definido</li>
+        <li><strong>Walkthrough:</strong> Dirigido por el autor del documento</li>
+        <li><strong>Revisión Técnica:</strong> Dirigido por un moderador técnico</li>
+        <li><strong>Inspección:</strong> Proceso formal con roles definidos y métricas</li>
+      </ul>
+    </div>
+    
+    <table class="check-table">
+      <tr>
+        <th style="width: 40%;">Criterio de Revisión</th>
+        <th style="width: 15%;">✓ / ✗</th>
+        <th style="width: 45%;">Observaciones</th>
+      </tr>
+      <tr>
+        <td>El documento tiene un propósito claro y bien definido</td>
+        <td><span class="checkbox">☐</span></td>
+        <td>_______________________________</td>
+      </tr>
+      <tr>
+        <td>La audiencia objetivo está claramente identificada</td>
+        <td><span class="checkbox">☐</span></td>
+        <td>_______________________________</td>
+      </tr>
+      <tr>
+        <td>El documento sigue los estándares de la organización</td>
+        <td><span class="checkbox">☐</span></td>
+        <td>_______________________________</td>
+      </tr>
+      <tr>
+        <td>La versión y control de cambios están actualizados</td>
+        <td><span class="checkbox">☐</span></td>
+        <td>_______________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>2️⃣ Checklist para Especificaciones de Requisitos</h2>
+    
+    <div class="checklist-item">
+      <h3>📖 Claridad y Completitud</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 60%;">Criterio</th>
+          <th style="width: 10%;">✓ / ✗</th>
+          <th style="width: 30%;">Comentarios</th>
+        </tr>
+        <tr>
+          <td>Los requisitos están escritos en lenguaje claro y sin ambigüedades</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Cada requisito es verificable y testeable</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los criterios de aceptación están bien definidos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>No hay contradicciones entre requisitos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Las dependencias entre requisitos están identificadas</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los requisitos no funcionales están especificados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>3️⃣ Checklist para Diseño de Sistema</h2>
+    
+    <div class="checklist-item">
+      <h3>🏗️ Arquitectura y Diseño</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 60%;">Criterio</th>
+          <th style="width: 10%;">✓ / ✗</th>
+          <th style="width: 30%;">Comentarios</th>
+        </tr>
+        <tr>
+          <td>La arquitectura es apropiada para los requisitos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los componentes y sus interfaces están bien definidos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>El diseño considera aspectos de seguridad</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los patrones de diseño utilizados son apropiados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>La escalabilidad y rendimiento están considerados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>La mantenibilidad del diseño es adecuada</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>4️⃣ Checklist para Código Fuente</h2>
+    
+    <div class="checklist-item">
+      <h3>💻 Calidad del Código</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 60%;">Criterio</th>
+          <th style="width: 10%;">✓ / ✗</th>
+          <th style="width: 30%;">Comentarios</th>
+        </tr>
+        <tr>
+          <td>El código sigue las convenciones de nomenclatura</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Las funciones y métodos tienen una responsabilidad única</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>El código está adecuadamente comentado</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>No hay código duplicado innecesario</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>El manejo de errores es apropiado</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Las vulnerabilidades de seguridad han sido consideradas</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>El código es eficiente en términos de rendimiento</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>5️⃣ Checklist para Casos de Prueba</h2>
+    
+    <div class="checklist-item">
+      <h3>🧪 Diseño de Pruebas</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 60%;">Criterio</th>
+          <th style="width: 10%;">✓ / ✗</th>
+          <th style="width: 30%;">Comentarios</th>
+        </tr>
+        <tr>
+          <td>Los casos de prueba están vinculados a requisitos específicos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los pasos de ejecución son claros y reproducibles</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los datos de entrada están bien especificados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los resultados esperados son precisos y verificables</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Se cubren tanto casos positivos como negativos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los casos límite están incluidos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>La prioridad de los casos está definida</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>6️⃣ Checklist para Planes de Prueba</h2>
+    
+    <div class="checklist-item">
+      <h3>📋 Planificación de Pruebas</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 60%;">Criterio</th>
+          <th style="width: 10%;">✓ / ✗</th>
+          <th style="width: 30%;">Comentarios</th>
+        </tr>
+        <tr>
+          <td>El alcance de las pruebas está claramente definido</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los objetivos de prueba son específicos y medibles</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>La estrategia de prueba es apropiada para el proyecto</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los recursos necesarios están identificados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>El cronograma de pruebas es realista</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los criterios de entrada y salida están definidos</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Los riesgos han sido identificados y mitigados</td>
+          <td><span class="checkbox">☐</span></td>
+          <td>________________</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>7️⃣ Defectos Encontrados</h2>
+    
+    <table class="check-table">
+      <tr>
+        <th style="width: 15%;">ID Defecto</th>
+        <th style="width: 20%;">Severidad</th>
+        <th style="width: 40%;">Descripción</th>
+        <th style="width: 25%;">Ubicación</th>
+      </tr>
+      <tr>
+        <td>DEF-001</td>
+        <td>Alta / Media / Baja</td>
+        <td>________________________________</td>
+        <td>________________________________</td>
+      </tr>
+      <tr>
+        <td>DEF-002</td>
+        <td>Alta / Media / Baja</td>
+        <td>________________________________</td>
+        <td>________________________________</td>
+      </tr>
+      <tr>
+        <td>DEF-003</td>
+        <td>Alta / Media / Baja</td>
+        <td>________________________________</td>
+        <td>________________________________</td>
+      </tr>
+      <tr>
+        <td>______</td>
+        <td>________________</td>
+        <td>________________________________</td>
+        <td>________________________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>8️⃣ Resumen y Recomendaciones</h2>
+    
+    <div class="info-box">
+      <h3>📊 Métricas de la Revisión</h3>
+      <table class="check-table">
+        <tr>
+          <th style="width: 40%;">Métrica</th>
+          <th style="width: 60%;">Valor</th>
+        </tr>
+        <tr>
+          <td>Total de elementos revisados</td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Total de defectos encontrados</td>
+          <td>________________</td>
+        </tr>
+        <tr>
+          <td>Defectos por severidad (Alta/Media/Baja)</td>
+          <td>________________ / ________________ / ________________</td>
+        </tr>
+        <tr>
+          <td>Tiempo invertido en la revisión</td>
+          <td>________________ horas</td>
+        </tr>
+        <tr>
+          <td>Densidad de defectos</td>
+          <td>________________ defectos/página o KLOC</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="info-box">
+      <h3>✅ Estado Final de la Revisión</h3>
+      <p><strong>☐ Aprobado:</strong> El documento puede proceder sin cambios</p>
+      <p><strong>☐ Aprobado con cambios menores:</strong> Requiere correcciones menores</p>
+      <p><strong>☐ Requiere nueva revisión:</strong> Necesita cambios significativos y re-revisión</p>
+      <p><strong>☐ Rechazado:</strong> El documento debe ser reescrito</p>
+    </div>
+    
+    <div class="info-box">
+      <h3>💡 Recomendaciones Principales</h3>
+      <ul>
+        <li>________________________________________________________________</li>
+        <li>________________________________________________________________</li>
+        <li>________________________________________________________________</li>
+        <li>________________________________________________________________</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="check-section">
+    <h2>📚 Referencias Normativas</h2>
+    
+    <div class="info-box">
+      <ul>
+        <li><strong>ISTQB Foundation Level v4.0 – Capítulo 3:</strong> Static Testing - Reviews.</li>
+        <li><strong>IEEE 1028:</strong> Standard for Software Reviews and Audits.</li>
+        <li><strong>ISO/IEC/IEEE 29119-4:</strong> Test Techniques - Static Testing.</li>
+        <li><strong>ISO/IEC 20246:</strong> Software and systems engineering - Work product reviews.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box" style="text-align: center;">
+    <h3>✅ Certificación de Revisión</h3>
+    <p>Esta <strong>Revisión</strong> cumple con los estándares <strong>ISTQB v4</strong>, <strong>IEEE 1028</strong> e <strong>ISO/IEC/IEEE 29119-4</strong> para técnicas estáticas y procesos de revisión en el desarrollo de software.</p>
+    <br>
+    <p><strong>Revisor Principal:</strong> _________________________</p>
+    <p><strong>Firma:</strong> _________________________</p>
+    <p><strong>Fecha de completitud:</strong> _________________________</p>
+  </div>
+
+</div>
+</body>
+</html>
