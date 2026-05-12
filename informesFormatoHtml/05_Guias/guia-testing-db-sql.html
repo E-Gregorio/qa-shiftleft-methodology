@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Database & Data Quality Testing — QA Shift-Left Methodology</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f5f5f5; color: #1a1a1a; }
+  .guide-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .guide-header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; padding: 25px; text-align: center; font-weight: bold; font-size: 24px; margin-bottom: 30px; border-radius: 8px; }
+  .guide-header .subtitle { font-size: 14px; font-weight: normal; opacity: 0.9; margin-top: 8px; }
+  .guide-meta { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #2563EB; }
+  .guide-section { margin: 30px 0; }
+  .guide-section h2 { color: #2563EB; border-bottom: 3px solid #2563EB; padding-bottom: 10px; }
+  .guide-section h3 { color: #1D4ED8; margin-top: 25px; }
+  .guide-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .guide-table td, .guide-table th { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+  .guide-table th { background: #2563EB; color: white; font-weight: bold; text-align: center; }
+  .guide-table tr:nth-child(even) { background: #f8f9fa; }
+  .info-box { background: #DBEAFE; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #2563EB; }
+  .warn-box { background: #FFF3E0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #F97316; }
+  .danger-box { background: #FEE2E2; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #EF4444; }
+  .ok-box { background: #D1FAE5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #10B981; }
+  .field-label { font-weight: bold; color: #2563EB; }
+  .divider { border-top: 2px solid #2563EB; margin: 30px 0; }
+  .code-box { background: #0F172A; color: #E2E8F0; padding: 18px; border-radius: 8px; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 15px 0; line-height: 1.5; }
+  .code-box .k { color: #60A5FA; }
+  .code-box .s { color: #FCD34D; }
+  .code-box .c { color: #94A3B8; font-style: italic; }
+  .template-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Consolas', monospace; font-size: 13px; border: 1px solid #ddd; white-space: pre-wrap; }
+  .standard-pill { display: inline-block; background: #2563EB; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .standard-pill.green { background: #10B981; }
+  .standard-pill.red { background: #EF4444; }
+  .standard-pill.amber { background: #F59E0B; }
+  .nav-back { display: inline-block; margin-bottom: 20px; padding: 8px 16px; background: #2563EB; color: white; text-decoration: none; border-radius: 4px; }
+  .nav-back:hover { background: #1D4ED8; }
+  .toc { background: #f8f9fa; padding: 18px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #F59E0B; }
+  .toc ul { columns: 2; list-style-type: none; padding-left: 0; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: #2563EB; text-decoration: none; }
+  .pipeline-stage { display: inline-block; background: #DBEAFE; border: 2px solid #2563EB; padding: 12px 16px; border-radius: 8px; margin: 6px; min-width: 140px; vertical-align: top; }
+  .pipeline-stage h4 { margin: 0; color: #1E40AF; font-size: 14px; }
+  .pipeline-stage ul { margin: 8px 0 0 0; padding-left: 18px; font-size: 12px; }
+  .dqfi-dim { background: #EFF6FF; border: 2px solid #2563EB; border-radius: 8px; padding: 16px; margin: 10px 0; }
+  .dqfi-dim h4 { color: #1E40AF; margin: 0 0 8px 0; font-size: 15px; }
+  .dqfi-score { display: inline-block; background: #10B981; color: white; border-radius: 50%; width: 42px; height: 42px; line-height: 42px; text-align: center; font-weight: bold; font-size: 14px; margin-right: 10px; vertical-align: middle; }
+  .dqfi-score.warn { background: #F59E0B; }
+  .dqfi-score.danger { background: #EF4444; }
+</style>
+</head>
+<body>
+<div class="guide-container">
+
+  <a href="index.html" class="nav-back">← Volver al portal de guías</a>
+
+  <div class="guide-header">
+    <div>🗄️ GUÍA DATABASE &amp; DATA QUALITY TESTING</div>
+    <div class="subtitle">Schema · Integridad · Transacciones · Test Data Management · DQFI — Shift-left de datos alineado a ISO/IEC 25012 y DAMA-DMBOK</div>
+  </div>
+
+  <div class="guide-meta">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <strong>QA Shift-Left Methodology · by E-Gregorio</strong>
+    </div>
+    <div style="text-align: center; margin-bottom: 12px;">
+      <span class="standard-pill green">ISO/IEC 25012:2008</span>
+      <span class="standard-pill green">ISO/IEC 25010:2023</span>
+      <span class="standard-pill green">DAMA-DMBOK v2</span>
+      <span class="standard-pill green">ISO 31000:2018</span>
+      <span class="standard-pill red">OWASP Top 10 A02/A03</span>
+      <span class="standard-pill amber">GDPR Art. 25 — Privacy by Design</span>
+    </div>
+    <div class="info-box">
+      Esta guía cubre <strong>cómo integrar el testing de la capa de datos en cada fase del ciclo Shift-Left</strong>: desde el contrato de datos como artefacto de DoR hasta las assertions de integridad post-E2E y el índice forense DQFI. La premisa: <strong>un defecto de datos encontrado en Fase 2 cuesta $1; encontrado en producción puede costar un breach regulatorio</strong>.
+    </div>
+  </div>
+
+  <div class="toc">
+    <strong>📋 Contenido</strong>
+    <ul>
+      <li><a href="#shift-left-datos">1. Shift-left de datos: el problema real</a></li>
+      <li><a href="#data-contract">2. Data Contract — DoR del dato</a></li>
+      <li><a href="#schema-testing">3. Schema Testing (Fase 2)</a></li>
+      <li><a href="#test-data-mgmt">4. Test Data Management</a></li>
+      <li><a href="#integridad">5. Data Integrity Testing</a></li>
+      <li><a href="#transacciones">6. Transaction Testing — ACID</a></li>
+      <li><a href="#query-perf">7. Query Performance Testing</a></li>
+      <li><a href="#data-security">8. Data Security Testing</a></li>
+      <li><a href="#pipeline">9. Pipeline de Database Testing</a></li>
+      <li><a href="#dqfi">10. DQFI — Data Quality Forensic Index</a></li>
+      <li><a href="#metricas">11. Métricas e indicadores</a></li>
+      <li><a href="#anti-patterns">12. Anti-patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 1 -->
+  <div class="guide-section" id="shift-left-datos">
+    <h2>1. Shift-left de datos: el problema real</h2>
+    <p>En proyectos reales, el equipo QA enfrenta tres escenarios recurrentes con los datos de prueba:</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Escenario</th>
+        <th>Situación</th>
+        <th>Riesgo</th>
+        <th>Solución Shift-Left</th>
+      </tr>
+      <tr>
+        <td><strong>Sin datos</strong></td>
+        <td>Dev no provee datos. QA genera sintéticos ad-hoc.</td>
+        <td>No se detectan problemas de calidad de datos reales.</td>
+        <td>Golden Dataset versionado + Data Contract en DoR.</td>
+      </tr>
+      <tr>
+        <td><strong>DB sin control</strong></td>
+        <td>Se da acceso a una BD de test controlada por dev. Puede cambiar sin aviso.</td>
+        <td>Tests inestables. La culpa "cae" sobre QA cuando rompe.</td>
+        <td>BD propia de QA. Schema validado contra contrato. Seed reproducible.</td>
+      </tr>
+      <tr>
+        <td><strong>Datos reales</strong></td>
+        <td>Cliente autoriza uso de datos de producción para pruebas.</td>
+        <td>Violación GDPR/LGPD si no hay anonimización. Riesgo legal.</td>
+        <td>DPA firmado + pipeline de anonimización (Privacy by Design — GDPR Art. 25).</td>
+      </tr>
+    </table>
+
+    <div style="text-align: center; margin: 20px 0;">
+      <div class="pipeline-stage">
+        <h4>📋 Fase 1</h4>
+        <ul><li>Data Contract</li><li>DPA si datos reales</li><li>Definir PII</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>🔍 Fase 2</h4>
+        <ul><li>Schema review</li><li>DDL assertions</li><li>Constraints check</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>🚀 Fase 3</h4>
+        <ul><li>Golden Dataset seed</li><li>BD propia QA</li><li>Health check BD</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>🎯 Fase 4</h4>
+        <ul><li>VCR por assertions DB</li><li>¿Automatizar?</li><li>Prioridad riesgo dato</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>⚡ Fase 5</h4>
+        <ul><li>DB assertions post-E2E</li><li>ACID tests</li><li>PII checks</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>📊 Fase 6</h4>
+        <ul><li>DQFI score</li><li>Grafana dashboard</li><li>Dictamen forense</li></ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📌 Regla de oro:</strong> QA debe ser dueño de sus datos de prueba igual que es dueño de sus test cases. Sin datos bajo control de QA, los tests son dependientes de terceros y su resultado no es reproducible.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 2 -->
+  <div class="guide-section" id="data-contract">
+    <h2>2. Data Contract — DoR del dato</h2>
+    <p>El <strong>Data Contract</strong> es el artefacto formal que define qué datos existen, cómo se estructuran y qué reglas deben cumplir. Es el <strong>DoR de la capa de datos</strong>: sin él, no se puede ejecutar ninguna prueba de datos válida.</p>
+
+    <h3>¿Qué contiene un Data Contract?</h3>
+    <table class="guide-table">
+      <tr>
+        <th>Elemento</th>
+        <th>Descripción</th>
+        <th>Ejemplo</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Entidades y tablas</span></td>
+        <td>Listado de tablas/colecciones relevantes para la HU.</td>
+        <td>users, orders, payments, audit_log</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Tipos y formatos</span></td>
+        <td>Tipo de dato esperado por columna.</td>
+        <td>email: VARCHAR(255), NOT NULL, UNIQUE</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Constraints de negocio</span></td>
+        <td>Reglas que el dato debe cumplir más allá del DDL.</td>
+        <td>password_hash NUNCA en texto plano · age >= 18</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Campos PII</span></td>
+        <td>Identificación de datos personales (GDPR/LGPD).</td>
+        <td>email, full_name, phone, ip_address</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Relaciones</span></td>
+        <td>FK y relaciones entre entidades.</td>
+        <td>orders.user_id → users.id (FK obligatoria)</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Estados válidos</span></td>
+        <td>Enumeración de valores permitidos.</td>
+        <td>status IN ('pending','active','cancelled')</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Volumen de referencia</span></td>
+        <td>Orden de magnitud de registros en producción.</td>
+        <td>users: ~50.000 · orders: ~250.000</td>
+      </tr>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠️ DoR bloqueante:</strong> Si el Data Contract no está firmado por el Analista Funcional y el Tech Lead, la Fase 2 (Schema Testing) no arranca. Este es un gate real del framework, no una recomendación opcional.
+    </div>
+
+    <h3>Plantilla mínima de Data Contract</h3>
+    <div class="template-box">
+DATA CONTRACT — [Nombre del Proyecto]
+Versión: 1.0 · Fecha: [YYYY-MM-DD]
+HU asociada: [HU_XXX]
+Firmado por: [Analista Funcional] · [Tech Lead] · [QA Lead]
+
+TABLA: users
+─────────────────────────────────────────────────
+| Columna        | Tipo         | Constraint          | PII | Regla de negocio           |
+| id             | BIGINT       | PK, AUTO_INCREMENT  | No  | Generado por BD            |
+| email          | VARCHAR(255) | NOT NULL, UNIQUE    | Sí  | Formato RFC 5322           |
+| password_hash  | VARCHAR(255) | NOT NULL            | No  | NUNCA texto plano (bcrypt) |
+| created_at     | TIMESTAMP    | NOT NULL, DEFAULT   | No  | UTC                        |
+| status         | VARCHAR(20)  | NOT NULL            | No  | IN('active','inactive')    |
+
+RELACIONES:
+  orders.user_id → users.id (FK, ON DELETE RESTRICT)
+
+CAMPOS PII IDENTIFICADOS: email
+POLÍTICA DE ENMASCARAMIENTO: email → anonimizar en ambiente QA
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 3 -->
+  <div class="guide-section" id="schema-testing">
+    <h2>3. Schema Testing (Fase 2 — Pruebas Estáticas)</h2>
+    <p>El schema es la primera línea de defensa de la calidad del dato. Un campo sin constraint a nivel BD es un defecto que la aplicación puede ocultar temporalmente pero que eventualmente produce datos corruptos.</p>
+
+    <h3>Checklist de Schema Review</h3>
+    <table class="guide-table">
+      <tr>
+        <th>Check</th>
+        <th>Qué verificar</th>
+        <th>Comando SQL de validación</th>
+        <th>Estado</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">PK definida</span></td>
+        <td>Toda tabla tiene PRIMARY KEY explícita.</td>
+        <td><code>SELECT table_name FROM information_schema.tables WHERE table_name NOT IN (SELECT table_name FROM information_schema.table_constraints WHERE constraint_type='PRIMARY KEY')</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">FK con índice</span></td>
+        <td>Toda FK tiene índice en la columna referenciada.</td>
+        <td><code>SHOW INDEX FROM tabla</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">NOT NULL críticos</span></td>
+        <td>Columnas del Data Contract marcadas como NOT NULL lo son en DDL.</td>
+        <td><code>SELECT column_name, is_nullable FROM information_schema.columns WHERE table_name='users'</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">UNIQUE constraints</span></td>
+        <td>Campos identificados como únicos tienen constraint UNIQUE.</td>
+        <td><code>SELECT constraint_name FROM information_schema.table_constraints WHERE constraint_type='UNIQUE'</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Longitudes de VARCHAR</span></td>
+        <td>Longitudes del DDL coinciden con el Data Contract.</td>
+        <td><code>SELECT column_name, character_maximum_length FROM information_schema.columns WHERE table_name='users'</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">ENUM/CHECK constraints</span></td>
+        <td>Estados y enumeraciones tienen CHECK constraint o tipo ENUM.</td>
+        <td><code>SELECT check_clause FROM information_schema.check_constraints</code></td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Sin columnas huérfanas</span></td>
+        <td>No existen columnas en BD que no estén en el Data Contract.</td>
+        <td>Comparar <code>information_schema.columns</code> contra el contrato.</td>
+        <td>☐ OK / ☐ Defecto</td>
+      </tr>
+    </table>
+
+    <div class="ok-box">
+      <strong>✅ Shift-Left en acción:</strong> Un schema sin FK en una relación crítica es un defecto de Severidad 2. Detectarlo en Fase 2 (antes del primer commit de dev) elimina el riesgo de datos huérfanos en producción.
+    </div>
+
+    <h3>Ejemplo de assertion de schema (Python + psycopg2)</h3>
+    <div class="code-box">
+<span class="c"># schema_assertions.py — ejecutar en Fase 2 contra BD de QA</span>
+<span class="k">import</span> psycopg2
+
+<span class="k">def</span> assert_schema(conn):
+    cur = conn.cursor()
+
+    <span class="c"># 1. Verificar que email sea NOT NULL y UNIQUE</span>
+    cur.execute(<span class="s">"""
+        SELECT is_nullable, column_default
+        FROM information_schema.columns
+        WHERE table_name='users' AND column_name='email'
+    """</span>)
+    row = cur.fetchone()
+    <span class="k">assert</span> row[0] == <span class="s">'NO'</span>, <span class="s">"DEFECTO: email permite NULL"</span>
+
+    <span class="c"># 2. Verificar FK orders → users</span>
+    cur.execute(<span class="s">"""
+        SELECT COUNT(*) FROM information_schema.referential_constraints
+        WHERE constraint_name = 'fk_orders_user_id'
+    """</span>)
+    <span class="k">assert</span> cur.fetchone()[0] == 1, <span class="s">"DEFECTO: FK orders.user_id no definida"</span>
+
+    <span class="c"># 3. Verificar que password_hash no almacene texto plano</span>
+    cur.execute(<span class="s">"SELECT COUNT(*) FROM users WHERE LENGTH(password_hash) < 60"</span>)
+    <span class="k">assert</span> cur.fetchone()[0] == 0, <span class="s">"DEFECTO: passwords sin hashear detectados"</span>
+
+    print(<span class="s">"✅ Schema assertions: PASSED"</span>)
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 4 -->
+  <div class="guide-section" id="test-data-mgmt">
+    <h2>4. Test Data Management — Golden Dataset y Enmascaramiento</h2>
+
+    <h3>Estrategia A: Golden Dataset (sin datos reales)</h3>
+    <p>El Golden Dataset es un conjunto de datos sintéticos, <strong>versionado en Git</strong>, que siembra la BD de QA antes de cada ejecución del pipeline. QA lo controla 100%.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Principio</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Representatividad</span></td>
+        <td>Los datos cubren todos los escenarios del Data Contract: valores límite, formatos extremos, estados válidos e inválidos.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Reproducibilidad</span></td>
+        <td>El mismo seed produce exactamente los mismos datos. El pipeline es determinista.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Versionado</span></td>
+        <td>El seed script vive en Git junto al código. Cambia con el Data Contract.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Aislamiento</span></td>
+        <td>Cada ejecución del pipeline restaura la BD desde el seed. Los tests no se contaminan entre sí.</td>
+      </tr>
+    </table>
+
+    <div class="code-box">
+<span class="c">-- seed.sql — Golden Dataset para HU_REG_01</span>
+<span class="k">TRUNCATE</span> users <span class="k">RESTART IDENTITY CASCADE</span>;
+
+<span class="k">INSERT INTO</span> users (email, password_hash, status) <span class="k">VALUES</span>
+  (<span class="s">'user.activo@qasl.test'</span>,   <span class="s">'$2b$12$...'</span>, <span class="s">'active'</span>),    <span class="c">-- TC positivo</span>
+  (<span class="s">'user.inactivo@qasl.test'</span>, <span class="s">'$2b$12$...'</span>, <span class="s">'inactive'</span>),  <span class="c">-- TC negativo estado</span>
+  (<span class="s">'unicode.ñoño@qasl.test'</span>,  <span class="s">'$2b$12$...'</span>, <span class="s">'active'</span>),    <span class="c">-- TC unicode</span>
+  (<span class="s">'max255chars@'</span> || repeat(<span class="s">'a'</span>,240) || <span class="s">'.test'</span>, <span class="s">'$2b$12$...'</span>, <span class="s">'active'</span>); <span class="c">-- límite</span>
+    </div>
+
+    <h3>Estrategia B: Datos reales enmascarados (con autorización)</h3>
+    <div class="danger-box">
+      <strong>🔴 OBLIGATORIO antes de usar datos reales:</strong>
+      <ol>
+        <li><strong>DPA firmado</strong> (Data Processing Agreement) — contrato legal con el cliente que especifica: qué datos, qué enmascaramiento, en qué ambiente, con qué retención.</li>
+        <li><strong>Anonimización verificada</strong> — no solo pseudonimización. El dato enmascarado no debe poder re-identificarse.</li>
+        <li><strong>Auditoría del proceso</strong> — el pipeline de anonimización debe ser trazable y reproducible.</li>
+      </ol>
+      Base normativa: <strong>GDPR Art. 25 (Privacy by Design)</strong> · ISO/IEC 27001:2022 · ISO/IEC 25012
+    </div>
+
+    <table class="guide-table">
+      <tr>
+        <th>Técnica de enmascaramiento</th>
+        <th>Aplica a</th>
+        <th>Ejemplo</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Sustitución</span></td>
+        <td>Nombres, emails, teléfonos</td>
+        <td>juan.perez@empresa.com → user_4829@qasl.test</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Shuffling</span></td>
+        <td>Datos numéricos, fechas</td>
+        <td>Redistribuir valores del mismo campo entre filas</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Nulling</span></td>
+        <td>Campos no necesarios para el test</td>
+        <td>phone_number → NULL</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Tokenización</span></td>
+        <td>Números de tarjeta, DNI</td>
+        <td>4111111111111111 → TOK_a83f9e2c</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Perturbación</span></td>
+        <td>Montos, edades, coordenadas</td>
+        <td>Añadir ruido gaussiano ±5%</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 5 -->
+  <div class="guide-section" id="integridad">
+    <h2>5. Data Integrity Testing — Assertions post-E2E</h2>
+    <p>Después de que Playwright ejecuta un flujo E2E completo, las DB assertions verifican que <strong>el estado de la base de datos sea exactamente el esperado</strong>. Lo que el UI muestra puede diferir de lo que realmente quedó persistido.</p>
+
+    <h3>Tipos de assertions de integridad</h3>
+    <table class="guide-table">
+      <tr>
+        <th>Tipo</th>
+        <th>Qué valida</th>
+        <th>Ejemplo de query</th>
+        <th>Caso de prueba</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Existencia</span></td>
+        <td>El registro fue creado (o eliminado).</td>
+        <td><code>SELECT COUNT(*) FROM users WHERE email='nuevo@test.com'</code></td>
+        <td>TC-001: Registro exitoso → usuario existe en BD</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Valores</span></td>
+        <td>Los campos tienen los valores esperados post-operación.</td>
+        <td><code>SELECT status FROM users WHERE email='...'</code></td>
+        <td>TC-002: Estado correcto post-registro</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">No-existencia</span></td>
+        <td>Registros inválidos NO fueron creados.</td>
+        <td><code>SELECT COUNT(*) FROM users WHERE email='inválido'</code></td>
+        <td>TC-003: Registro fallido → NO existe en BD (BUG-001 type)</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Integridad referencial</span></td>
+        <td>FK correctamente vinculadas post-operación.</td>
+        <td><code>SELECT o.id FROM orders o LEFT JOIN users u ON o.user_id=u.id WHERE u.id IS NULL</code></td>
+        <td>TC-004: Sin órdenes huérfanas</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Seguridad del dato</span></td>
+        <td>PII no almacenada en texto plano.</td>
+        <td><code>SELECT COUNT(*) FROM users WHERE LENGTH(password_hash) &lt; 60</code></td>
+        <td>TC-005: Password hasheado — alinea a OWASP A02</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Auditoría</span></td>
+        <td>Registro de auditoría creado para operaciones críticas.</td>
+        <td><code>SELECT COUNT(*) FROM audit_log WHERE entity='user' AND action='CREATE'</code></td>
+        <td>TC-006: Log de creación de usuario existe</td>
+      </tr>
+    </table>
+
+    <div class="ok-box">
+      <strong>✅ Conexión con BUG-001 de QASL Framework:</strong> TC-008/009/015 del framework detectaron que el SUT aceptaba passwords de 5 y 1 caracteres. Una assertion de BD post-registro habría confirmado que el dato corrupto quedó persistido — dando evidencia doble: UI + BD, severidad reforzada.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 6 -->
+  <div class="guide-section" id="transacciones">
+    <h2>6. Transaction Testing — ACID</h2>
+    <p>Las propiedades ACID (Atomicity, Consistency, Isolation, Durability) son los contratos que la BD hace con la aplicación. Cuando se violan, los datos quedan en estados inconsistentes que ningún test de UI detecta.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Propiedad</th>
+        <th>Qué significa</th>
+        <th>Cómo testearla</th>
+        <th>Escenario de falla</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Atomicity</span></td>
+        <td>La transacción completa o no hace nada.</td>
+        <td>Simular falla en el paso N de una transacción multi-step. Verificar rollback completo.</td>
+        <td>Pago registrado en tabla payments pero orden sin actualizar en orders.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Consistency</span></td>
+        <td>La BD pasa de un estado válido a otro válido.</td>
+        <td>Verificar constraints post-transacción. Ninguna constraint debe violarse.</td>
+        <td>Balance de cuenta negativo tras débito sin validación.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Isolation</span></td>
+        <td>Transacciones concurrentes no interfieren entre sí.</td>
+        <td>Ejecutar 2+ transacciones en paralelo (K6 con 2 VUs) sobre el mismo recurso.</td>
+        <td>Dos usuarios registran el mismo email simultáneamente. Uno debería fallar.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Durability</span></td>
+        <td>Los datos confirmados persisten ante fallos.</td>
+        <td>Verificar que datos existen en BD después de reiniciar el servicio.</td>
+        <td>Registro exitoso en UI pero dato perdido después de reinicio del servidor.</td>
+      </tr>
+    </table>
+
+    <h3>Ejemplo: Test de Isolation con K6</h3>
+    <div class="code-box">
+<span class="c">// isolation_test.k6.js — 2 VUs registrando el mismo email concurrentemente</span>
+<span class="k">import</span> http <span class="k">from</span> <span class="s">'k6/http'</span>;
+<span class="k">import</span> { check } <span class="k">from</span> <span class="s">'k6'</span>;
+
+<span class="k">export const</span> options = { vus: 2, iterations: 2 };
+
+<span class="k">export default function</span>() {
+  <span class="k">const</span> payload = JSON.stringify({
+    email: <span class="s">'duplicate@qasl.test'</span>,  <span class="c">// mismo email en ambos VUs</span>
+    password: <span class="s">'ValidPass123'</span>
+  });
+
+  <span class="k">const</span> res = http.post(<span class="s">'http://localhost:3000/api/register'</span>, payload, {
+    headers: { <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span> }
+  });
+
+  <span class="c">// Exactamente 1 debe ser 201 y 1 debe ser 409 (conflict)</span>
+  check(res, {
+    <span class="s">'respuesta válida (201 o 409)'</span>: (r) => [201, 409].includes(r.status),
+  });
+  <span class="c">// Post-test: SELECT COUNT(*) FROM users WHERE email='duplicate@qasl.test' debe = 1</span>
+}
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 7 -->
+  <div class="guide-section" id="query-perf">
+    <h2>7. Query Performance Testing</h2>
+    <p>Una query lenta en producción es un defecto de calidad del dato igual que un valor nulo inesperado. Se detecta antes del release, no cuando el DBA recibe la alerta a las 3 AM.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Check</th>
+        <th>Herramienta</th>
+        <th>Umbral de alerta</th>
+        <th>Acción</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Full table scan</span></td>
+        <td>EXPLAIN ANALYZE</td>
+        <td>type = ALL en queries frecuentes</td>
+        <td>Agregar índice en la columna filtrada.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Query time p95</span></td>
+        <td>K6 + slow query log</td>
+        <td>&gt; 500 ms en operaciones CRUD básicas</td>
+        <td>Revisar índices, N+1, joins innecesarios.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">N+1 queries</span></td>
+        <td>Query log / ORM profiler</td>
+        <td>Más de 1 query por entidad en listados</td>
+        <td>Usar JOINs o eager loading.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Lock contention</span></td>
+        <td>pg_locks / SHOW STATUS</td>
+        <td>Waits &gt; 100ms bajo 2 VUs</td>
+        <td>Revisar isolation level y orden de locks.</td>
+      </tr>
+    </table>
+
+    <div class="code-box">
+<span class="c">-- Verificar que la query de login usa índice (no full scan)</span>
+<span class="k">EXPLAIN ANALYZE</span>
+<span class="k">SELECT</span> id, status <span class="k">FROM</span> users <span class="k">WHERE</span> email = <span class="s">'user@test.com'</span>;
+
+<span class="c">-- Resultado esperado: Index Scan using users_email_idx (NO Seq Scan)</span>
+<span class="c">-- Si aparece "Seq Scan" → DEFECTO: falta índice en users.email</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 8 -->
+  <div class="guide-section" id="data-security">
+    <h2>8. Data Security Testing</h2>
+    <p>La capa de BD es el objetivo final de los ataques de inyección y la última línea de defensa para los datos sensibles. Alineado a <strong>OWASP Top 10 A02 (Cryptographic Failures)</strong> y <strong>A03 (Injection)</strong>.</p>
+
+    <table class="guide-table">
+      <tr>
+        <th>Riesgo OWASP</th>
+        <th>Check en capa BD</th>
+        <th>Query de validación</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">A02 · Cryptographic Failures</span></td>
+        <td>Passwords nunca en texto plano. Datos sensibles encriptados.</td>
+        <td><code>SELECT COUNT(*) FROM users WHERE LENGTH(password_hash) &lt; 60 OR password_hash NOT LIKE '$2%'</code></td>
+      </tr>
+      <tr>
+        <td><span class="field-label">A02 · PII en logs</span></td>
+        <td>Logs de BD no contienen PII (email, nombre, DNI).</td>
+        <td>Revisar slow query log / general log por patrones de email.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">A03 · SQL Injection</span></td>
+        <td>Inputs del usuario parametrizados antes de llegar a BD.</td>
+        <td>Intentar <code>'; DROP TABLE users; --</code> vía API. Verificar que BD no ejecuta el DROP.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Excessive data exposure</span></td>
+        <td>Endpoints no devuelven columnas que no deben (password_hash, etc.).</td>
+        <td>Interceptar respuesta API. Verificar que password_hash no aparece en ningún response.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Permisos de BD</span></td>
+        <td>Usuario de la app tiene mínimos privilegios (no DROP, no GRANT).</td>
+        <td><code>SHOW GRANTS FOR 'app_user'@'%'</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 9 -->
+  <div class="guide-section" id="pipeline">
+    <h2>9. Pipeline de Database Testing integrado</h2>
+    <p>El DB testing no es un paso separado — se integra al pipeline existente del QASL Framework como una <strong>capa adicional que se ejecuta en paralelo o post-E2E</strong>.</p>
+
+    <div style="text-align: center; margin: 20px 0;">
+      <div class="pipeline-stage" style="background: #FEF3C7;">
+        <h4>🔍 Pre-pipeline</h4>
+        <ul><li>Schema assertions</li><li>Seed Golden Dataset</li><li>DB health check</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>🎭 E2E (Playwright)</h4>
+        <ul><li>Flujos funcionales</li><li>HAR capture</li><li>Screenshots</li></ul>
+      </div>
+      <div class="pipeline-stage" style="background: #D1FAE5;">
+        <h4>🗄️ DB Assertions</h4>
+        <ul><li>Post-E2E integrity</li><li>ACID checks</li><li>PII validation</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>⚡ API (Newman)</h4>
+        <ul><li>Contract testing</li><li>HAR replay</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>🏎️ Performance (K6)</h4>
+        <ul><li>Load + isolation</li><li>Query p95</li></ul>
+      </div>
+      <div class="pipeline-stage">
+        <h4>📊 DQFI + Grafana</h4>
+        <ul><li>Score D1/D2/D3</li><li>Dashboard</li></ul>
+      </div>
+    </div>
+
+    <h3>GitHub Actions — stage de DB Testing</h3>
+    <div class="code-box">
+<span class="c"># .github/workflows/qa-pipeline.yml — stage de DB assertions</span>
+  db-assertions:
+    <span class="k">name</span>: <span class="s">'F10.1.5 · DB Assertions post-E2E'</span>
+    <span class="k">needs</span>: [e2e-tests]
+    <span class="k">runs-on</span>: ubuntu-latest
+    <span class="k">steps</span>:
+      - <span class="k">name</span>: Checkout
+        <span class="k">uses</span>: actions/checkout@v4
+
+      - <span class="k">name</span>: Setup Python
+        <span class="k">uses</span>: actions/setup-python@v5
+        <span class="k">with</span>: { python-version: <span class="s">'3.11'</span> }
+
+      - <span class="k">name</span>: Install dependencies
+        <span class="k">run</span>: pip install psycopg2-binary pytest
+
+      - <span class="k">name</span>: Seed Golden Dataset
+        <span class="k">run</span>: psql $DB_URL -f seed/golden_dataset.sql
+
+      - <span class="k">name</span>: Run schema assertions
+        <span class="k">run</span>: pytest tests/db/schema_assertions.py -v
+
+      - <span class="k">name</span>: Run integrity assertions
+        <span class="k">run</span>: pytest tests/db/integrity_assertions.py -v
+
+      - <span class="k">name</span>: Run security assertions
+        <span class="k">run</span>: pytest tests/db/security_assertions.py -v
+
+      - <span class="k">name</span>: Generate DQFI score
+        <span class="k">run</span>: python scripts/calculate_dqfi.py --output reports/db/dqfi.json
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 10 -->
+  <div class="guide-section" id="dqfi">
+    <h2>10. DQFI — Data Quality Forensic Index</h2>
+    <p>El <strong>DQFI (Data Quality Forensic Index)</strong> es el índice forense de la capa de datos. Convierte los resultados de las assertions en un <strong>score 0–100 con grado A→F</strong>, siguiendo el mismo patrón que CFQI (AppSec) y AFQI (AI/LLM) del ecosistema QASL.</p>
+
+    <div class="info-box">
+      <strong>📌 Base normativa:</strong> ISO/IEC 25012:2008 define las 15 características de calidad del dato (Accuracy, Completeness, Consistency, Currentness, Accessibility, Compliance, Confidentiality, Efficiency, Precision, Traceability, Understandability, Availability, Portability, Recoverability). El DQFI opera sobre las 5 más críticas en contexto de QA.
+    </div>
+
+    <h3>Las tres dimensiones del DQFI</h3>
+
+    <div class="dqfi-dim">
+      <h4>D1 · Integridad Estructural — 35%</h4>
+      <p>Calidad del schema y las constraints. Mide la salud de la BD en reposo.</p>
+      <ul>
+        <li>PKs definidas en todas las tablas</li>
+        <li>FKs con índices correctos</li>
+        <li>NOT NULL en campos del Data Contract</li>
+        <li>Constraints de formato (VARCHAR lengths, ENUMs, CHECKs)</li>
+      </ul>
+      <p><strong>Herramientas:</strong> information_schema queries · sqlfluff · schemaspy</p>
+    </div>
+
+    <div class="dqfi-dim">
+      <h4>D2 · Calidad del Dato — 35%</h4>
+      <p>Calidad del contenido persistido. Mide lo que está mal en los datos reales.</p>
+      <ul>
+        <li>NULLs en campos NOT NULL (datos pre-existentes corruptos)</li>
+        <li>Formatos inválidos (emails malformados, fechas fuera de rango)</li>
+        <li>Violaciones de reglas de negocio (passwords sin hashear, estados inválidos)</li>
+        <li>Duplicados en campos UNIQUE</li>
+        <li>Integridad referencial (registros huérfanos)</li>
+      </ul>
+      <p><strong>Herramientas:</strong> Great Expectations · assertions SQL custom · dbt tests</p>
+    </div>
+
+    <div class="dqfi-dim">
+      <h4>D3 · Consistencia Transaccional — 30%</h4>
+      <p>Comportamiento bajo operaciones concurrentes y adversas. Mide ACID bajo presión.</p>
+      <ul>
+        <li>Atomicidad: rollback correcto en transacciones parciales</li>
+        <li>Isolation: sin race conditions bajo 2+ VUs concurrentes</li>
+        <li>Durabilidad: datos confirmados persisten ante reinicios</li>
+        <li>Query performance p95 bajo SLO definido</li>
+      </ul>
+      <p><strong>Herramientas:</strong> K6 + DB assertions · pg_locks · slow query log</p>
+    </div>
+
+    <h3>Penalización Λ (Lambda)</h3>
+    <div class="danger-box">
+      <strong>🔴 Penalización crítica:</strong> Si se detecta PII almacenada en texto plano, o datos financieros sin encriptar, se aplica una penalización Λ que degrada el score a D automaticamente, independientemente de D1/D2/D3. Un proyecto no puede tener grado A con un breach de datos activo.
+    </div>
+
+    <h3>Tabla de grados DQFI</h3>
+    <table class="guide-table">
+      <tr>
+        <th>Score</th>
+        <th>Grado</th>
+        <th>Interpretación</th>
+        <th>Acción recomendada</th>
+      </tr>
+      <tr>
+        <td><strong>90–100</strong></td>
+        <td><span class="dqfi-score">A</span></td>
+        <td>Capa de datos en excelente estado. Release autorizado.</td>
+        <td>Mantener. Monitorear en producción.</td>
+      </tr>
+      <tr>
+        <td><strong>75–89</strong></td>
+        <td><span class="dqfi-score">B</span></td>
+        <td>Pequeñas deudas de calidad. No bloquea release.</td>
+        <td>Documentar. Resolver en próximo sprint.</td>
+      </tr>
+      <tr>
+        <td><strong>60–74</strong></td>
+        <td><span class="dqfi-score warn">C</span></td>
+        <td>Problemas de calidad de dato notables. Riesgo moderado.</td>
+        <td>Resolver antes del release. Mínimo aceptable.</td>
+      </tr>
+      <tr>
+        <td><strong>40–59</strong></td>
+        <td><span class="dqfi-score warn">D</span></td>
+        <td>Problemas serios de integridad o consistencia.</td>
+        <td>Bloquear release hasta resolver críticos.</td>
+      </tr>
+      <tr>
+        <td><strong>0–39</strong></td>
+        <td><span class="dqfi-score danger">F</span></td>
+        <td>Capa de datos no apta. Posible breach o corrupción activa.</td>
+        <td>Detener pipeline. Investigar inmediatamente.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 11 -->
+  <div class="guide-section" id="metricas">
+    <h2>11. Métricas e indicadores</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th>Métrica</th>
+        <th>Fórmula / Fuente</th>
+        <th>Umbral objetivo</th>
+        <th>Dashboard</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">DQFI Score</span></td>
+        <td>D1×0.35 + D2×0.35 + D3×0.30 − Λ</td>
+        <td>≥ 75 (grado B)</td>
+        <td>Grafana · panel DQFI gauge</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Schema Assertions Pass Rate</span></td>
+        <td>Assertions OK / Total assertions × 100</td>
+        <td>100% (bloqueante)</td>
+        <td>Grafana · panel D1</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Integrity Assertions Pass Rate</span></td>
+        <td>Assertions OK / Total assertions × 100</td>
+        <td>≥ 95%</td>
+        <td>Grafana · panel D2</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Query p95</span></td>
+        <td>Percentil 95 de latencia de queries críticas</td>
+        <td>&lt; 500ms</td>
+        <td>Grafana · panel D3</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">PII Exposure Rate</span></td>
+        <td>Registros con PII en texto plano / Total</td>
+        <td>0% (bloqueante Λ)</td>
+        <td>Grafana · panel seguridad</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Seed Reproducibility</span></td>
+        <td>Hash del estado de BD post-seed debe ser idéntico en cada run</td>
+        <td>100% idéntico</td>
+        <td>CI log</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECCIÓN 12 -->
+  <div class="guide-section" id="anti-patterns">
+    <h2>12. Anti-patterns en Database Testing</h2>
+
+    <table class="guide-table">
+      <tr>
+        <th>Anti-pattern</th>
+        <th>Por qué es peligroso</th>
+        <th>Solución</th>
+      </tr>
+      <tr>
+        <td><span class="field-label">Tests que comparten estado de BD</span></td>
+        <td>Un test contamina los datos del siguiente. Resultados no reproducibles.</td>
+        <td>Seed antes de cada ejecución. Transacciones con rollback en tests unitarios de BD.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Probar solo via UI</span></td>
+        <td>El UI puede mostrar éxito mientras el dato quedó corrupto en BD.</td>
+        <td>Siempre combinar: assertion UI + assertion BD para flujos críticos.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Usar BD de producción para tests</span></td>
+        <td>Riesgo de borrado/corrupción de datos reales. Violación GDPR.</td>
+        <td>BD propia de QA, aislada, controlada. Golden Dataset o datos enmascarados.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Ignorar el schema hasta que falla</span></td>
+        <td>Un campo sin NOT NULL produce datos corruptos que tardan meses en detectarse.</td>
+        <td>Schema assertions en Fase 2, antes del primer commit de dev.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">Data Contract verbal</span></td>
+        <td>"El equipo sabe cómo son los datos" — hasta que rotan personas o cambia el equipo.</td>
+        <td>Data Contract escrito, versionado en Git, firmado como DoR.</td>
+      </tr>
+      <tr>
+        <td><span class="field-label">No testear ACID bajo concurrencia</span></td>
+        <td>Los bugs de isolation aparecen en producción bajo carga real, no en tests seriales.</td>
+        <td>Usar K6 con 2+ VUs sobre los mismos recursos. Testear race conditions.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- INTEGRACIÓN CON EL FRAMEWORK -->
+  <div class="guide-section">
+    <h2>🔗 Integración con el QA Shift-Left Methodology</h2>
+    <div class="ok-box">
+      <p>Esta guía es la <strong>extensión de capa de datos</strong> del framework. Se integra como sigue:</p>
+      <ul>
+        <li><strong>Data Contract</strong> → DoR de la Fase 1 (Análisis). Sin Data Contract firmado, no arranca Schema Testing.</li>
+        <li><strong>Schema Testing</strong> → Fase 2 (Pruebas Estáticas). Mismo principio: validar antes del código.</li>
+        <li><strong>Golden Dataset</strong> → Fase 3 (Deploy SUT). QA siembra su propia BD. Sin dependencia de Dev.</li>
+        <li><strong>VCR para DB assertions</strong> → Fase 4 (Planning Poker). VCR ≥ 9 → automatizar assertions de BD.</li>
+        <li><strong>DB Assertions post-E2E</strong> → Fase 5 (Ejecución). Capa adicional al pipeline E2E → API → K6 → ZAP.</li>
+        <li><strong>DQFI en Grafana</strong> → Fase 6 (Métricas). Quinta capa del Quality Cockpit.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="index.html" class="nav-back" style="font-size: 15px; padding: 12px 22px;">← Volver al portal de guías</a>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #2563EB; color: #475569; font-size: 13px;">
+    <strong>QA Shift-Left Methodology · by E-Gregorio</strong><br>
+    Guía Database &amp; Data Quality Testing · DQFI v1.0<br>
+    <em>ISO/IEC 25012:2008 · DAMA-DMBOK v2 · ISO 31000:2018 · OWASP Top 10 A02/A03 · GDPR Art. 25</em>
+  </div>
+
+</div>
+</body>
+</html>
